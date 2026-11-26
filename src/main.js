@@ -116,7 +116,7 @@ function drawRoutes(){
  const parts=mergeDisplayRoutes(routes,coordinates=>map.project(coordinates,map.getZoom()));
  if(parts.length){
   const weight=lineWeight==='bold'?4:2;
-  L.polyline(parts,{color:destination?'#ffad46':'#e99b52',weight,opacity:.9,interactive:false,smoothFactor:1.5}).addTo(activeLines);
+  L.polyline(parts,{color:dark?'#ff5a63':'#d92535',weight,opacity:.9,interactive:false,smoothFactor:1.5}).addTo(activeLines);
  }
  const focus=trains.find(t=>t.id===focusedTrainId);
  if(focus){

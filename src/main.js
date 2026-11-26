@@ -1,12 +1,12 @@
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import {createIcons, TrainFront, ArrowUpRight, Upload, Search, MapPin, Route, ZoomIn, Info, LocateFixed, Plus, Minus, X, Download, LockKeyhole, ChevronDown} from 'lucide';
-const icons={TrainFront,ArrowUpRight,Upload,Search,MapPin,Route,ZoomIn,Info,LocateFixed,Plus,Minus,X,Download,LockKeyhole,ChevronDown};
+import {createIcons, TrainFront, ArrowUpRight, Upload, Search, MapPin, Route, ZoomIn, Info, LocateFixed, Plus, Minus, X, Download, LockKeyhole, ChevronDown, Layers, Maximize, Type} from 'lucide';
+const icons={TrainFront,ArrowUpRight,Upload,Search,MapPin,Route,ZoomIn,Info,LocateFixed,Plus,Minus,X,Download,LockKeyhole,ChevronDown,Layers,Maximize,Type};
 import {demoData} from './data.js';
 import {reachable,validateData} from './network.js';
 import {chinaToday,displayTime,importTimetable} from './timetable.js';
 import './style.css';
-import {maplibreGL} from '@maplibre/maplibre-gl-leaflet';
+import maplibreGL from './vendor/maplibre-leaflet.js';
 import maplibregl from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import {segmentKey, routeParts} from './rail-geometry.js';
@@ -18,25 +18,41 @@ let stationById=new Map(), networkEdges=[];
 let travelDate=chinaToday();
 document.querySelector('#app').innerHTML=`
 <header><a class="brand" href="/" aria-label="行轨首页"><span class="brand-icon">${icon('train-front')}</span><strong>行轨<span>中国铁路可达地图</span></strong></a><nav><span class="nav-active">探索地图</span><button id="about">关于数据 ${icon('arrow-up-right')}</button></nav><div class="header-right"><span class="demo-badge"><b></b><span id="data-mode">正在加载时刻表</span></span><button id="import" class="import">${icon('upload')} 导入时刻表</button></div></header>
-<main><aside><div class="intro"><div class="eyebrow">沿着铁轨，发现更多</div><h1>从一站出发，<br>看见所有可能。</h1><p>选择一个车站，探索列车可以带你去的地方。</p></div><div class="date-control"><label for="travel-date">乘车日期 <small>中国标准时间</small></label><input id="travel-date" type="date" aria-label="乘车日期"><button id="restore-snapshot" hidden>恢复内置快照</button><span id="data-summary" role="status">正在加载真实时刻表…</span></div><div class="search-box">${icon('search')}<input id="search" placeholder="搜索车站，如 珠海、广州南" autocomplete="off" aria-label="搜索出发站"><kbd>⌕</kbd></div><div id="search-results"></div><div id="panel"></div><div class="sidebar-bottom">${icon('info')}<span>真实时刻表快照 · 运行日期以数据源为准<br>实际开行与停站请以 12306 公布为准</span></div></aside><section class="map-area" aria-label="中国铁路地图"><div id="map"></div><div class="map-title"><span class="live-dot"></span><span>中国铁路网络</span><small id="map-subtitle">缩放地图，发现沿途车站</small></div><div class="map-top-right"><span id="station-count"></span> 个站点<button id="reset-view" aria-label="回到全国视图">${icon('locate-fixed')}</button></div><div id="selection-banner" hidden></div><div class="basemap-switch" role="group" aria-label="底图风格"><button data-basemap="positron">浅色</button><button data-basemap="dark">深色</button><button data-basemap="osm">原 OSM</button></div><div id="routing-status" role="status">正在加载铁路路径…</div><div class="zoom"><button id="zoom-in" aria-label="放大地图">${icon('plus')}</button><button id="zoom-out" aria-label="缩小地图">${icon('minus')}</button></div><div class="legend"><strong>地图图例</strong><span><b class="legend-hub"></b>枢纽站</span><span><b class="legend-station"></b>一般站点</span><span><b class="legend-route"></b>可达线路</span><small>放大地图可查看小站</small></div><div class="map-footer">铁路，让远方更近。<span>CHINA RAILWAY EXPLORER</span></div><div id="toast" role="status"></div></section></main>
+<main><aside><div class="intro"><div class="eyebrow">沿着铁轨，发现更多</div><h1>从一站出发，<br>看见所有可能。</h1><p>选择一个车站，探索列车可以带你去的地方。</p></div><div class="date-control"><label for="travel-date">乘车日期 <small>中国标准时间</small></label><input id="travel-date" type="date" aria-label="乘车日期"><button id="restore-snapshot" hidden>恢复内置快照</button><span id="data-summary" role="status">正在加载真实时刻表…</span></div><div class="search-box">${icon('search')}<input id="search" placeholder="搜索车站，如 珠海、广州南" autocomplete="off" aria-label="搜索出发站"><kbd>⌕</kbd></div><div id="search-results"></div><div id="panel"></div><div class="sidebar-bottom">${icon('info')}<span>真实时刻表快照 · 运行日期以数据源为准<br>实际开行与停站请以 12306 公布为准</span></div></aside><section class="map-area" aria-label="中国铁路地图"><div id="map"></div><div class="map-title"><span class="live-dot"></span><span>中国铁路网络</span><small id="map-subtitle">缩放地图，发现沿途车站</small></div><div class="map-top-right"><span id="station-count"></span> 个站点</div><div id="selection-banner" hidden></div><div id="routing-status" role="status">正在加载铁路路径…</div><div class="map-tools" role="group" aria-label="地图工具"><button id="layers-toggle" aria-label="地图与线条" aria-expanded="false" aria-controls="layer-panel" title="地图与线条">${icon('layers')}</button><button id="reset-view" aria-label="回到全国视图" title="回到全国视图">${icon('maximize')}</button><button id="toggle-labels" aria-label="显示或隐藏站名" aria-pressed="true" title="站名开关">${icon('type')}</button><button id="zoom-in" aria-label="放大地图" title="放大">${icon('plus')}</button><button id="zoom-out" aria-label="缩小地图" title="缩小">${icon('minus')}</button></div><section id="layer-panel" role="dialog" aria-modal="false" aria-labelledby="layer-heading" hidden><div class="layer-heading"><h2 id="layer-heading">地图与线条</h2><button id="layers-close" aria-label="关闭地图与线条">${icon('x')}</button></div><fieldset class="basemap-options"><legend class="sr-only">底图风格</legend><label class="basemap-option"><input type="radio" name="basemap" data-basemap="dark" value="dark"><span class="map-swatch swatch-dark" aria-hidden="true"></span><span><strong>深色</strong><small>OpenFreeMap Dark</small></span></label><label class="basemap-option"><input type="radio" name="basemap" data-basemap="positron" value="positron"><span class="map-swatch swatch-light" aria-hidden="true"></span><span><strong>简洁浅色</strong><small>OpenFreeMap Positron</small></span></label><label class="basemap-option"><input type="radio" name="basemap" data-basemap="osm" value="osm"><span class="map-swatch swatch-osm" aria-hidden="true"></span><span><strong>OSM 标准</strong><small>完整街道信息</small></span></label></fieldset><fieldset class="line-options"><legend>线条粗细 · 全局</legend><label><input type="radio" name="line-weight" value="fine" checked><span class="line-sample fine"></span>细（默认）</label><label><input type="radio" name="line-weight" value="bold"><span class="line-sample bold"></span>粗</label></fieldset><p id="basemap-status" role="status">地图数据来自 OpenStreetMap</p><button id="basemap-retry" hidden>重新加载底图</button></section><div class="legend"><strong>地图图例</strong><span><b class="legend-hub"></b>枢纽站</span><span><b class="legend-station"></b>一般站点</span><span><b class="legend-route"></b>可达线路</span><small>放大地图可查看小站</small></div><div class="map-footer">铁路，让远方更近。<span>CHINA RAILWAY EXPLORER</span></div><div id="toast" role="status"></div></section></main>
 <dialog id="about-dialog"><button class="close-dialog" aria-label="关闭">${icon('x')}</button><div class="eyebrow">数据说明</div><h2>一张可以探索的铁路地图</h2><p>默认使用 wensimehrp / chinese-railway-gtfs 发布的真实时刻表快照，运行数据由 RailGo-Parser 获取，站点坐标来自 OpenStreetMap。按乘车站当地日期筛选开行车次，跨午夜时按始发日换算。这里不查询实时余票或临时停运。</p><p id="snapshot-details">正在读取数据版本…</p><p>可达指同一趟列车在所选站之后的停站，不计算换乘。线路优先使用数据源提供的走向，缺失部分采用 OSM 铁路最短路；无法匹配时不画直线替代。铁路几何不等同于经官方核实的车次经由。</p><p>支持导入 qETRC .pyetgr / .pyetdb 文件，按车站名称匹配内置坐标。导入内容的真实性和有效日期由文件提供者负责。</p><a href="https://github.com/wensimehrp/chinese-railway-gtfs" target="_blank" rel="noreferrer">时刻表来源与更新</a> · <a href="https://github.com/CDK6182CHR/qETRC" target="_blank" rel="noreferrer">qETRC 项目</a><button id="download" class="primary">下载时刻表格式示例 ${icon('download')}</button><p class="fine">导入在浏览器本地完成，刷新后恢复内置真实时刻表快照。底图来自 OpenFreeMap / OpenStreetMap。铁路几何 © OpenStreetMap contributors，ODbL 1.0；OSM 路网快照 2026-09-02；时刻表与上游线路走向快照见版本说明。</p></dialog><input id="file" type="file" accept=".json,.pyetgr,.pyetdb,application/json" hidden>`;
 const map=L.map('map',{zoomControl:false,minZoom:3,maxZoom:13,preferCanvas:true}).setView([34.5,106.5],4);
-let basemapLayer, dark=false, basemapGeneration=0;
+let basemapLayer, dark=false, basemapGeneration=0,basemapStyle='dark',basemapTimer;
+let lineWeight='fine',labelsOn=true;
+try{lineWeight=localStorage.getItem('xinggui-line-weight')==='bold'?'bold':'fine';labelsOn=localStorage.getItem('xinggui-labels')!=='off';}catch{}
+maplibregl.setWorkerCount(2);
 const attribution='© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>';
+const vectorAttribution='<a href="https://openfreemap.org/">OpenFreeMap</a> · <a href="https://openmaptiles.org/">OpenMapTiles</a> · '+attribution;
 function setBasemap(style){
  if(!['positron','dark','osm'].includes(style))style='dark';
- if(style!=='osm'&&!maplibregl.supported())style='osm';
- if(basemapLayer)map.removeLayer(basemapLayer);
+ const generation=++basemapGeneration;basemapStyle=style;clearTimeout(basemapTimer);
+ const status=document.querySelector('#basemap-status'),retry=document.querySelector('#basemap-retry');retry.hidden=true;
+ if(basemapLayer){map.removeLayer(basemapLayer);basemapLayer=null;}
  dark=style==='dark';document.body.classList.toggle('dark-map',dark);
- const generation=++basemapGeneration;
- document.querySelectorAll('[data-basemap]').forEach(b=>{b.classList.toggle('active',b.dataset.basemap===style);b.setAttribute('aria-pressed',String(b.dataset.basemap===style));});
+ document.querySelectorAll('[name="basemap"]').forEach(r=>r.checked=r.value===style);
  try{localStorage.setItem('xinggui-basemap',style);}catch{}
- if(style==='osm')basemapLayer=L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution}).addTo(map);
- else{
-  try{basemapLayer=maplibreGL({style:`https://tiles.openfreemap.org/styles/${style}`,interactive:false,attribution:'<a href="https://openfreemap.org/">OpenFreeMap</a> · '+attribution,maxTileCacheSize:48,fadeDuration:0}).addTo(map);
-   basemapLayer.getMaplibreMap().on('error',()=>{if(generation===basemapGeneration)document.querySelector('#routing-status').textContent='底图资源加载遇到问题，可切换原 OSM。';});
-  }catch{setBasemap('osm');}
- }
+ const name=style==='dark'?'OpenFreeMap Dark':style==='positron'?'OpenFreeMap Positron':'OSM 标准';
+ status.textContent=`正在加载 ${name}…`;
+ function failed(message){if(generation!==basemapGeneration)return;clearTimeout(basemapTimer);status.textContent=message;retry.hidden=false;}
+ try{
+  if(style==='osm'){
+   basemapLayer=L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution});
+   basemapLayer.on('load',()=>{if(generation===basemapGeneration){clearTimeout(basemapTimer);status.textContent='OSM 标准 · 地图数据来自 OpenStreetMap';retry.hidden=true;}});
+   basemapLayer.on('tileerror',()=>failed('OSM 瓦片加载失败，请重试。'));
+   basemapLayer.addTo(map);
+  }else{
+   if(!maplibregl.supported())throw Error('当前浏览器无法启用 WebGL，可选择 OSM 标准底图。');
+   basemapLayer=maplibreGL({style:`https://tiles.openfreemap.org/styles/${style}`,interactive:false,attribution:vectorAttribution,maxTileCacheSize:48,maxTileCacheZoomLevels:2,fadeDuration:0}).addTo(map);
+   const gl=basemapLayer.getMaplibreMap();
+   gl.on('load',()=>{if(generation===basemapGeneration){clearTimeout(basemapTimer);status.textContent=`${name} · 地图数据来自 OpenStreetMap`;retry.hidden=true;}});
+   gl.on('error',event=>{console.error('OpenFreeMap:',event.error);failed(`${name} 资源加载失败，请重试或切换底图。`);});
+  }
+  basemapTimer=setTimeout(()=>failed(`${name} 加载较慢，请检查网络或重试。`),15000);
+ }catch(error){failed(error.message||`${name} 初始化失败，请重试。`);}
  drawMap();
 }
 let railGeometry={segments:{}},geometryReady=false;
@@ -89,7 +105,7 @@ function drawMap(){
   }
   const bounds=map.getBounds().pad(.15),groups=colors.map(()=>[]);
   networkEdges.forEach((edge,i)=>{if(bounds.intersects(edge.bounds))groups[i%colors.length].push(...edge.parts);});
-  groups.forEach((parts,i)=>drawParts(parts,colors[i],map.getZoom()<6?1.5:2.5,selected?.12:.6,lines));
+  groups.forEach((parts,i)=>drawParts(parts,colors[i],lineWeight==='bold'?3.6:1.8,selected?.12:.6,lines));
   if(result){
     const paths=destination?result.destinations.get(destination):result.services;
     const seen=new Set(),active=[],missing=new Set();
@@ -97,7 +113,7 @@ function drawMap(){
      const key=segmentKey(t.path[i],id);if(seen.has(key))return;seen.add(key);
      const parts=routeParts([t.path[i],id],stationById,railGeometry);if(parts.length)active.push(...parts);else missing.add(key);
     }));
-    drawParts(active,destination?'#ffb44c':'#ef9b50',destination?4:3,.95,activeLines);
+    drawParts(active,destination?'#ffb44c':'#ef9b50',lineWeight==='bold'?4.5:2.6,.95,activeLines);
     document.querySelector('#routing-status').textContent=missing.size?`${missing.size} 个区间缺少线路几何，未绘制连线`:'铁路路径参考 · 实际经由以运行图为准';
   }else if(geometryReady)document.querySelector('#routing-status').textContent='铁路路径参考 · 选择出发站查看直达车次';
   const zoom=map.getZoom();
@@ -106,7 +122,7 @@ function drawMap(){
     if(!isSelected&&!isDestination&&!map.getBounds().pad(.1).contains([s.lat,s.lng]))return;
     if(!isSelected&&!isDestination&&s.level>0&&zoom<(s.level===1?5:7))return;
     const marker=L.circleMarker(stationPosition(s),{radius:isSelected?8:s.level===0?4.8:3.4,color:isSelected?'#fff':isReachable?'#db9b43':dark?'#bdcdd5':'#3d564b',weight:isSelected?3:1.5,fillColor:isSelected?'#efab48':'#fff',fillOpacity:1,opacity:selected&&!isSelected&&!isReachable?.38:1}).addTo(markers);
-    marker.bindTooltip(escape(s.name),{permanent:isSelected||isDestination||s.level===0||zoom>=7,direction:'right',className:`station-label ${isSelected?'selected-label':''} ${selected&&!isSelected&&!isReachable?'muted-label':''}`,offset:[7,0]});
+    marker.bindTooltip(escape(s.name),{permanent:labelsOn&&(isSelected||isDestination||s.level===0||zoom>=7),direction:'right',className:`station-label ${isSelected?'selected-label':''} ${selected&&!isSelected&&!isReachable?'muted-label':''}`,offset:[7,0]});
     marker.on('click',()=>choose(s.id));
   });
   document.querySelector('#station-count').textContent=data.stations.length;
@@ -171,6 +187,17 @@ document.querySelector('#travel-date').onchange=e=>{
  renderPanel();drawMap();
 };
 document.querySelector('#restore-snapshot').onclick=()=>applyDataset(snapshot,snapshotGeometry);
-document.querySelectorAll('[data-basemap]').forEach(b=>b.onclick=()=>setBasemap(b.dataset.basemap));
+const layerPanel=document.querySelector('#layer-panel'),layersToggle=document.querySelector('#layers-toggle');
+function showLayers(open,returnFocus=false){layerPanel.hidden=!open;layersToggle.setAttribute('aria-expanded',String(open));if(open)layerPanel.querySelector('[name="basemap"]:checked')?.focus();else if(returnFocus)layersToggle.focus();}
+layersToggle.onclick=()=>showLayers(layerPanel.hidden);
+document.querySelector('#layers-close').onclick=()=>showLayers(false,true);
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!layerPanel.hidden){e.preventDefault();showLayers(false,true);}});
+document.addEventListener('pointerdown',e=>{if(!layerPanel.hidden&&!layerPanel.contains(e.target)&&!layersToggle.contains(e.target))showLayers(false);});
+L.DomEvent.disableClickPropagation(layerPanel);L.DomEvent.disableScrollPropagation(layerPanel);
+document.querySelectorAll('[name="basemap"]').forEach(r=>r.onchange=()=>{if(r.checked)setBasemap(r.value);});
+document.querySelector('#basemap-retry').onclick=()=>setBasemap(basemapStyle);
+document.querySelectorAll('[name="line-weight"]').forEach(r=>{r.checked=r.value===lineWeight;r.onchange=()=>{lineWeight=r.value;try{localStorage.setItem('xinggui-line-weight',lineWeight);}catch{}drawMap();};});
+document.querySelector('#toggle-labels').setAttribute('aria-pressed',String(labelsOn));
+document.querySelector('#toggle-labels').onclick=()=>{labelsOn=!labelsOn;document.querySelector('#toggle-labels').setAttribute('aria-pressed',String(labelsOn));try{localStorage.setItem('xinggui-labels',labelsOn?'on':'off');}catch{}drawMap();};
 let initialBasemap='dark';try{initialBasemap=localStorage.getItem('xinggui-basemap')||'dark';}catch{}
 map.on('moveend',drawMap);renderPanel();setBasemap(initialBasemap);refreshIcons();loadSnapshot();

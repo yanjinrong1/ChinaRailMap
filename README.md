@@ -43,3 +43,9 @@ node scripts/fill-timetable-routes.mjs
 统一 JSON 支持 `stations`、`trains` 数组；站点含 `id,name,lat,lng,level`，车次含 `id,stops`，可选 `code,times`。示例下载仍为明确标注的 DEMO 格式示例，默认地图不再使用它。
 
 旧演示路径 `public/rail-routes.json` 与 Natural Earth `public/world.json` 仅作为原型资料保留；默认不加载。
+
+## 地图工具与底图渲染
+
+OpenFreeMap Dark / Positron 与日本直通地图使用相同的 MapLibre GL 4.7.1 和 Leaflet bridge，版本固定。bridge 仅将原 UMD 包装改为 ESM；许可在 `public/MAPLIBRE-LEAFLET-LICENSE.txt`。不再在初始化失败时静默改成 OSM，面板中显示加载状态、网络错误、WebGL 不可用提示与重试入口。
+
+地图右下角统一工具栏包含图层、全国视图、站名开关和缩放。图层面板提供三种底图和全局细／粗线宽，支持 Escape 关闭、点击外部关闭与键盘焦点返回。底图、线宽、站名显示偏好保存在本机浏览器。

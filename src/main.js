@@ -45,10 +45,11 @@ async function setBasemap(style){
  if(style==='osm'){status.textContent='OSM 标准 · 地图数据来自 OpenStreetMap';return;}
  status.textContent=`正在加载 ${name}，暂用 OSM 备用样式…`;
  let vectorLoaded=false,lastError='';
+ const errorText=message=>/webgl/i.test(message)?'浏览器无法启用 WebGL':/404/.test(message)?'地图资源未找到（404）':/20 秒/.test(message)?message:'地图资源或网络连接失败';
  function fallback(reason){
   if(generation!==basemapGeneration)return;clearTimeout(basemapTimer);
   if(vectorLayer){map.removeLayer(vectorLayer);vectorLayer=null;}
-  ensureRaster();status.textContent=`${name} 加载失败：${reason||lastError||'未知错误'}。暂用 OSM ${dark?'深色':'浅色'}备用样式。`;retry.hidden=false;
+  ensureRaster();status.textContent=`${name} 加载失败：${errorText(reason||lastError||'未知错误')}。暂用 OSM ${dark?'深色':'浅色'}备用样式。`;retry.hidden=false;
  }
  try{
   vectorPromise??=import('./vector-basemap.js');const {createVectorLayer}=await vectorPromise;
@@ -60,7 +61,7 @@ async function setBasemap(style){
    if(basemapLayer){map.removeLayer(basemapLayer);basemapLayer=null;}
    status.textContent=`${name} · 地图数据来自 OpenStreetMap`;retry.hidden=true;
   });
-  gl.on('error',event=>{lastError=event.error?.message||'地图资源请求失败';console.warn('OpenFreeMap:',lastError);if(!vectorLoaded)status.textContent=`正在加载 ${name} · ${lastError}`;});basemapTimer=setTimeout(()=>fallback(lastError||'加载超过 20 秒'),20000);
+  gl.on('error',event=>{lastError=event.error?.message||'地图资源请求失败';console.warn('OpenFreeMap:',lastError);if(!vectorLoaded)status.textContent=`正在加载 ${name} · ${errorText(lastError)}`;});basemapTimer=setTimeout(()=>fallback(lastError||'加载超过 20 秒'),20000);
  }catch(error){console.warn('OpenFreeMap initialization:',error.message);fallback(error.message);}
 }
 let railGeometry={segments:{}},geometryReady=false;

@@ -1,10 +1,45 @@
 {
   "baiyunPassengerAccess": {
     "line": "京广线",
-    "bounds": [23.17, 113.18, 23.45, 113.29],
+    "bounds": [
+      23.17,
+      113.18,
+      23.45,
+      113.29
+    ],
     "requiresTimetableStation": "广州白云",
-    "overrides": {"railway:traffic_mode": "freight"},
+    "overrides": {
+      "railway:traffic_mode": "freight"
+    },
     "reason": "广州白云接入京广普速铁路并承接普速客车；局部旧货运标签与已投入使用的客站接入相矛盾。只在有该站停站证据、同名京广正线与限定范围内使用。",
-    "evidence": ["https://jtj.gz.gov.cn/gkmlpt/content/9/9331/post_9331418.html", "https://www.thepaper.cn/newsDetail_forward_24649281"]
+    "evidence": [
+      "https://jtj.gz.gov.cn/gkmlpt/content/9/9331/post_9331418.html",
+      "https://www.thepaper.cn/newsDetail_forward_24649281"
+    ]
+  },
+  "guangmaoPassengerDiversion": {
+    "line": "广珠线",
+    "bounds": [
+      23.17,
+      112.92,
+      23.29,
+      113.22
+    ],
+    "requiresTimetableStation": "广州白云",
+    "requiresAnyTimetableStation": [
+      "肇庆",
+      "三水"
+    ],
+    "operator": "CR",
+    "category": "conventional",
+    "overrides": {
+      "railway:traffic_mode": "freight"
+    },
+    "reason": "广茂普速客车自2023年10月11日起经江大联络线、广珠线北段、沙狮联络线绕行；该范围的广珠线旧货运标签不能作为禁止客车的依据。不得扩展到广珠城际或广珠线南段。",
+    "evidence": [
+      "https://jtj.gz.gov.cn/xwdt/gzdt/content/post_8674047.html",
+      "https://pc.nfnews.com/11389/8182071.html",
+      "https://huacheng.gz-cmc.com/pages/2023/10/11/SF10908344a337c99e4b8b445fb5b5d3.html"
+    ]
   }
 }

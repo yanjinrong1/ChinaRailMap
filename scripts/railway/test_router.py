@@ -27,6 +27,19 @@ class RoutingPolicyTests(unittest.TestCase):
   a={'id':'A','lat':36,'lng':110};b={'id':'B','lat':36,'lng':110.1};p={'operator':'CR','category':'conventional'}
   route,error=graph.route(a,b,p);self.assertIsNone(error);self.assertEqual(route['lineNames'],['某普速线'])
   route,error=graph.route(a,{'id':'D','lat':36,'lng':111},p);self.assertIsNone(route);self.assertEqual(error,'station-not-on-allowed-railway')
+ def test_guangmao_diversion_requires_timetable_and_stays_on_northern_freight_corridor(self):
+  stations={'A':{'name':'广州白云'},'B':{'name':'肇庆'}}
+  train={'operator':'CR','category':'conventional','stops':['A','B']};profile=profile_for(train,stations)
+  self.assertTrue(profile['guangmaoPassengerDiversion'])
+  tags={'railway':'rail','name':'广珠线','railway:traffic_mode':'freight','gauge':'1435'}
+  self.assertIsNotNone(edge_weight(tags,profile,(23.22,113.05),1))
+  self.assertIsNone(edge_weight(tags,profile,(22.5,113.05),1))
+  self.assertIsNone(edge_weight({**tags,'name':'广珠城际线'},profile,(23.22,113.05),1))
+  self.assertIsNone(edge_weight({**tags,'name':'江长联络线'},profile,(23.22,113.05),1))
+  self.assertIsNone(edge_weight(tags,{**profile,'operator':'GDIC'},(23.22,113.05),1))
+  self.assertIsNone(edge_weight(tags,{**profile,'category':'high-speed-emu'},(23.22,113.05),1))
+  self.assertIsNone(edge_weight(tags,{**profile,'guangmaoPassengerDiversion':False},(23.22,113.05),1))
+  self.assertNotIn('guangmaoPassengerDiversion',profile_for({**train,'stops':['A']},stations))
  def test_passenger_passing_loops_allowed_but_yards_excluded(self):
   p={'operator':'CR','category':'conventional'};t={'railway':'rail','name':'京广线'}
   self.assertEqual(edge_weight({**t,'service':'siding'},p,(30,114),1),2)

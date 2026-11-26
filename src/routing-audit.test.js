@@ -19,3 +19,16 @@ test('every timetable leg has geometry or an explicit automated audit failure',(
  }
  assert.equal(unresolved,audit.unresolvedTrainLegs);assert.ok(inferred>30000);
 });
+
+test('all Baiyun to Zhaoqing missing legs use the documented northern Guangmao diversion',()=>{
+ const data=read('data'),g=readRouteData(),audit=read('routing-audit');let checked=0;
+ for(const train of data.trains)for(let i=1;i<train.stops.length;i++){
+  const pair=[train.stops[i-1],train.stops[i]].sort().join('|');if(pair!=='GBA|ZVQ')continue;
+  const segment=g.segments[g.trainRoutes[train.id].legs[pair]];assert.ok(segment,train.code);checked++;
+  assert.equal(segment.source,'OSM inferred');assert.ok(segment.inference.lengthKm<150);
+  for(const name of ['京广线','江大联络线','广珠线','沙狮联络线','广茂线'])assert.ok(segment.inference.lineNames.includes(name),`${train.code}: ${name}`);
+  assert.ok(segment.inference.tagOverrides.includes('guangmaoPassengerDiversion'));
+  assert.equal(segment.inference.lineNames.some(n=>n.includes('城际')),false);
+ }
+ assert.ok(checked>=6);assert.equal(audit.legs.some(l=>[l.from,l.to].sort().join('|')==='GBA|ZVQ'),false);
+});

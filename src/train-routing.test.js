@@ -1,8 +1,9 @@
+import {readRouteData} from '../scripts/read-route-data.mjs';
 import {test}from 'node:test';import assert from 'node:assert/strict';import fs from 'node:fs';
 import {routeParts,routeVariantKey,segmentKey}from './rail-geometry.js';
 import {shouldFitSelection}from './map-model.js';
 const data=JSON.parse(fs.readFileSync(new URL('../public/timetable/data.json',import.meta.url)));
-const geometry=JSON.parse(fs.readFileSync(new URL('../public/timetable/routes.json',import.meta.url)));
+const geometry=readRouteData();
 const stations=new Map(data.stations.map(s=>[s.id,s]));
 test('source identity separates same endpoints for EMU and conventional trains',()=>{
  const high=data.trains.find(t=>t.code==='C4231'),regular=data.trains.find(t=>t.code==='Y733');
@@ -32,7 +33,7 @@ test('conventional trains may use their own source path without a blanket high-s
 });
 test('all referenced shapes remain within their train operator and category',()=>{
  for(const t of data.trains){const ref=geometry.trainRoutes[t.id];assert.deepEqual(ref.stops,t.stops);
-  for(const id of Object.values(ref.legs)){const s=geometry.segments[id];assert.equal(s.operator,t.operator);assert.equal(s.category,t.category);assert.equal(s.source,'train-specific GTFS shape');}
+  for(const id of Object.values(ref.legs)){const s=geometry.segments[id];assert.equal(s.operator,t.operator);assert.equal(s.category,t.category);assert.ok(['train-specific GTFS shape','OSM inferred'].includes(s.source));}
  }
 });
 test('cancel actions preserve view even when the destination becomes the origin',()=>{

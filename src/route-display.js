@@ -18,8 +18,8 @@ export function mergeDisplayRoutes(routes,project,tolerance=1.25){
 }
 export function routeCoverage(train,geometry){
  const path=train.path||train.stops,ref=geometry.trainRoutes?.[train.id];
- let available=0;
- for(let i=1;i<path.length;i++){const key=[path[i-1],path[i]].sort().join('|');if(geometry.segments?.[ref?.legs[key]])available++;}
- return {total:Math.max(0,path.length-1),available,sourceMissing:!!ref&&!ref.shapeId};
+ let available=0,inferred=0;
+ for(let i=1;i<path.length;i++){const key=[path[i-1],path[i]].sort().join('|');const segment=geometry.segments?.[ref?.legs[key]];if(segment){available++;if(segment.source==='OSM inferred')inferred++;}}
+ return {total:Math.max(0,path.length-1),available,inferred,sourceGeometryMissing:!!ref&&!ref.shapeId,sourceMissing:!!ref&&!ref.shapeId&&available===0};
 }
 export function focusedStopIds(trains,id){return new Set(trains.find(t=>t.id===id)?.path||[]);}

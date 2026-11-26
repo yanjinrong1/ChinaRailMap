@@ -8,6 +8,12 @@ Timetable upstream: RailGo-Parser. Station coordinates: OpenStreetMap.
 Changes: GTFS to application JSON; simplified train-specific route shapes;
 operator/category isolation; per-train stop matching (750 m limit);
 calendar dates preserved; Guangdong Intercity operator corrections.
-No unclassified OSM shortest-path additions in v2 routes.json.
-The complete derived geometry database is supplied as routes.json.
+Missing train legs are inferred on an attributed OSM railway graph, with train category,
+operator and scoped exception rules. Inferred geometry is not an official train track.
+OSM-derived railway geometry: © OpenStreetMap contributors, ODbL 1.0.
+https://www.openstreetmap.org/copyright
+Extracts by Geofabrik: https://download.geofabrik.de/asia/china.html
+The exact extract date, SHA256 and inference provenance are in routes.json metadata.
+The complete derived geometry database is available in the GitHub source routes.json and geometry/*.json;
+the deployed browser geometry is split into timetable/geometry/*.json.
 Railway geometry is a source reference and is not a fully verified train itinerary.

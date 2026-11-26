@@ -1,0 +1,10 @@
+{
+  "baiyunPassengerAccess": {
+    "line": "京广线",
+    "bounds": [23.17, 113.18, 23.45, 113.29],
+    "requiresTimetableStation": "广州白云",
+    "overrides": {"railway:traffic_mode": "freight"},
+    "reason": "广州白云接入京广普速铁路并承接普速客车；局部旧货运标签与已投入使用的客站接入相矛盾。只在有该站停站证据、同名京广正线与限定范围内使用。",
+    "evidence": ["https://jtj.gz.gov.cn/gkmlpt/content/9/9331/post_9331418.html", "https://www.thepaper.cn/newsDetail_forward_24649281"]
+  }
+}

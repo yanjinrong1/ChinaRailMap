@@ -1,7 +1,7 @@
 // MapLibre's Leaflet bridge, matching the Japan map (ISC license).
 // Adapted from UMD to ESM only. See /MAPLIBRE-LEAFLET-LICENSE.txt.
 import L from 'leaflet';
-import maplibregl from 'maplibre-gl';
+import maplibregl from 'maplibre-gl/dist/maplibre-gl-csp.js';
 
     L.MaplibreGL = L.Layer.extend({
             options: {

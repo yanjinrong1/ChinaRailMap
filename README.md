@@ -44,8 +44,11 @@ node scripts/fill-timetable-routes.mjs
 
 旧演示路径 `public/rail-routes.json` 与 Natural Earth `public/world.json` 仅作为原型资料保留；默认不加载。
 
-## 地图工具与底图渲染
+## 地图性能、选站与底图
 
-OpenFreeMap Dark / Positron 与日本直通地图使用相同的 MapLibre GL 4.7.1 和 Leaflet bridge，版本固定。bridge 仅将原 UMD 包装改为 ESM；许可在 `public/MAPLIBRE-LEAFLET-LICENSE.txt`。不再在初始化失败时静默改成 OSM，面板中显示加载状态、网络错误、WebGL 不可用提示与重试入口。
-
-地图右下角统一工具栏包含图层、全国视图、站名开关和缩放。图层面板提供三种底图和全局细／粗线宽，支持 Escape 关闭、点击外部关闭与键盘焦点返回。底图、线宽、站名显示偏好保存在本机浏览器。
+- 默认无路线、无常驻站名；站名只在悬停时显示。站点按所选日期的车次数排序，蓝色大圆点代表高频站、青色代表中频站、灰色小圆点代表低频站。最高频 30 站从 zoom 3 开始显示，随后在 zoom 5/6/7/8 逐级增加；默认模式按视野裁剪和 26px 网格避让。低频站也可通过搜索选择。
+- 首次选站显示该始发站的全部同车可达站及铁路路径；再次选站显示两站之间的路线，左侧展开车次列表。已选站点在地图上显示可取消的名称盒。取消目的地保留始发站；取消始发站会将现有目的地提升为新始发站，重新计算该方向的可达车次。
+- 默认只加载 4.5MB 时刻表，14MB 线路几何首次选站时才下载。拖动地图只更新可见站点，不遍历全国线路；复用可见 Canvas 圆点，路线只在选站、日期、线宽或主题变化时重画。已选可达站不受低 zoom 隐藏规则影响，保证能选择低频目的地。
+- OpenFreeMap 样式使用完整 URL：`https://tiles.openfreemap.org/styles/positron/style.json` 与 `https://tiles.openfreemap.org/styles/dark/style.json`。MapLibre 4.7.1 按需加载，CSP Worker 作为同源文件输出，使用单 Worker 和较小瓦片缓存。Leaflet bridge 的许可见 `public/MAPLIBRE-LEAFLET-LICENSE.txt`。
+- 矢量样式、Worker、WebGL 或网络失败时，10 秒内回落到已可用的 OSM 栅格瓦片，深浅备用样式只滤镜处理底图所在 Pane，不影响车站与路线颜色。面板明确显示实际使用的底图和重试入口。备用样式不是 OpenFreeMap 本身。
+- 地图右下角工具栏包含图层、全国视图和缩放；图层面板支持细／粗线宽、Escape 关闭、点击外部关闭与焦点返回。偏好保存在浏览器。

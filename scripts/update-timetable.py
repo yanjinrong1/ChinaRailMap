@@ -23,7 +23,9 @@ services=defaultdict(list)
 for r in rows('calendar_dates.txt'):
  if r['exception_type']=='1':services[r['service_id']].append(date(r['date']))
 stations={r['stop_id']:{'id':r['stop_id'],'name':r['stop_name'],'lat':float(r['stop_lat']),'lng':float(r['stop_lon']),'level':2} for r in rows('stops.txt')}
-trips={r['trip_id']:{'id':r['trip_id'],'code':r['trip_short_name'],'serviceId':r['service_id'],'shape':r['shape_id'],'stops':[],'times':[]}for r in rows('trips.txt')}
+route_agencies={r['route_id']:r['agency_id'] for r in rows('routes.txt')}
+operator_config=json.loads((ROOT/'config/rail-operators.json').read_text())
+trips={r['trip_id']:{'id':r['trip_id'],'code':r['trip_short_name'],'serviceId':r['service_id'],'operator':route_agencies.get(r['route_id'],'unknown'),'shape':r['shape_id'],'stops':[],'times':[]}for r in rows('trips.txt')}
 times=defaultdict(list)
 for r in rows('stop_times.txt'):times[r['trip_id']].append((int(r['stop_sequence']),r['stop_id'],r['arrival_time'],r['departure_time']))
 skipped=[];frequency=Counter()
@@ -32,6 +34,12 @@ for tid,t in list(trips.items()):
  if len(ids)<2 or any(id not in stations for id in ids) or len(set(ids))!=len(ids):
   skipped.append(tid);del trips[tid];continue
  t['stops']=ids;t['times']=[[r[2],r[3]]for r in stops];frequency.update(ids)
+ prefix=t['code'][:1].upper()
+ t['category']='high-speed-emu' if prefix=='G' else 'emu' if prefix=='D' else 'intercity-emu' if prefix=='C' else 'suburban' if prefix=='S' else 'conventional' if prefix in 'ZKTVNYL' or prefix.isdigit() else 'unknown'
+ rule=operator_config['guangdongIntercity'];lo_lat,lo_lng,hi_lat,hi_lng=rule['bounds']
+ if prefix in rule['prefixes'] and any(stations[id]['name'] in rule['distinctiveStations'] for id in ids) and all(lo_lat<=stations[id]['lat']<=hi_lat and lo_lng<=stations[id]['lng']<=hi_lng for id in ids):
+  t['operator']=rule['operator'];t['operatorEvidence']='Guangdong corridor + distinctive stations + train prefix'
+ else:t['operatorEvidence']='GTFS agency_id'
 for id in list(stations):
  if not frequency[id]:del stations[id]
 for i,(id,_) in enumerate(frequency.most_common()):
@@ -40,7 +48,8 @@ for i,(id,_) in enumerate(frequency.most_common()):
 byshape=defaultdict(list)
 for t in trips.values():
  if t['shape']:byshape[t['shape']].append(t)
-segments={};shape_count=0
+segments={};train_routes={};shape_count=0;unmatched=0
+for t in trips.values():train_routes[t['id']]={'code':t['code'],'operator':t['operator'],'category':t['category'],'stops':t['stops'],'legs':{},'shapeId':t['shape']}
 # Iterative Douglas-Peucker, preserving rail endpoints.
 def simplify(ps,tol=.0007):
  if len(ps)<3:return ps
@@ -54,8 +63,8 @@ def simplify(ps,tol=.0007):
   if at is not None:keep.add(at);stack.extend([(a,at),(at,b)])
  return [[round(ps[i][0],5),round(ps[i][1],5)]for i in sorted(keep)]
 def consume(sid,points):
- global shape_count
- if sid not in byshape:return
+ global shape_count,unmatched
+ if sid not in byshape or not points:return
  shape_count+=1
  for train in byshape[sid]:
   positions={}
@@ -63,15 +72,25 @@ def consume(sid,points):
    s=stations[id];factor=math.cos(s['lat']*math.pi/180)
    j=min(range(len(points)),key=lambda j:(points[j][0]-s['lat'])**2+((points[j][1]-s['lng'])*factor)**2)
    km=math.hypot(points[j][0]-s['lat'],(points[j][1]-s['lng'])*factor)*111
-   if km<=5:positions[id]=j
+   # Avoid attaching a nearby parallel railway/station several kilometres away.
+   if km<=.75:positions[id]=j
+  direction=None
   for a,b in zip(train['stops'],train['stops'][1:]):
-   ids=sorted([a,b]);key='|'.join(ids)
-   if key in segments or a not in positions or b not in positions:continue
-   ia,ib=[positions[x]for x in ids]
-   if ia==ib:continue
+   if a not in positions or b not in positions:unmatched+=1;continue
+   ia,ib=positions[a],positions[b]
+   if ia==ib:unmatched+=1;continue
+   sign=1 if ib>ia else -1
+   if direction is None:direction=sign
+   if sign!=direction:unmatched+=1;continue
+   ids=sorted([a,b]);key='|'.join(ids);ia,ib=[positions[id] for id in ids]
    coords=points[min(ia,ib):max(ia,ib)+1]
    if ia>ib:coords=list(reversed(coords))
-   segments[key]={'status':'routed','coordinates':simplify(coords),'source':'GTFS shape'}
+   coordinates=simplify(coords)
+   # Deduplicate only identical geometry in the same operator/category, never station pairs.
+   identity=json.dumps([train['operator'],train['category'],coordinates],separators=(',',':'))
+   gid=hashlib.sha256(identity.encode()).hexdigest()[:24]
+   segments.setdefault(gid,{'status':'routed','coordinates':coordinates,'source':'train-specific GTFS shape','operator':train['operator'],'category':train['category'],'stations':ids})
+   train_routes[train['id']]['legs'][key]=gid
 current=None;points=[]
 for r in rows('shapes.txt'):
  sid=r['shape_id']
@@ -80,10 +99,10 @@ for r in rows('shapes.txt'):
  if sid in byshape:points.append((float(r['shape_pt_lat']),float(r['shape_pt_lon'])))
 if current is not None:consume(current,points)
 for t in trips.values():t.pop('shape',None)
-meta={'name':'中国铁路真实时刻表快照','kind':'snapshot','sourceName':'wensimehrp / chinese-railway-gtfs','sourceUrl':BASE,'releaseUrl':BASE+'/releases/tag/'+tag,'release':tag,'updatedAt':date(feed['feed_version']),'validFrom':date(feed['feed_start_date']),'validTo':date(feed['feed_end_date']),'timezone':'Asia/Shanghai','license':'CC BY 4.0','upstream':'RailGo-Parser','sha256':hashlib.sha256(path.read_bytes()).hexdigest(),'excludedTrips':len(skipped),'geometry':'上游 GTFS 线路走向，仅供经由参考'}
+meta={'name':'中国铁路真实时刻表快照','kind':'snapshot','sourceName':'wensimehrp / chinese-railway-gtfs','sourceUrl':BASE,'releaseUrl':BASE+'/releases/tag/'+tag,'release':tag,'updatedAt':date(feed['feed_version']),'validFrom':date(feed['feed_start_date']),'validTo':date(feed['feed_end_date']),'timezone':'Asia/Shanghai','license':'CC BY 4.0','upstream':'RailGo-Parser','sha256':hashlib.sha256(path.read_bytes()).hexdigest(),'excludedTrips':len(skipped),'geometry':'逐车次来源线路，按运营方及车种隔离；无路径时不作无约束寻路' }
 payload={'metadata':meta,'stations':list(stations.values()),'trains':list(trips.values()),'services':dict(services)}
-geometry={'metadata':{'source':BASE,'license':'CC BY 4.0','snapshot':meta['updatedAt']},'stationCoordinates':{id:[s['lat'],s['lng']]for id,s in stations.items()},'segments':segments}
+geometry={'metadata':{'source':BASE,'license':'CC BY 4.0','snapshot':meta['updatedAt']},'stationCoordinates':{id:[s['lat'],s['lng']]for id,s in stations.items()},'segments':segments,'version':2,'trainRoutes':train_routes}
 for name,obj in [('data.json',payload),('routes.json',geometry)]:
  target=ROOT/'public/timetable'/name;target.parent.mkdir(parents=True,exist_ok=True)
  tmp=target.with_suffix('.tmp');tmp.write_text(json.dumps(obj,ensure_ascii=False,separators=(',',':')));os.replace(tmp,target)
-print(json.dumps({'stations':len(stations),'trips':len(trips),'services':len(services),'routedPairs':len(segments),'shapes':shape_count,'metadata':meta},ensure_ascii=False,indent=2))
+print(json.dumps({'stations':len(stations),'trips':len(trips),'services':len(services),'geometryVariants':len(segments),'trainSpecificLegs':sum(len(r['legs'])for r in train_routes.values()),'unmatchedLegs':unmatched,'shapes':shape_count,'metadata':meta},ensure_ascii=False,indent=2))

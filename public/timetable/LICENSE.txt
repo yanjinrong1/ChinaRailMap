@@ -5,13 +5,9 @@ https://creativecommons.org/licenses/by/4.0/
 https://github.com/wensimehrp/chinese-railway-gtfs
 Original release: gtfs-20261124-112841, published 2026-11-24.
 Timetable upstream: RailGo-Parser. Station coordinates: OpenStreetMap.
-Changes: GTFS to application JSON; simplified route shapes; station-pair clipping;
-ranked station display levels; calendar dates preserved; additional OSM rail paths.
-
-Additional shortest railway paths in routes.json where source = "OSM shortest rail path":
-© OpenStreetMap contributors, ODbL 1.0.
-Source: @railroute-ts/china 2026.9.1, network snapshot 2026-09-02.
-https://www.openstreetmap.org/copyright
-https://opendatacommons.org/licenses/odbl/1-0/
-The complete derived routing data is supplied as routes.json with per-segment provenance.
-Railway geometry is a reference and is not a verified train itinerary.
+Changes: GTFS to application JSON; simplified train-specific route shapes;
+operator/category isolation; per-train stop matching (750 m limit);
+calendar dates preserved; Guangdong Intercity operator corrections.
+No unclassified OSM shortest-path additions in v2 routes.json.
+The complete derived geometry database is supplied as routes.json.
+Railway geometry is a source reference and is not a fully verified train itinerary.

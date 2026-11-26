@@ -32,3 +32,7 @@ export function visibleStations(stations,{zoom,contains,origin,destination,reach
  }
  return visible;
 }
+
+export function shouldFitSelection(action,before,after){
+ return action.type==='pick'&&!!after.origin&&(before.origin!==after.origin||before.destination!==after.destination);
+}

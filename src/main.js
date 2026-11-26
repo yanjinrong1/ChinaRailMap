@@ -52,7 +52,7 @@ async function setBasemap(style){
  try{
   vectorPromise??=import('./vector-basemap.js');const {createVectorLayer}=await vectorPromise;
   if(generation!==basemapGeneration)return;
-  const layer=createVectorLayer(`https://tiles.openfreemap.org/styles/${style}/style.json`,'<a href="https://openfreemap.org/">OpenFreeMap</a> · © OpenMapTiles · '+attribution);
+  const layer=createVectorLayer(`https://tiles.openfreemap.org/styles/${style}`,'<a href="https://openfreemap.org/">OpenFreeMap</a> · © OpenMapTiles · '+attribution);
   vectorLayer=layer;layer.addTo(map);const gl=layer.getMaplibreMap();
   gl.on('load',()=>{
    if(generation!==basemapGeneration||vectorLayer!==layer)return;clearTimeout(basemapTimer);

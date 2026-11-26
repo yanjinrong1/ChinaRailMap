@@ -61,7 +61,7 @@ async function setBasemap(style){
    status.textContent=`${name} · 地图数据来自 OpenStreetMap`;retry.hidden=true;
   });
   gl.on('error',event=>{lastError=event.error?.message||'地图资源请求失败';console.warn('OpenFreeMap:',lastError);if(!vectorLoaded)status.textContent=`正在加载 ${name} · ${lastError}`;});basemapTimer=setTimeout(()=>fallback(lastError||'加载超过 20 秒'),20000);
- }catch(error){fallback(error.message);}
+ }catch(error){console.warn('OpenFreeMap initialization:',error.message);fallback(error.message);}
 }
 let railGeometry={segments:{}},geometryReady=false;
 async function loadSnapshot(){

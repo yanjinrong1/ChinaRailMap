@@ -1,0 +1,7 @@
+Rail geometry: © OpenStreetMap contributors, Open Database License (ODbL) 1.0.
+https://www.openstreetmap.org/copyright
+https://opendatacommons.org/licenses/odbl/1-0/
+Source: @railroute-ts/china 2026.9.1, network snapshot 2026-09-02.
+https://github.com/mayurrawte/railroutes/tree/main/packages/china
+Derived database: rail-routes.json, station-pair shortest paths computed by railroute-ts 0.2.1.
+Rail geometry is a network routing reference, not a verified service itinerary.

@@ -1,3 +1,4 @@
+import {runsOnDate} from './service-calendar.js';
 export function validateData(data) {
   if (!data || !Array.isArray(data.stations) || !Array.isArray(data.trains)) throw new Error('需要 stations 和 trains 数组，请参考示例文件。');
   if (!data.stations.length || data.stations.length > 20000 || data.trains.length > 100000) throw new Error('站点数量应为 1–20000，车次数量最多 100000。');
@@ -13,16 +14,16 @@ export function validateData(data) {
   }
   return data;
 }
-export function reachable(data, origin) {
+export function reachable(data, origin, date) {
   const destinations = new Map();
   const services = [];
   for (const train of data.trains) {
     const index = train.stops.indexOf(origin);
-    if (index < 0 || index === train.stops.length - 1) continue;
-    services.push({...train, path:train.stops.slice(index)});
+    if (index < 0 || index === train.stops.length - 1 || !runsOnDate(data,train,index,date)) continue;
+    services.push({...train, originIndex:index, path:train.stops.slice(index)});
     train.stops.slice(index+1).forEach((id,offset)=>{
       if (!destinations.has(id)) destinations.set(id,[]);
-      destinations.get(id).push({...train,path:train.stops.slice(index,index+offset+2)});
+      destinations.get(id).push({...train,originIndex:index,path:train.stops.slice(index,index+offset+2)});
     });
   }
   return {destinations,services};

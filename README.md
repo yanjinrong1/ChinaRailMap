@@ -1,60 +1,45 @@
 # 行轨 · ChinaRailMap
 
-中国铁路可达地图交互原型。使用 Vite、原生 JavaScript 和 Leaflet，采用 OpenFreeMap / OSM 底图，并包含预计算的 OSM 铁路寻路几何。
+中国铁路同车可达地图，Vite / Leaflet / MapLibre。内置真实时刻表快照，支持 qETRC 文件导入，以及浅色、深色、OSM 标准底图。
 
-## 开发
+## 数据来源与范围
 
-需要 Node.js 22 或更高版本。
+默认读取 `public/timetable/data.json`，来源 [wensimehrp/chinese-railway-gtfs](https://github.com/wensimehrp/chinese-railway-gtfs)，最新接入发布版本 `gtfs-20261124-112841`。发布于 2026-11-24，3250 个站点、11569 趟车次、463 组开行日记录；记录范围 2026-11-09 至 2027-02-13。运行数据由 RailGo-Parser 获取，坐标采用 OSM / WGS84。数据以 CC BY 4.0 发布，作者 wensimehrp (Jeremy Gao)。原 GTFS SHA-256、版本、来源、日期范围保存在 metadata。
+
+这是一份第三方真实时刻表快照，不是 12306 实时余票接口；未查询临时停运或实时变更，不能把记录范围理解为每天都完整覆盖全国列车。按所选**乘车站当地日期**和服务日历计算，同一趟列车跨午夜后会换算始发日期。时刻详情显示到达、发车及相对乘车日的跨日信息。不推导换乘或反向列车。
+
+`public/timetable/routes.json` 优先采用上游 GTFS 线路走向，按站点裁切、简化；缺失区间由 `@railroute-ts/china` OSM 铁路网络计算最短路径，端点吸附限制 5km。210 个无法匹配的区间明确缺失，不画直线替代。几何并非经官方核验的实际车次经由。来源在每个区间的 `source` 字段中，许可证见 `public/timetable/LICENSE.txt`。
+
+## 开发与验证
 
 ```sh
 npm ci --cache /workspace/.npm
-npm run dev -- --port 5173
-```
-
-```sh
+npm run dev
 npm test
 npm run build
 ```
 
-## 已实现
+## 更新真实时刻表
 
-- 枢纽站始终显示，区域站在缩放级别 5 起显示，小站在级别 7 起显示。搜索可选择任意已收录站点。
-- 单出发站锁定，取消后才可更换。
-- 根据车次停站顺序计算同车直达，展示后续可达站点与沿 OSM 铁路网络计算的站间路径。
-- 目的地筛选、单条行程高亮、全国视图与移动端布局。
-- 本地 JSON 导入，验证经纬度、ID、停站引用。可在“关于数据”下载完整示例。
-
-## 数据范围
-
-内置 67 个近似坐标的示例站点、40 趟人工构造的演示车次。DEMO 车次及其停站组合不能用于出行。尚未收录全国站点、全国真实时刻表、日期有效性或经车次核验的运行经由。可达计算不包含换乘，不推导实际乘车时间。
-
-qETRC 的 README 与列车序列化代码已做调研。它是运行图编辑程序，列车文件包含 checi 和 timetable，不能直接作为全国实时查询服务。原生 qETRC 导入、全国数据采集与定期刷新尚未实现。
-
-导入格式如下，stops 按列车运行方向排列，level 的 0、1、2 分别表示枢纽、区域站和小站。导入仅保存在当前页面内存，刷新恢复演示数据。
-
-```json
-{
-  "metadata": { "name": "数据集名称", "updatedAt": "2026-11-26" },
-  "stations": [
-    { "id": "zhuhai", "name": "珠海", "lat": 22.239, "lng": 113.519, "level": 1, "province": "广东" },
-    { "id": "guangzhounan", "name": "广州南", "lat": 22.989, "lng": 113.269, "level": 0, "province": "广东" }
-  ],
-  "trains": [ { "id": "EXAMPLE", "line": "示例线路", "stops": ["zhuhai", "guangzhounan"] } ]
-}
+```sh
+npm run data:update
+npm test
+npm run build
 ```
 
-## 地理底图
+更新脚本解析 GitHub 最新 Release，下载 `output_gtfs.zip`，保留服务日历、站点和到发时间，将上游几何转换为紧凑的站间路径，再为缺失区间补充 OSM 寻路。需要 Python 3 和 Node.js。更新时间取自源数据，不冒充当天数据。更新会更改跟踪文件，需要正常同步源码并重新发布到 Sites；**没有设置后台自动更新任务**。
 
-`public/world.json` 来自 Natural Earth 1:110m 地理数据（公共领域），用于离线地理概览。其边界概化精度有限，正式发布需要核对地图规范。
+也可使用已下载的 GTFS，锁定版本以复现：
 
-来源 https://github.com/nvkelso/natural-earth-vector/blob/master/geojson/ne_110m_admin_0_countries.geojson
+```sh
+python scripts/update-timetable.py /absolute/path/output_gtfs.zip gtfs-20261124-112841
+node scripts/fill-timetable-routes.mjs
+```
 
-使用条款 https://www.naturalearthdata.com/about/terms-of-use/
+## 导入 qETRC
 
-## 底图与铁路寻路
+网站“导入时刻表”接受 `.pyetgr`、`.pyetdb` 和 JSON。读取 `trains[].checi` 与 `trains[].timetable` 中的 `zhanming`、`ddsj`、`cfsj`，按名称匹配内置站点坐标，并处理午夜时刻回绕。未知站点会列出错误并拒绝整次导入，避免偷偷缩短停站序列。qETRC 不含可验证开行日历时，页面明确标记“开行日期未核验”，不冒充当前真实数据。导入仅保存在页面内存，可恢复内置快照。
 
-- 提供与日本铁路直通地图相同的 OpenFreeMap Positron（浅色）、Dark（深色）和原 OSM 底图，记住上次选择。底图需要网络。
-- `public/rail-routes.json` 是基于 `@railroute-ts/china` 2026.9.1 的离线预计算路径，覆盖当前全部 72 个站间区间。数据快照为 2026-09-02，© OpenStreetMap contributors，ODbL 1.0；见 `public/RAIL-DATA-LICENSE.txt`。
-- `node scripts/build-rail-routes.mjs` 可重建路径。该步骤沿铁路网络计算最短路，不使用公路路由，不代表演示车次的实际运行经由。端点吸附限制为 5 公里，地图站点显示在对应铁路节点上。珠海、中山示例坐标已按数据源更新。
-- 导入的站点只有在 ID、坐标及站间区间与内置几何一致时才复用路径。缺失路径不画直线替代，选站后显示缺失区间数量；当前未支持为任意导入站点在线寻路。
-- 旧 `public/world.json` 地理概览数据保留，当前不再作为底图。
+统一 JSON 支持 `stations`、`trains` 数组；站点含 `id,name,lat,lng,level`，车次含 `id,stops`，可选 `code,times`。示例下载仍为明确标注的 DEMO 格式示例，默认地图不再使用它。
+
+旧演示路径 `public/rail-routes.json` 与 Natural Earth `public/world.json` 仅作为原型资料保留；默认不加载。

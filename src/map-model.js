@@ -20,11 +20,11 @@ export function selectionTransition(state,action,reachableIds=new Set()){
 }
 // No origin means no route computation or drawing.
 export function selectedPaths(result,destination){return result?(destination?result.destinations.get(destination)||[]:result.services):[];}
-export function visibleStations(stations,{zoom,contains,origin,destination,reachableIds,project,cellSize=26}){
+export function visibleStations(stations,{zoom,contains,origin,destination,reachableIds,project,viaIds=new Set(),cellSize=26}){
  const occupied=new Set(),visible=[];
  for(const s of stations){
-  const forced=s.id===origin||s.id===destination;
-  if(!contains(s)&&!forced)continue;
+  const endpoint=s.id===origin||s.id===destination,via=viaIds.has(s.id),forced=endpoint||via;
+  if(!contains(s)&&!endpoint)continue;
   if(origin){if(!forced&&(destination||!reachableIds.has(s.id)))continue;}
   else if(zoom<s.minZoom)continue;
   if(!origin&&!forced){const p=project(s),key=`${Math.floor(p.x/cellSize)},${Math.floor(p.y/cellSize)}`;if(occupied.has(key))continue;occupied.add(key);}

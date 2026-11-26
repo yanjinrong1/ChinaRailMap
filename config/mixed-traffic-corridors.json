@@ -1,0 +1,162 @@
+[
+  {
+    "id": "shitai",
+    "lines": [
+      "石太客专线"
+    ],
+    "bounds": [
+      37.5,
+      112.4,
+      38.4,
+      114.8
+    ],
+    "maxspeed": 250,
+    "evidence": [
+      "https://ggzyfw.beijing.gov.cn/jyxxggjtbyqs/20240624/4571872.html"
+    ],
+    "reason": "Documented mixed passenger operation; exact named corridor only, not a general high-speed exemption."
+  },
+  {
+    "id": "hengliu",
+    "lines": [
+      "衡柳线"
+    ],
+    "bounds": [
+      24,
+      109,
+      27,
+      113
+    ],
+    "maxspeed": 250,
+    "evidence": [
+      "https://www.chinanews.com/sh/2013/12-03/5573808.shtml"
+    ],
+    "reason": "Documented mixed passenger operation; exact named corridor only, not a general high-speed exemption."
+  },
+  {
+    "id": "qinshen",
+    "lines": [
+      "京哈线"
+    ],
+    "bounds": [
+      39.7,
+      119.3,
+      42.1,
+      123.6
+    ],
+    "maxspeed": 250,
+    "evidence": [
+      "https://fgw.ln.gov.cn/fgw/xxgk/jyta/srddbjy/sssjrdechy2024n/2024082811183712102/"
+    ],
+    "reason": "Documented mixed passenger operation; exact named corridor only, not a general high-speed exemption."
+  },
+  {
+    "id": "lanyu",
+    "lines": [
+      "兰渝线"
+    ],
+    "bounds": [
+      29,
+      103,
+      37,
+      107
+    ],
+    "maxspeed": 250,
+    "evidence": [
+      "https://fzggw.cq.gov.cn/zwxx/bmdt/202002/t20200212_5182684_wap.html"
+    ],
+    "reason": "Documented mixed passenger operation; exact named corridor only, not a general high-speed exemption."
+  },
+  {
+    "id": "huaiheng",
+    "lines": [
+      "怀衡线"
+    ],
+    "bounds": [
+      26,
+      109,
+      28.5,
+      113
+    ],
+    "maxspeed": 250,
+    "evidence": [
+      "https://www.ndrc.gov.cn/fzggw/jgsj/zcs/sjdt/201401/t20140102_1145414.html"
+    ],
+    "reason": "Documented mixed passenger operation; exact named corridor only, not a general high-speed exemption."
+  },
+  {
+    "id": "changfu",
+    "lines": [
+      "昌福线"
+    ],
+    "bounds": [
+      25,
+      115,
+      29,
+      120
+    ],
+    "maxspeed": 250,
+    "evidence": [
+      "https://www.nra.gov.cn/xxgk/gkml/ztjg/jybl/zxfk/202011/P020230414355543925786.pdf"
+    ],
+    "reason": "Documented mixed passenger operation; exact named corridor only, not a general high-speed exemption."
+  },
+  {
+    "id": "nanlong",
+    "lines": [
+      "南龙线"
+    ],
+    "bounds": [
+      24.5,
+      116,
+      28,
+      119
+    ],
+    "maxspeed": 250,
+    "evidence": [
+      "https://fgw.fujian.gov.cn/ztzl/tljsbgs/fjstlfzqk/fjtljscg/201812/t20181229_4728818.htm"
+    ],
+    "reason": "Documented mixed passenger operation; exact named corridor only, not a general high-speed exemption."
+  },
+  {
+    "id": "qujiu",
+    "lines": [
+      "衢九线"
+    ],
+    "bounds": [
+      28,
+      115,
+      30.5,
+      120
+    ],
+    "maxspeed": 250,
+    "evidence": [
+      "https://www.mee.gov.cn/ywgz/hjyxpj/jsxmhjyxpj/xmslqk/201605/W020160522142795690345.pdf"
+    ],
+    "reason": "Documented mixed passenger operation; exact named corridor only, not a general high-speed exemption."
+  },
+  {
+    "id": "taiyuan-shared-approach",
+    "lines": [
+      "大西高速线",
+      "郑太客专线",
+      "8道",
+      "9道",
+      "10道",
+      ""
+    ],
+    "bounds": [
+      37.76,
+      112.57,
+      37.87,
+      112.65
+    ],
+    "maxspeed": 160,
+    "requiresTimetableStation": "太原",
+    "reason": "Bounded low-speed shared station approaches, not permission for the adjoining high-speed main lines. OSM topology-based inference; station timetable evidence required.",
+    "evidence": [
+      "https://www.chinautc.com/upload/accessorychinautc/20186/201862214379664796.pdf"
+    ],
+    "uncertainty": "Shared approach track assignment inferred from OSM, not an official train working diagram."
+  }
+]

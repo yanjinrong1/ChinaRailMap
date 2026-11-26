@@ -3,11 +3,23 @@
 import argparse,collections,gzip,hashlib,json,os,sys,time
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).parent/'railway'))
+from station_locations import apply_station_locations
 from router import RailGraph,profile_for,read_index,km,simplify_coordinates,FREIGHT_TAG_PENALTY
 root=Path(__file__).resolve().parents[1]
 p=argparse.ArgumentParser();p.add_argument('--index',required=True);p.add_argument('--cache',default=str(root/'.cache/osm-attributed-graph.json.gz'));p.add_argument('--target',action='append');p.add_argument('--repair-identities',action='store_true');args=p.parse_args()
 data=json.loads((root/'public/timetable/data.json').read_text());geometry=json.loads((root/'public/timetable/routes.json').read_text());stations={s['id']:s for s in data['stations']}
 for filename in geometry.get('segmentFiles',[]):geometry['segments'].update(json.loads((root/'public/timetable'/filename).read_text()))
+corrections=apply_station_locations(stations)
+data['metadata']['stationCoordinateCorrections']=corrections
+geometry['stationCoordinates']={id:[s['lat'],s['lng']]for id,s in stations.items()}
+# A corrected station invalidates source geometry attached to its old location.
+for ref in geometry['trainRoutes'].values():
+ for pair,gid in list(ref['legs'].items()):
+  segment=geometry['segments'][gid]
+  if segment['source']=='OSM inferred':continue
+  ids=pair.split('|');points=segment['coordinates']
+  if any(km(geometry['stationCoordinates'][id],point)>.75 for id,point in zip(ids,(points[0],points[-1]))):ref['legs'].pop(pair)
+(root/'public/timetable/data.json').write_text(json.dumps(data,ensure_ascii=False,separators=(',',':')))
 graph=RailGraph.from_index(args.index,args.cache);print('Routing starts',flush=True)
 # Repair coordinate mismatches using exact-name OSM railway station anchors.
 # No coordinate is guessed or silently replaced in the source timetable.

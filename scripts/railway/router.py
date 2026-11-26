@@ -18,6 +18,18 @@ GD_OPERATORS=re.compile('广东城际|广州地铁|广东珠三角城际')
 FAST_NAMES=re.compile('高速|客运专线|客专|高铁')
 LANXIN=re.compile('兰新.*(客|第二|二线|二双)|Lanxin.*(Passenger|Second)|兰新高铁',re.I)
 OVERRIDES=json.loads((Path(__file__).resolve().parents[2]/'config/osm-routing-overrides.json').read_text())
+MIXED_CORRIDORS=json.loads((Path(__file__).resolve().parents[2]/'config/mixed-traffic-corridors.json').read_text())
+def mixed_corridor(tags,profile,position):
+ if profile['operator']!='CR' or profile['category']!='conventional':return None
+ for rule in MIXED_CORRIDORS:
+  south,west,north,east=rule['bounds'];lat,lng=position
+  if rule.get('requiresTimetableStation') and not profile.get('taiyuanSharedApproach'):continue
+  if tags.get('name','')not in rule['lines'] or not(south<=lat<=north and west<=lng<=east):continue
+  speeds=re.findall(r'\d+',str(tags.get('maxspeed','')))
+  if speeds and max(map(int,speeds))>rule['maxspeed']:continue
+  return rule['id']
+ return None
+
 TAG_FIELDS=('railway','name','name:zh','official_name','ref','operator','owner','highspeed','maxspeed','gauge','electrified','usage','service','railway:traffic_mode','access','layer','bridge','tunnel')
 def freight_override(tags,profile,position):
  for key,rule in OVERRIDES.items():
@@ -54,7 +66,7 @@ def _base_edge_weight(tags,profile,position,length):
   if '城际' in name or '市域' in name:return None
   if fast:
    lat,lng=position
-   if not(profile.get('lanxin') and 34<lat<45 and 85<lng<105 and LANXIN.search(name)):return None
+   if not mixed_corridor(tags,profile,position) and not(profile.get('lanxin') and 34<lat<45 and 85<lng<105 and LANXIN.search(name)):return None
   return 2 if tags.get('service')=='siding' else 1 if name else 1.12
  if profile['category']=='high-speed-emu':return 2 if tags.get('service')=='siding' else 1 if fast else 1.6
  return 2 if tags.get('service')=='siding' else 1 if name else 1.08
@@ -64,7 +76,7 @@ def profile_for(train,stations):
  # Intermediate stations unique to the Lanxin passenger corridor constitute
  # timetable evidence; this is not a blanket exemption for every Z/K/T train.
  lanxin=train.get('operator')=='CR'and train.get('category')=='conventional'and bool(names&{'张掖西','高台南','酒泉南','嘉峪关南','柳园南','鄯善北','吐鲁番北'})
- profile={'operator':train.get('operator','unknown'),'category':train.get('category','unknown'),'lanxin':lanxin,'baiyunPassengerAccess':train.get('operator')=='CR'and '广州白云'in names}
+ profile={'taiyuanSharedApproach':train.get('operator')=='CR'and train.get('category')=='conventional'and '太原'in names,'operator':train.get('operator','unknown'),'category':train.get('category','unknown'),'lanxin':lanxin,'baiyunPassengerAccess':train.get('operator')=='CR'and '广州白云'in names}
  rule=OVERRIDES['guangmaoPassengerDiversion']
  if profile['operator']==rule['operator']and profile['category']==rule['category']and rule['requiresTimetableStation']in names and names.intersection(rule['requiresAnyTimetableStation']):profile['guangmaoPassengerDiversion']=True
  return profile
@@ -198,7 +210,7 @@ class RailGraph:
   tags=[self.edges[id]['tags']for id in dict.fromkeys(edge_ids)];names=list(dict.fromkeys(t.get('name')for t in tags if t.get('name')))
   freight_edges=[self.edges[id]for id in edge_ids if self.edges[id]['tags'].get('railway:traffic_mode')=='freight']
   soft_edges=[e for e in freight_edges if not freight_override(e['tags'],profile,e['coordinates'][len(e['coordinates'])//2])]
-  return {'coordinates':points,'freightTagPolicy':'soft-penalty','freightTagPenalty':FREIGHT_TAG_PENALTY,'freightTaggedWayIds':list(dict.fromkeys(e['way']for e in freight_edges)),'softFreightWayIds':list(dict.fromkeys(e['way']for e in soft_edges)),'tagOverrides':sorted({freight_override(self.edges[id]['tags'],profile,self.edges[id]['coordinates'][len(self.edges[id]['coordinates'])//2])for id in edge_ids if self.edges[id]['tags'].get('railway:traffic_mode')=='freight'}-{None}),'lengthKm':round(length,2),'wayIds':list(dict.fromkeys(self.edges[id]['way']for id in edge_ids)),'lineNames':names,'snapKm':[round(start[0],3),round(end[0],3)],'profile':profile},None
+  return {'coordinates':points,'freightTagPolicy':'soft-penalty','freightTagPenalty':FREIGHT_TAG_PENALTY,'freightTaggedWayIds':list(dict.fromkeys(e['way']for e in freight_edges)),'softFreightWayIds':list(dict.fromkeys(e['way']for e in soft_edges)),'tagOverrides':sorted({freight_override(self.edges[id]['tags'],profile,self.edges[id]['coordinates'][len(self.edges[id]['coordinates'])//2])for id in edge_ids if self.edges[id]['tags'].get('railway:traffic_mode')=='freight'}-{None}),'mixedTrafficCorridors':sorted({mixed_corridor(self.edges[id]['tags'],profile,self.edges[id]['coordinates'][len(self.edges[id]['coordinates'])//2])for id in edge_ids}-{None}),'lengthKm':round(length,2),'wayIds':list(dict.fromkeys(self.edges[id]['way']for id in edge_ids)),'lineNames':names,'snapKm':[round(start[0],3),round(end[0],3)],'profile':profile},None
 
 def simplify_coordinates(points,tolerance_km=.045):
  """Preserve endpoints while reducing map-display geometry to a 45m tolerance."""

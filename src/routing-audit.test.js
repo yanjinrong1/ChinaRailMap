@@ -32,3 +32,28 @@ test('all Baiyun to Zhaoqing missing legs use the documented northern Guangmao d
  }
  assert.ok(checked>=6);assert.equal(audit.legs.some(l=>[l.from,l.to].sort().join('|')==='GBA|ZVQ'),false);
 });
+
+test('reviewed OSM station corrections agree with the geometry coordinate registry',()=>{
+ const data=read('data'),g=readRouteData();
+ const corrections=JSON.parse(fs.readFileSync(new URL('../config/station-coordinate-overrides.json',import.meta.url)));
+ for(const correction of corrections){
+  const station=data.stations.find(s=>s.id===correction.id);assert.ok(station);
+  assert.deepEqual([station.lat,station.lng],correction.coordinates);
+  assert.deepEqual(g.stationCoordinates[station.id],correction.coordinates);
+ }
+});
+test('Taiyuan-Shijiazhuang North and Guilin North-Liuzhou have audited mixed-traffic geometry',()=>{
+ const data=read('data'),g=readRouteData();
+ for(const [pair,corridor]of [['TYV|VVP','shitai'],['GBZ|LZZ','hengliu']]){
+  let checked=0;
+  for(const train of data.trains){
+   if(train.category!=='conventional')continue;
+   const ref=g.trainRoutes[train.id];
+   if(!train.stops.some((a,i)=>i&&[a,train.stops[i-1]].sort().join('|')===pair))continue;
+   const segment=g.segments[ref.legs[pair]];assert.ok(segment,`${train.code} ${pair}`);
+   assert.ok(segment.inference.mixedTrafficCorridors.includes(corridor));
+   assert.ok(segment.inference.lengthKm<300);checked++;
+  }
+  assert.ok(checked>0,pair);
+ }
+});

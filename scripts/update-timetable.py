@@ -23,6 +23,8 @@ services=defaultdict(list)
 for r in rows('calendar_dates.txt'):
  if r['exception_type']=='1':services[r['service_id']].append(date(r['date']))
 stations={r['stop_id']:{'id':r['stop_id'],'name':r['stop_name'],'lat':float(r['stop_lat']),'lng':float(r['stop_lon']),'level':2} for r in rows('stops.txt')}
+from railway.station_locations import apply_station_locations
+coordinate_corrections=apply_station_locations(stations)
 route_agencies={r['route_id']:r['agency_id'] for r in rows('routes.txt')}
 operator_config=json.loads((ROOT/'config/rail-operators.json').read_text())
 trips={r['trip_id']:{'id':r['trip_id'],'code':r['trip_short_name'],'serviceId':r['service_id'],'operator':route_agencies.get(r['route_id'],'unknown'),'shape':r['shape_id'],'stops':[],'times':[]}for r in rows('trips.txt')}
@@ -100,6 +102,7 @@ for r in rows('shapes.txt'):
 if current is not None:consume(current,points)
 for t in trips.values():t.pop('shape',None)
 meta={'name':'中国铁路真实时刻表快照','kind':'snapshot','sourceName':'wensimehrp / chinese-railway-gtfs','sourceUrl':BASE,'releaseUrl':BASE+'/releases/tag/'+tag,'release':tag,'updatedAt':date(feed['feed_version']),'validFrom':date(feed['feed_start_date']),'validTo':date(feed['feed_end_date']),'timezone':'Asia/Shanghai','license':'CC BY 4.0','upstream':'RailGo-Parser','sha256':hashlib.sha256(path.read_bytes()).hexdigest(),'excludedTrips':len(skipped),'geometry':'逐车次来源线路，按运营方及车种隔离；无路径时不作无约束寻路' }
+meta['stationCoordinateCorrections']=coordinate_corrections
 payload={'metadata':meta,'stations':list(stations.values()),'trains':list(trips.values()),'services':dict(services)}
 geometry={'metadata':{'source':BASE,'license':'CC BY 4.0','snapshot':meta['updatedAt']},'stationCoordinates':{id:[s['lat'],s['lng']]for id,s in stations.items()},'segments':segments,'version':2,'trainRoutes':train_routes}
 for name,obj in [('data.json',payload),('routes.json',geometry)]:

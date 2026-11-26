@@ -1,0 +1,344 @@
+[
+  {
+    "id": "AGK",
+    "name": "阳谷东",
+    "originalCoordinates": [
+      36.026603,
+      115.740046
+    ],
+    "coordinates": [
+      36.1971101,
+      115.8871176
+    ],
+    "osmNodeId": 11296772784,
+    "offsetKm": 23.11,
+    "railSnapKm": 0.026,
+    "source": "OSM railway=station, exact name and unique local cluster; connected to railway",
+    "osmDate": "2026-11-24",
+    "url": "https://www.openstreetmap.org/node/11296772784"
+  },
+  {
+    "id": "AXB",
+    "name": "伊春西",
+    "originalCoordinates": [
+      46.971808,
+      128.046669
+    ],
+    "coordinates": [
+      47.7205625,
+      128.7349333
+    ],
+    "osmNodeId": 11277905801,
+    "offsetKm": 98.08,
+    "railSnapKm": 0.048,
+    "source": "OSM railway=station, exact name and unique local cluster; connected to railway",
+    "osmDate": "2026-11-24",
+    "url": "https://www.openstreetmap.org/node/11277905801"
+  },
+  {
+    "id": "CCK",
+    "name": "曹县西",
+    "originalCoordinates": [
+      34.815322,
+      115.604683
+    ],
+    "coordinates": [
+      34.847835,
+      115.4995082
+    ],
+    "osmNodeId": 11296772774,
+    "offsetKm": 10.26,
+    "railSnapKm": 0.046,
+    "source": "OSM railway=station, exact name and unique local cluster; connected to railway",
+    "osmDate": "2026-11-24",
+    "url": "https://www.openstreetmap.org/node/11296772774"
+  },
+  {
+    "id": "CEE",
+    "name": "成都龙泉驿",
+    "originalCoordinates": [
+      30.687915,
+      103.977504
+    ],
+    "coordinates": [
+      30.5974567,
+      104.1914934
+    ],
+    "osmNodeId": 14114209531,
+    "offsetKm": 22.81,
+    "railSnapKm": 0.004,
+    "source": "OSM railway=station, exact name and unique local cluster; connected to railway",
+    "osmDate": "2026-11-24",
+    "url": "https://www.openstreetmap.org/node/14114209531"
+  },
+  {
+    "id": "HOI",
+    "name": "衡水南",
+    "originalCoordinates": [
+      37.306011,
+      115.968895
+    ],
+    "coordinates": [
+      37.6977281,
+      115.6349636
+    ],
+    "osmNodeId": 11296772796,
+    "offsetKm": 52.58,
+    "railSnapKm": 0.074,
+    "source": "OSM railway=station, exact name and unique local cluster; connected to railway",
+    "osmDate": "2026-11-24",
+    "url": "https://www.openstreetmap.org/node/11296772796"
+  },
+  {
+    "id": "KAW",
+    "name": "开江南",
+    "originalCoordinates": [
+      31.063772,
+      107.825797
+    ],
+    "coordinates": [
+      30.9162375,
+      107.7965626
+    ],
+    "osmNodeId": 1763859669,
+    "offsetKm": 16.64,
+    "railSnapKm": 0.022,
+    "source": "OSM railway=station, exact name and unique local cluster; connected to railway",
+    "osmDate": "2026-11-24",
+    "url": "https://www.openstreetmap.org/node/1763859669"
+  },
+  {
+    "id": "KYB",
+    "name": "呼兰北",
+    "originalCoordinates": [
+      45.943704,
+      126.844609
+    ],
+    "coordinates": [
+      46.007694,
+      126.5932089
+    ],
+    "osmNodeId": 12750056578,
+    "offsetKm": 20.69,
+    "railSnapKm": 0.005,
+    "source": "OSM railway=station, exact name and unique local cluster; connected to railway",
+    "osmDate": "2026-11-24",
+    "url": "https://www.openstreetmap.org/node/12750056578"
+  },
+  {
+    "id": "NWH",
+    "name": "南通东",
+    "originalCoordinates": [
+      32.156868,
+      120.890091
+    ],
+    "coordinates": [
+      32.0003294,
+      120.9497853
+    ],
+    "osmNodeId": 5504439167,
+    "offsetKm": 18.29,
+    "railSnapKm": 0.134,
+    "source": "OSM railway=station, exact name and unique local cluster; connected to railway",
+    "osmDate": "2026-11-24",
+    "url": "https://www.openstreetmap.org/node/5504439167"
+  },
+  {
+    "id": "QMB",
+    "name": "庆安南",
+    "originalCoordinates": [
+      46.549587,
+      127.555221
+    ],
+    "coordinates": [
+      46.8534845,
+      127.501608
+    ],
+    "osmNodeId": 12750175449,
+    "offsetKm": 34.04,
+    "railSnapKm": 0.065,
+    "source": "OSM railway=station, exact name and unique local cluster; connected to railway",
+    "osmDate": "2026-11-24",
+    "url": "https://www.openstreetmap.org/node/12750175449"
+  },
+  {
+    "id": "QQI",
+    "name": "清河西",
+    "originalCoordinates": [
+      37.087316,
+      115.945739
+    ],
+    "coordinates": [
+      37.0725218,
+      115.6051457
+    ],
+    "osmNodeId": 11296772790,
+    "offsetKm": 30.26,
+    "railSnapKm": 0.038,
+    "source": "OSM railway=station, exact name and unique local cluster; connected to railway",
+    "osmDate": "2026-11-24",
+    "url": "https://www.openstreetmap.org/node/11296772790"
+  },
+  {
+    "id": "RQI",
+    "name": "任丘西",
+    "originalCoordinates": [
+      38.472388,
+      116.092395
+    ],
+    "coordinates": [
+      38.7029368,
+      116.0212588
+    ],
+    "osmNodeId": 11296772806,
+    "offsetKm": 26.37,
+    "railSnapKm": 0.007,
+    "source": "OSM railway=station, exact name and unique local cluster; connected to railway",
+    "osmDate": "2026-11-24",
+    "url": "https://www.openstreetmap.org/node/11296772806"
+  },
+  {
+    "id": "SGB",
+    "name": "绥化南",
+    "originalCoordinates": [
+      46.127366,
+      127.063772
+    ],
+    "coordinates": [
+      46.6114468,
+      126.9985839
+    ],
+    "osmNodeId": 12750145341,
+    "offsetKm": 54.06,
+    "railSnapKm": 0.009,
+    "source": "OSM railway=station, exact name and unique local cluster; connected to railway",
+    "osmDate": "2026-11-24",
+    "url": "https://www.openstreetmap.org/node/12750145341"
+  },
+  {
+    "id": "SJI",
+    "name": "肃宁河间",
+    "originalCoordinates": [
+      37.8892,
+      116.030645
+    ],
+    "coordinates": [
+      38.4144607,
+      115.9346822
+    ],
+    "osmNodeId": 11296772803,
+    "offsetKm": 59.01,
+    "railSnapKm": 0.039,
+    "source": "OSM railway=station, exact name and unique local cluster; connected to railway",
+    "osmDate": "2026-11-24",
+    "url": "https://www.openstreetmap.org/node/11296772803"
+  },
+  {
+    "id": "SME",
+    "name": "寿安",
+    "originalCoordinates": [
+      30.255337,
+      103.968762
+    ],
+    "coordinates": [
+      30.2704202,
+      103.5844542
+    ],
+    "osmNodeId": 10598598288,
+    "offsetKm": 36.95,
+    "railSnapKm": 0.002,
+    "source": "OSM railway=station, exact name and unique local cluster; connected to railway",
+    "osmDate": "2026-11-24",
+    "url": "https://www.openstreetmap.org/node/10598598288"
+  },
+  {
+    "id": "SZI",
+    "name": "深州东",
+    "originalCoordinates": [
+      38.180794,
+      116.06152
+    ],
+    "coordinates": [
+      38.0048927,
+      115.671929
+    ],
+    "osmNodeId": 11296772800,
+    "offsetKm": 39.31,
+    "railSnapKm": 0.048,
+    "source": "OSM railway=station, exact name and unique local cluster; connected to railway",
+    "osmDate": "2026-11-24",
+    "url": "https://www.openstreetmap.org/node/11296772800"
+  },
+  {
+    "id": "TWK",
+    "name": "台前东",
+    "originalCoordinates": [
+      35.81413,
+      115.818175
+    ],
+    "coordinates": [
+      36.0067065,
+      115.9239382
+    ],
+    "osmNodeId": 11296772781,
+    "offsetKm": 23.44,
+    "railSnapKm": 0.049,
+    "source": "OSM railway=station, exact name and unique local cluster; connected to railway",
+    "osmDate": "2026-11-24",
+    "url": "https://www.openstreetmap.org/node/11296772781"
+  },
+  {
+    "id": "VVK",
+    "name": "临清东",
+    "originalCoordinates": [
+      36.86862,
+      115.922582
+    ],
+    "coordinates": [
+      36.8228472,
+      115.757203
+    ],
+    "osmNodeId": 11296772787,
+    "offsetKm": 15.57,
+    "railSnapKm": 0.048,
+    "source": "OSM railway=station, exact name and unique local cluster; connected to railway",
+    "osmDate": "2026-11-24",
+    "url": "https://www.openstreetmap.org/node/11296772787"
+  },
+  {
+    "id": "XWB",
+    "name": "兴隆镇西",
+    "originalCoordinates": [
+      45.943704,
+      126.844609
+    ],
+    "coordinates": [
+      46.4068043,
+      126.9385998
+    ],
+    "osmNodeId": 12750131952,
+    "offsetKm": 52.0,
+    "railSnapKm": 0.032,
+    "source": "OSM railway=station, exact name and unique local cluster; connected to railway",
+    "osmDate": "2026-11-24",
+    "url": "https://www.openstreetmap.org/node/12750131952"
+  },
+  {
+    "id": "ZQI",
+    "name": "枣强南",
+    "originalCoordinates": [
+      36.86862,
+      115.922582
+    ],
+    "coordinates": [
+      37.3248736,
+      115.6657174
+    ],
+    "osmNodeId": 11296772793,
+    "offsetKm": 55.61,
+    "railSnapKm": 0.034,
+    "source": "OSM railway=station, exact name and unique local cluster; connected to railway",
+    "osmDate": "2026-11-24",
+    "url": "https://www.openstreetmap.org/node/11296772793"
+  }
+]

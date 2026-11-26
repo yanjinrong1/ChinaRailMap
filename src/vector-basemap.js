@@ -6,6 +6,6 @@ import maplibreGL from './vendor/maplibre-leaflet.js';
 maplibregl.setWorkerUrl(workerUrl);
 maplibregl.setWorkerCount(1);
 export function createVectorLayer(style,attribution){
- if(!maplibregl.supported())throw Error('WebGL 不可用');
+ // MapLibre 4 has no supported() export; Map construction reports WebGL errors.
  return maplibreGL({style,attribution,pane:'vectorBase',interactive:false,maxTileCacheSize:24,maxTileCacheZoomLevels:1,fadeDuration:0});
 }

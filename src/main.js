@@ -44,10 +44,11 @@ async function setBasemap(style){
  drawMap();
  if(style==='osm'){status.textContent='OSM 标准 · 地图数据来自 OpenStreetMap';return;}
  status.textContent=`正在加载 ${name}，暂用 OSM 备用样式…`;
- function fallback(){
+ let vectorLoaded=false,lastError='';
+ function fallback(reason){
   if(generation!==basemapGeneration)return;clearTimeout(basemapTimer);
   if(vectorLayer){map.removeLayer(vectorLayer);vectorLayer=null;}
-  ensureRaster();status.textContent=`${name} 暂不可用，已使用 OSM ${dark?'深色':'浅色'}备用样式。`;retry.hidden=false;
+  ensureRaster();status.textContent=`${name} 加载失败：${reason||lastError||'未知错误'}。暂用 OSM ${dark?'深色':'浅色'}备用样式。`;retry.hidden=false;
  }
  try{
   vectorPromise??=import('./vector-basemap.js');const {createVectorLayer}=await vectorPromise;
@@ -55,12 +56,12 @@ async function setBasemap(style){
   const layer=createVectorLayer(`https://tiles.openfreemap.org/styles/${style}`,'<a href="https://openfreemap.org/">OpenFreeMap</a> · © OpenMapTiles · '+attribution);
   vectorLayer=layer;layer.addTo(map);const gl=layer.getMaplibreMap();
   gl.on('load',()=>{
-   if(generation!==basemapGeneration||vectorLayer!==layer)return;clearTimeout(basemapTimer);
+   if(generation!==basemapGeneration||vectorLayer!==layer)return;vectorLoaded=true;clearTimeout(basemapTimer);
    if(basemapLayer){map.removeLayer(basemapLayer);basemapLayer=null;}
    status.textContent=`${name} · 地图数据来自 OpenStreetMap`;retry.hidden=true;
   });
-  gl.on('error',fallback);basemapTimer=setTimeout(fallback,10000);
- }catch{fallback();}
+  gl.on('error',event=>{lastError=event.error?.message||'地图资源请求失败';console.warn('OpenFreeMap:',lastError);if(!vectorLoaded)status.textContent=`正在加载 ${name} · ${lastError}`;});basemapTimer=setTimeout(()=>fallback(lastError||'加载超过 20 秒'),20000);
+ }catch(error){fallback(error.message);}
 }
 let railGeometry={segments:{}},geometryReady=false;
 async function loadSnapshot(){

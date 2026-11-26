@@ -10,7 +10,8 @@
     "test": "node --test",
     "data:update": "python scripts/update-timetable.py && node scripts/fill-timetable-routes.mjs",
     "data:route": "python scripts/build-osm-inferred-routes.py",
-    "test:routing": "python -m unittest discover -s scripts/railway -p \"test_*.py\""
+    "test:routing": "python -m unittest discover -s scripts/railway -p \"test_*.py\"",
+    "deploy:pages": "npm run build && npx --yes wrangler@4 pages deploy dist --project-name=china-interactive-railway-map --branch=main"
   },
   "dependencies": {
     "leaflet": "1.9.4",

@@ -108,3 +108,20 @@ OSM 的 `railway:traffic_mode=freight` 现在作为软约束：仍满足车种�
 中老境外缺口通过补充同日期的 [Geofabrik 老挝数据](https://download.geofabrik.de/asia/laos.html) 解决；保留独立下载 URL、SHA-256 和合并来源。使用 `scripts/extract-osm-rail-index.py` 分别提取两个国家的索引，使用 `scripts/extract-osm-rail-ferries.py` 从中国 PBF 提取已审核的铁路轮渡，然后用 `scripts/merge-rail-indexes.py --input 中国索引 --input 老挝索引 --input 轮渡索引 --output 合并索引` 合并。调整保留的轨道集合后必须使用新的图缓存或删除旧缓存。
 
 琼州海峡使用真实 OSM `railway=ferry` way 25172513；五段登船接入轨道长约 1.10km，只允许有两岸停站证据的国铁普速列车使用。轨道仅按共享 OSM 节点连接，不按位置靠近就造连接。经由记录保留轮渡及登船轨道 ID；没有将汽车渡轮当作铁路使用。几何全覆盖并不等于经由已获官方逐车次认证，所有补充经由仍明确标记为 OSM 推算。
+
+
+## Cloudflare Pages
+
+部署名称：`china-interactive-railway-map`，期望地址 `https://china-interactive-railway-map.pages.dev`。此名称必须由 Cloudflare 在创建时确认可用；配置文件不代表已经部署。
+
+推荐在 Cloudflare Pages 连接本 GitHub 仓库，生产分支 `main`，构建命令 `npm run build`，产物目录 `dist`，根目录保持仓库根目录。这样后续推送会自动构建。Pages 项目名填写 `china-interactive-railway-map`。
+
+也可在有 Cloudflare 授权的终端执行：
+
+```sh
+npx --yes wrangler@4 login
+npx --yes wrangler@4 pages project create china-interactive-railway-map --production-branch=main
+npm run deploy:pages
+```
+
+已有同名 Pages 项目时无需再次创建。CLI 上传是手动发布，不会自动建立 GitHub 集成。不要把 API token 写进配置或提交仓库。部署结果以 Cloudflare 返回的成功状态和实际域名为准；大陆地区及外部地图服务的可用性仍需实测。

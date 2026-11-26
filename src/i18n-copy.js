@@ -1,0 +1,17 @@
+export default {
+  "默认使用 wensimehrp / chinese-railway-gtfs 发布的真实时刻表快照，运行数据由 RailGo-Parser 获取，站点坐标来自 OpenStreetMap。按乘车站当地日期筛选开行车次，跨午夜时按始发日换算。这里不查询实时余票或临时停运。": "The default timetable is a published snapshot from wensimehrp / chinese-railway-gtfs, collected by RailGo-Parser, with station coordinates from OpenStreetMap. Trains are filtered by the boarding date; overnight journeys use the corresponding origin service date. This map does not check live seat availability or temporary cancellations.",
+  "可达指同一趟列车在所选站之后的停站，不计算换乘。线路优先采用每趟车自己的来源走向；缺失时使用保留线路名、高速线、运营方、轨距等属性的 OSM 路网逐站推算，并明确标注。OSM 货运标签仅增加寻路代价，不再直接禁行；工业专用线、车种与运营方等约束仍保留。仍无法通过约束检查的区间列入自动缺线清单。铁路几何不等同于经官方核实的车次经由。": "Reachability means later stops on the same train, without transfers. Routes prefer each train’s own source geometry. Missing geometry is inferred through an attributed OSM railway graph with line, speed, operator and gauge constraints, and is labeled accordingly. Freight tags add a routing cost; industrial lines and operator / train-category restrictions remain enforced. Failed sections appear in the coverage audit. Railway geometry is not an officially verified train itinerary.",
+  "支持导入 qETRC .pyetgr / .pyetdb 文件，按车站名称匹配内置坐标。导入内容的真实性和有效日期由文件提供者负责。": "Import qETRC .pyetgr / .pyetdb files by matching names to known station coordinates. The imported file determines data accuracy and service dates.",
+  "导入在浏览器本地完成，刷新后恢复内置真实时刻表快照。深浅底图来自 OpenFreeMap，无法连接时使用 OSM 栅格的备用视觉样式。铁路几何 © OpenStreetMap contributors，ODbL 1.0；OSM 路网日期与推算来源见自动审计记录；时刻表与上游线路走向快照见版本说明。": "Imports stay in your browser; reloading restores the built-in snapshot. OpenFreeMap supplies vector styles, with an OSM raster fallback when unavailable. Railway geometry © OpenStreetMap contributors, ODbL 1.0. See the routing audit for OSM dates and inference provenance, and the snapshot metadata for timetable attribution.",
+  "个站点": "stations",
+  "国铁（源数据标注）": "China Railway (source agency)",
+  "市域／城际": "Suburban / intercity",
+  "时刻表 ©": "Timetable ©",
+  "需要 stations 和 trains 数组，请参考示例文件。": "Expected stations and trains arrays. See the example file.",
+  "站点数量应为 1–20000，车次数量最多 100000。": "Use 1–20,000 stations and at most 100,000 trains.",
+  "站点须有唯一 id、名称、有效经纬度和 level（0、1、2）。": "Each station needs a unique ID, a name, valid coordinates, and level 0, 1 or 2.",
+  "车次须有唯一 id 和至少两个按运行方向排列、已定义且不重复的停站。": "Each train needs a unique ID and at least two distinct, defined stops in travel order.",
+  "请选择统一 JSON 或含 trains 的 qETRC .pyetgr / .pyetdb 文件。": "Select the unified JSON format or a qETRC .pyetgr / .pyetdb file containing trains.",
+  "qETRC 站名 zhanming 必须为字符串。": "qETRC station names (zhanming) must be strings.",
+  "qETRC 车次缺少 checi。": "qETRC train is missing its checi identifier."
+};

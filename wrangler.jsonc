@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "china-interactive-railway-map",
+  "name": "china-interactive-rail-map",
   "pages_build_output_dir": "./dist",
   "compatibility_date": "2026-11-26"
 }

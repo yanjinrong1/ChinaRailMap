@@ -112,16 +112,23 @@ OSM 的 `railway:traffic_mode=freight` 现在作为软约束：仍满足车种�
 
 ## Cloudflare Pages
 
-部署名称：`china-interactive-railway-map`，期望地址 `https://china-interactive-railway-map.pages.dev`。此名称必须由 Cloudflare 在创建时确认可用；配置文件不代表已经部署。
+部署名称：`china-interactive-rail-map`，期望地址 `https://china-interactive-rail-map.pages.dev`。此名称必须由 Cloudflare 在创建时确认可用；配置文件不代表已经部署。
 
-推荐在 Cloudflare Pages 连接本 GitHub 仓库，生产分支 `main`，构建命令 `npm run build`，产物目录 `dist`，根目录保持仓库根目录。这样后续推送会自动构建。Pages 项目名填写 `china-interactive-railway-map`。
+推荐在 Cloudflare Pages 连接本 GitHub 仓库，生产分支 `main`，构建命令 `npm run build`，产物目录 `dist`，根目录保持仓库根目录。这样后续推送会自动构建。Pages 项目名填写 `china-interactive-rail-map`。
 
 也可在有 Cloudflare 授权的终端执行：
 
 ```sh
 npx --yes wrangler@4 login
-npx --yes wrangler@4 pages project create china-interactive-railway-map --production-branch=main
+npx --yes wrangler@4 pages project create china-interactive-rail-map --production-branch=main
 npm run deploy:pages
 ```
 
 已有同名 Pages 项目时无需再次创建。CLI 上传是手动发布，不会自动建立 GitHub 集成。不要把 API token 写进配置或提交仓库。部署结果以 Cloudflare 返回的成功状态和实际域名为准；大陆地区及外部地图服务的可用性仍需实测。
+
+
+## 中英文界面
+
+标题为 China Interactive Rail Map。标题右侧 EN / CN 圆点开关可即时切换，手动选择保存在本地浏览器。首次访问优先通过同源 `/api/region` 的 Cloudflare `request.cf.country` 判断地区；CN、HK、MO、TW 默认中文，其余已识别地区默认英文。静态 Sites 无 Pages Functions 时，改用 Cloudflare trace 的地区代码；网络或地区判断失败时回退到浏览器语言。不会读取设备定位，地区接口只返回国家／地区代码，不返回或存储 IP。
+
+语言切换不改变数据、车次 ID、选择状态或地图视角。英文站名使用常见英文名或拼音，线路几何仍使用原始站点 ID。Cloudflare Pages 的地区接口位于 `functions/api/region.js`；静态资源仍由 CDN 提供。仅推送 `a1` 时，若 Pages 生产分支仍是 `main`，它只会产生预览构建，不会覆盖生产站。

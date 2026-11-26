@@ -11,15 +11,17 @@
     "data:update": "python scripts/update-timetable.py && node scripts/fill-timetable-routes.mjs",
     "data:route": "python scripts/build-osm-inferred-routes.py",
     "test:routing": "python -m unittest discover -s scripts/railway -p \"test_*.py\"",
-    "deploy:pages": "npm run build && npx --yes wrangler@4 pages deploy dist --project-name=china-interactive-railway-map --branch=main"
+    "deploy:pages": "npm run build && npx --yes wrangler@4 pages deploy dist --project-name=china-interactive-rail-map --branch=main"
   },
   "dependencies": {
     "leaflet": "1.9.4",
     "lucide": "0.468.0",
-    "maplibre-gl": "4.7.1"
+    "maplibre-gl": "4.7.1",
+    "pinyin-pro": "^3.29.5"
   },
   "devDependencies": {
     "@railroute-ts/china": "^2026.9.1",
+    "linkedom": "^0.18.15",
     "railroute-ts": "^0.2.1",
     "vite": "6.4.1"
   }

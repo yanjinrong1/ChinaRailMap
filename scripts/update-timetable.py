@@ -86,8 +86,8 @@ def consume(sid,points):
    coords=points[min(ia,ib):max(ia,ib)+1]
    if ia>ib:coords=list(reversed(coords))
    coordinates=simplify(coords)
-   # Deduplicate only identical geometry in the same operator/category, never station pairs.
-   identity=json.dumps([train['operator'],train['category'],coordinates],separators=(',',':'))
+   # Identical coordinates may belong to different station IDs; bind identity to the pair.
+   identity=json.dumps([train['operator'],train['category'],ids,coordinates],separators=(',',':'))
    gid=hashlib.sha256(identity.encode()).hexdigest()[:24]
    segments.setdefault(gid,{'status':'routed','coordinates':coordinates,'source':'train-specific GTFS shape','operator':train['operator'],'category':train['category'],'stations':ids})
    train_routes[train['id']]['legs'][key]=gid

@@ -26,12 +26,20 @@ def freight_override(tags,profile,position):
    if rule.get('operator',profile['operator'])==profile['operator']and rule.get('category',profile['category'])==profile['category']:return key
  return None
 
+FREIGHT_TAG_PENALTY=1.5
+
 def edge_weight(tags,profile,position,length):
+ weight=_base_edge_weight(tags,profile,position,length)
+ if weight is None:return None
+ # A freight label is uncertain evidence, not a passenger prohibition.
+ if tags.get('railway:traffic_mode')=='freight'and not freight_override(tags,profile,position):weight*=FREIGHT_TAG_PENALTY
+ return weight
+
+def _base_edge_weight(tags,profile,position,length):
  """None means forbidden. Unknown tags are penalized, never interpreted as proof."""
  if tags.get('railway')!='rail' or tags.get('service') in ('yard','spur') or tags.get('usage') in ('industrial','military','test'):return None
  gauge=str(tags.get('gauge',''));name=' '.join(str(tags.get(k,''))for k in ('name','name:zh','official_name'));operator=str(tags.get('operator',''))
  if gauge and '1435' not in gauge:return None
- if tags.get('railway:traffic_mode')=='freight'and not freight_override(tags,profile,position):return None
  gd=bool(GD_NAMES.search(name)or GD_OPERATORS.search(operator))
  fast=tags.get('highspeed')=='yes' or bool(FAST_NAMES.search(name))
  try:fast=fast or float(re.findall(r'\d+',str(tags.get('maxspeed','')))[0])>=250
@@ -188,7 +196,9 @@ class RailGraph:
    self.last_failure={'lengthKm':length,'straightKm':straight,'startSnap':start[0],'endSnap':end[0],'lines':list(dict.fromkeys(self.edges[id]['tags'].get('name','')for id in edge_ids))}
    return None,'excessive-detour'
   tags=[self.edges[id]['tags']for id in dict.fromkeys(edge_ids)];names=list(dict.fromkeys(t.get('name')for t in tags if t.get('name')))
-  return {'coordinates':points,'tagOverrides':sorted({freight_override(self.edges[id]['tags'],profile,self.edges[id]['coordinates'][len(self.edges[id]['coordinates'])//2])for id in edge_ids if self.edges[id]['tags'].get('railway:traffic_mode')=='freight'}-{None}),'lengthKm':round(length,2),'wayIds':list(dict.fromkeys(self.edges[id]['way']for id in edge_ids)),'lineNames':names,'snapKm':[round(start[0],3),round(end[0],3)],'profile':profile},None
+  freight_edges=[self.edges[id]for id in edge_ids if self.edges[id]['tags'].get('railway:traffic_mode')=='freight']
+  soft_edges=[e for e in freight_edges if not freight_override(e['tags'],profile,e['coordinates'][len(e['coordinates'])//2])]
+  return {'coordinates':points,'freightTagPolicy':'soft-penalty','freightTagPenalty':FREIGHT_TAG_PENALTY,'freightTaggedWayIds':list(dict.fromkeys(e['way']for e in freight_edges)),'softFreightWayIds':list(dict.fromkeys(e['way']for e in soft_edges)),'tagOverrides':sorted({freight_override(self.edges[id]['tags'],profile,self.edges[id]['coordinates'][len(self.edges[id]['coordinates'])//2])for id in edge_ids if self.edges[id]['tags'].get('railway:traffic_mode')=='freight'}-{None}),'lengthKm':round(length,2),'wayIds':list(dict.fromkeys(self.edges[id]['way']for id in edge_ids)),'lineNames':names,'snapKm':[round(start[0],3),round(end[0],3)],'profile':profile},None
 
 def simplify_coordinates(points,tolerance_km=.045):
  """Preserve endpoints while reducing map-display geometry to a 45m tolerance."""

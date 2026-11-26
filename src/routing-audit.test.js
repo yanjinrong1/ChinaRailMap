@@ -13,8 +13,8 @@ test('every timetable leg has geometry or an explicit automated audit failure',(
   for(let i=1;i<train.stops.length;i++){
    const a=train.stops[i-1],b=train.stops[i],segment=geometry.segments[ref.legs[[a,b].sort().join('|')]];
    if(!segment){unresolved++;assert.ok(missing.has(`${train.id}|${a}|${b}`),`${train.code}: omitted audit leg`);continue;}
-   assert.equal(segment.operator,train.operator);assert.equal(segment.category,train.category);
-   if(segment.source==='OSM inferred'){inferred++;assert.ok(segment.inference.wayIds.length);assert.ok(segment.dataDate);}
+   assert.equal(segment.operator,train.operator);assert.equal(segment.category,train.category);assert.deepEqual(segment.stations,[a,b].sort(),`${train.code}: station-pair geometry mismatch`);
+   if(segment.source==='OSM inferred'){inferred++;assert.ok(segment.inference.wayIds.length);assert.ok(segment.dataDate);assert.equal(segment.inference.freightTagPolicy,'soft-penalty');assert.equal(segment.inference.freightTagPenalty,1.5);assert.ok(segment.inference.softFreightWayIds.every(id=>segment.inference.wayIds.includes(id)));}
   }
  }
  assert.equal(unresolved,audit.unresolvedTrainLegs);assert.ok(inferred>30000);

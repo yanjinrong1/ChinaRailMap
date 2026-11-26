@@ -59,6 +59,7 @@ export function selectionTransition(state,action,reachableIds=new Set()){
  const {origin,destination}=state;
  switch(action.type){
   case 'pick':if(!origin)return {origin:action.id,destination:null};if(action.id!==origin&&reachableIds.has(action.id))return {origin,destination:action.id};return state;
+  case 'swap':return origin&&destination?{origin:destination,destination:origin}:state;
   case 'remove-origin':return {origin:destination||null,destination:null};
   case 'remove-destination':return {origin,destination:null};
   case 'reset':return {origin:null,destination:null};

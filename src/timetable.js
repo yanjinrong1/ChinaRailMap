@@ -33,3 +33,18 @@ export function importTimetable(input,knownStations){
  if(missing.size)throw Error(`无法定位 ${missing.size} 个车站：${[...missing].slice(0,8).join('、')}。请用含这些车站经纬度的统一 JSON 导入；未部分导入。`);
  return validateData({metadata:{name:'qETRC 导入时刻表',kind:'import',dateUnknown:true},stations:[...used.values()],trains:result});
 }
+
+// Arrival elapsed from the user's boarding stop, not the train's first stop.
+// Timetable hours are already unrolled beyond 24:00 by GTFS / the importer.
+export function elapsedAtStation(train,stationId){
+ if(!train)return null;
+ const start=train.originIndex??0,index=train.stops.indexOf(stationId);
+ if(index<start||(train.path&&!train.path.includes(stationId)))return null;
+ const departure=train.times?.[start]?.[1]||train.times?.[start]?.[0];
+ const arrival=train.times?.[index]?.[0]||train.times?.[index]?.[1];
+ const valid=t=>/^\d{1,3}:[0-5]\d(?::[0-5]\d)?$/.test(t||'');
+ if(!valid(departure)||!valid(arrival))return null;
+ const minutes=index===start?0:timeMinutes(arrival)-timeMinutes(departure);
+ if(minutes<0)return null;
+ return `已行走 ${String(Math.floor(minutes/60)).padStart(2,'0')}：${String(minutes%60).padStart(2,'0')}`;
+}

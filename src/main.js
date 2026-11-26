@@ -1,11 +1,11 @@
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import {createIcons, Upload, Info, Plus, Minus, X, Download, Layers, Maximize} from 'lucide';
-const icons={Upload,Info,Plus,Minus,X,Download,Layers,Maximize};
+import {createIcons, Upload, Info, Plus, Minus, X, Download, Layers, Maximize, ArrowLeftRight} from 'lucide';
+const icons={Upload,Info,Plus,Minus,X,Download,Layers,Maximize,ArrowLeftRight};
 import {demoData} from './data.js';
 import {mergeDisplayRoutes,routeCoverage,focusedStopIds} from './route-display.js';
 import {reachable,validateData} from './network.js';
-import {chinaToday,displayTime,importTimetable} from './timetable.js';
+import {chinaToday,displayTime,importTimetable,elapsedAtStation} from './timetable.js';
 import './style.css';
 import {stationPriorities,selectionTransition,selectedPaths,visibleStations,shouldFitSelection} from './map-model.js';
 import {routeVariantKey,routeParts,categoryLabels,operatorLabels} from './rail-geometry.js';
@@ -134,17 +134,20 @@ function drawChips(){
 function drawStations(){
  const bounds=map.getBounds().pad(.08),ids=new Set(result?.destinations.keys()||[]),viaIds=focusedStopIds(selectedPaths(result,destination),focusedTrainId);
  const stations=visibleStations(rankedStations,{zoom:map.getZoom(),contains:s=>bounds.contains([s.lat,s.lng]),origin:selected,destination,reachableIds:ids,viaIds,project:s=>map.latLngToContainerPoint([s.lat,s.lng])});
+ const focusedTrain=selectedPaths(result,destination).find(t=>t.id===focusedTrainId);
  const wanted=new Set(stations.map(s=>s.id));
  for(const[id,marker]of visibleMarkers)if(!wanted.has(id)){markers.removeLayer(marker);visibleMarkers.delete(id);}
  for(const station of stations){
   const isSelected=station.id===selected||station.id===destination;
   const style={radius:isSelected?8:viaIds.has(station.id)?5:station.radius,color:isSelected?'#fff':dark?'#d5e4ec':'#fff',weight:isSelected?2.5:1.2,fillColor:station.id===selected?'#f39a37':station.id===destination?'#b468eb':viaIds.has(station.id)?'#ffbd69':station.tier==='major'?'#198bd2':station.tier==='regional'?'#64b7d1':'#a2abb5',fillOpacity:1};
+  const elapsed=elapsedAtStation(focusedTrain,station.id);
+  const tooltip=`${escape(station.name)} <small>${elapsed||`${station.frequency} 趟车次${station.regionalRepresentative?' · 区域代表站':''}`}</small>`;
   let marker=visibleMarkers.get(station.id);
   if(!marker){
    marker=L.circleMarker(stationPosition(station),style).addTo(markers);
-   marker.bindTooltip(`${escape(station.name)} <small>${station.frequency} 趟车次${station.regionalRepresentative?' · 区域代表站':''}</small>`,{permanent:false,direction:'top',className:'station-hover',offset:[0,-5]});
+   marker.bindTooltip(tooltip,{permanent:false,direction:'top',className:'station-hover',offset:[0,-5]});
    marker.on('click',()=>choose(station.id));visibleMarkers.set(station.id,marker);
-  }else marker.setStyle(style).setRadius(style.radius);
+  }else {marker.setStyle(style).setRadius(style.radius);marker.setTooltipContent(tooltip);}
  }
  document.querySelector('#station-count').textContent=`${stations.length} / ${data.stations.length}`;
 }
@@ -172,12 +175,13 @@ function renderPanel(){
   if(!selected){panel.innerHTML=`<div class="section-heading"><h2>选择始发站</h2><span>点击地图车站</span></div><div class="popular">${['珠海','广州南','广州白云','北京西','上海虹桥','成都东','武汉','西安北','杭州东','深圳北','重庆北','郑州东'].map(name=>data.stations.find(s=>s.name===name)?.id).filter(Boolean).map(id=>`<button data-station="${escape(id)}">${escape(stationById.get(id).name)}</button>`).join('')}</div><p class="selection-hint">放大地图可选择更多车站</p>`;}
   else{
     const origin=stationById.get(selected),target=stationById.get(destination);
-    panel.innerHTML=`<div class="selection-summary"><div class="endpoint"><span><small>始发车站</small><strong>${escape(origin.name)}</strong></span><button id="clear-origin" aria-label="取消始发站">${icon('x')}</button></div>${target?`<div class="endpoint destination-endpoint"><span><small>目的地</small><strong>${escape(target.name)}</strong></span><button id="clear-destination" aria-label="取消目的地站">${icon('x')}</button></div>`:'<p>点击可达车站选择目的地。</p>'}</div>`;
+    panel.innerHTML=`<div class="selection-summary"><div class="endpoint"><span><small>始发车站</small><strong>${escape(origin.name)}</strong></span><button id="clear-origin" aria-label="取消始发站">${icon('x')}</button></div>${target?`<button type="button" id="swap-stations" class="swap-stations" aria-label="交换始发站和目的地" title="交换始发站和目的地">${icon('arrow-left-right')}</button><div class="endpoint destination-endpoint"><span><small>目的地</small><strong>${escape(target.name)}</strong></span><button id="clear-destination" aria-label="取消目的地站">${icon('x')}</button></div>`:'<p>点击可达车站选择目的地。</p>'}</div>`;
     document.querySelector('#clear-origin').onclick=()=>changeSelection({type:'remove-origin'});
     if(target){
+     document.querySelector('#swap-stations').onclick=()=>{changeSelection({type:'swap'});document.querySelector('#swap-stations')?.focus();};
      document.querySelector('#clear-destination').onclick=()=>changeSelection({type:'remove-destination'});
      const trains=result.destinations.get(destination)||[];
-     panel.insertAdjacentHTML('beforeend',`<div class="section-heading"><h2>${trains.length} 趟直达车次</h2><span>${escape(travelDate)}</span></div>${renderJourneys(trains)}`);
+     panel.insertAdjacentHTML('beforeend',`<div class="section-heading"><h2>${trains.length} 趟直达车次</h2><span>${escape(travelDate)}</span></div>${trains.length?renderJourneys(trains):'<p class="empty">所选日期没有此方向的直达车次。</p>'}`);
     }else{
      panel.insertAdjacentHTML('beforeend',`<div class="stats"><div><strong>${result.destinations.size}</strong><span>可达站点</span></div><div><strong>${result.services.length}</strong><span>途经车次</span></div></div><div class="section-heading"><h2>可达站点</h2><span>${escape(travelDate)}</span></div><div id="destinations"></div>`);
      renderDestinations();

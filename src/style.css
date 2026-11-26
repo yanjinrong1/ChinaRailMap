@@ -58,3 +58,11 @@ aside{width:300px;max-height:none;min-height:0;padding:14px 14px 0;background:#f
 .source-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:12px 0}.source-actions button,#source-panel #download{font-size:12px;padding:7px 10px;margin:0;border:1px solid var(--control-border);border-radius:5px;line-height:1.4}.source-actions .primary,#source-panel #download{background:var(--control-accent);color:#fff}#source-panel #download{display:block;margin-top:10px}.source-actions [hidden]{display:none}
 .map-area:has(#source-panel:not([hidden])) .legend{display:none}
 @media(max-width:650px){main{height:100dvh;min-height:0;flex-direction:column-reverse}.map-area{height:58dvh;min-height:0;flex:none}aside{height:42dvh;max-height:none;min-height:0;width:100%;padding:9px 12px 0}.app-brand{gap:8px;padding-bottom:7px;margin-bottom:5px}.app-brand img{width:27px;height:31px}.app-brand h1{font-size:16px;margin:0}.app-brand-en{font-size:10px}.database-footer{padding:5px 0;font-size:11px}.popular{grid-template-columns:repeat(3,1fr)}.popular button{padding:6px 7px;min-height:28px}.section-heading{margin-top:5px}#source-panel{right:65px;bottom:16px;width:340px;max-width:calc(100% - 77px);max-height:calc(100% - 30px);padding:14px}.legend{bottom:16px}#routing-status{max-width:calc(100% - 90px);font-size:11px}}
+
+/* Keep both endpoint boxes compact, with the swap control between them. */
+.selection-summary:has(.swap-stations){grid-template-columns:minmax(0,1fr) 30px minmax(0,1fr);align-items:center}
+.swap-stations{display:grid;place-items:center;width:30px;height:36px;padding:0;border:1px solid #dce5ec;border-radius:5px;color:#446a7c;background:#f5f8fa}
+.swap-stations svg{width:18px;height:18px}
+.swap-stations:hover{background:#e9f1f5}
+.swap-stations:focus-visible{outline:2px solid #198bd2;outline-offset:2px}
+.selection-summary .endpoint>span{min-width:0}

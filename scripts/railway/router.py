@@ -13,7 +13,7 @@ def read_index(path):
 def km(a,b):
  y1,x1,y2,x2=map(math.radians,(*a,*b));h=math.sin((y2-y1)/2)**2+math.cos(y1)*math.cos(y2)*math.sin((x2-x1)/2)**2
  return 6371*2*math.asin(min(1,math.sqrt(h)))
-GD_NAMES=re.compile('莞惠|佛莞|广佛环|广佛南环|佛肇|广肇|广惠|广清|广州东环|琶洲支线|琶莲|穗莞深|穗深')
+GD_NAMES=re.compile('莞惠|佛莞|广佛环|广佛南环|佛肇|广肇|广惠|广清|广州东环|琶洲支线|琶莲|穗莞深|穗深|新白广')
 GD_OPERATORS=re.compile('广东城际|广州地铁|广东珠三角城际')
 FAST_NAMES=re.compile('高速|客运专线|客专|高铁')
 LANXIN=re.compile('兰新.*(客|第二|二线|二双)|Lanxin.*(Passenger|Second)|兰新高铁',re.I)
@@ -24,11 +24,29 @@ def mixed_corridor(tags,profile,position):
  for rule in MIXED_CORRIDORS:
   south,west,north,east=rule['bounds'];lat,lng=position
   if rule.get('requiresTimetableStation') and not profile.get('taiyuanSharedApproach'):continue
-  if tags.get('name','')not in rule['lines'] or not(south<=lat<=north and west<=lng<=east):continue
+  if rule.get('requiresAnyTimetableStation') and not set(rule['requiresAnyTimetableStation']).intersection(profile.get('mixedTrafficStations',[])):continue
+  if tags.get('name','')not in rule['lines'] and tags.get('_osmWayId')not in rule.get('wayIds',[]):continue
+  if not(south<=lat<=north and west<=lng<=east):continue
   speeds=re.findall(r'\d+',str(tags.get('maxspeed','')))
   if speeds and max(map(int,speeds))>rule['maxspeed']:continue
   return rule['id']
  return None
+
+RAIL_FERRIES=json.loads((Path(__file__).resolve().parents[2]/'config/rail-ferries.json').read_text())
+def rail_ferry_allowed(tags,profile,position):
+ if profile['operator']!='CR'or profile['category']!='conventional'or not profile.get('railFerry'):return False
+ return any(tags.get('_osmWayId')==r['wayId']and r['bounds'][0]<=position[0]<=r['bounds'][2]and r['bounds'][1]<=position[1]<=r['bounds'][3]for r in RAIL_FERRIES)
+
+FERRY_APPROACH_IDS={id for r in RAIL_FERRIES for id in r.get('boardingApproachWayIds',[])}
+def ferry_approach_allowed(tags,profile,position):
+ if profile['operator']!='CR'or profile['category']!='conventional'or not profile.get('railFerry'):return False
+ return any(tags.get('_osmWayId')in r.get('boardingApproachWayIds',[])and r['boardingApproachBounds'][0]<=position[0]<=r['boardingApproachBounds'][2]and r['boardingApproachBounds'][1]<=position[1]<=r['boardingApproachBounds'][3]for r in RAIL_FERRIES)
+
+PASSENGER_TRACK_OVERRIDES=json.loads((Path(__file__).resolve().parents[2]/'config/passenger-track-overrides.json').read_text())
+PASSENGER_TRACK_IDS={id for r in PASSENGER_TRACK_OVERRIDES for id in r['wayIds']}
+def passenger_track_allowed(tags,profile,position):
+ if profile['operator']!='CR'or profile['category']!='conventional':return False
+ return any(r['id']in profile.get('passengerTrackOverrides',[])and tags.get('_osmWayId')in r['wayIds']and r['bounds'][0]<=position[0]<=r['bounds'][2]and r['bounds'][1]<=position[1]<=r['bounds'][3]for r in PASSENGER_TRACK_OVERRIDES)
 
 TAG_FIELDS=('railway','name','name:zh','official_name','ref','operator','owner','highspeed','maxspeed','gauge','electrified','usage','service','railway:traffic_mode','access','layer','bridge','tunnel')
 def freight_override(tags,profile,position):
@@ -49,7 +67,8 @@ def edge_weight(tags,profile,position,length):
 
 def _base_edge_weight(tags,profile,position,length):
  """None means forbidden. Unknown tags are penalized, never interpreted as proof."""
- if tags.get('railway')!='rail' or tags.get('service') in ('yard','spur') or tags.get('usage') in ('industrial','military','test'):return None
+ if tags.get('railway')=='ferry':return 2 if rail_ferry_allowed(tags,profile,position)else None
+ if tags.get('railway')!='rail' or (tags.get('service') in ('yard','spur')and not(ferry_approach_allowed(tags,profile,position)or passenger_track_allowed(tags,profile,position))) or tags.get('usage') in ('industrial','military','test'):return None
  gauge=str(tags.get('gauge',''));name=' '.join(str(tags.get(k,''))for k in ('name','name:zh','official_name'));operator=str(tags.get('operator',''))
  if gauge and '1435' not in gauge:return None
  gd=bool(GD_NAMES.search(name)or GD_OPERATORS.search(operator))
@@ -62,6 +81,7 @@ def _base_edge_weight(tags,profile,position,length):
   if name or operator or length>1:return None
   return 5
  if gd:return None
+ if tags.get('service')=='yard':return 3 if ferry_approach_allowed(tags,profile,position)or passenger_track_allowed(tags,profile,position)else None
  if profile['category']=='conventional':
   if '城际' in name or '市域' in name:return None
   if fast:
@@ -77,13 +97,19 @@ def profile_for(train,stations):
  # timetable evidence; this is not a blanket exemption for every Z/K/T train.
  lanxin=train.get('operator')=='CR'and train.get('category')=='conventional'and bool(names&{'张掖西','高台南','酒泉南','嘉峪关南','柳园南','鄯善北','吐鲁番北'})
  profile={'taiyuanSharedApproach':train.get('operator')=='CR'and train.get('category')=='conventional'and '太原'in names,'operator':train.get('operator','unknown'),'category':train.get('category','unknown'),'lanxin':lanxin,'baiyunPassengerAccess':train.get('operator')=='CR'and '广州白云'in names}
+ profile['passengerTrackOverrides']=sorted(r['id']for r in PASSENGER_TRACK_OVERRIDES if set(r['requiresAllTimetableStations'])<=names)
+ profile['railFerry']=profile['operator']=='CR'and profile['category']=='conventional'and bool(names.intersection({n for r in RAIL_FERRIES for n in r['requiresIslandStation']}))and any(stations[id]['lat']>20.3 for id in train['stops'])
+ required={name for rule in MIXED_CORRIDORS for name in rule.get('requiresAnyTimetableStation',[])}
+ profile['mixedTrafficStations']=sorted(names.intersection(required))
  rule=OVERRIDES['guangmaoPassengerDiversion']
  if profile['operator']==rule['operator']and profile['category']==rule['category']and rule['requiresTimetableStation']in names and names.intersection(rule['requiresAnyTimetableStation']):profile['guangmaoPassengerDiversion']=True
  return profile
 
 class RailGraph:
  def __init__(self,edges,positions,metadata=None):
-  self.edges=edges;self.positions=positions;self.metadata=metadata or {};self.adj=collections.defaultdict(list);self.grid=collections.defaultdict(set);self.weight_cache={};self.snap_cache={}
+  self.edges=edges;self.positions=positions;
+  for e in edges:e['tags']['_osmWayId']=e['way']
+  self.metadata=metadata or {};self.adj=collections.defaultdict(list);self.grid=collections.defaultdict(set);self.weight_cache={};self.snap_cache={}
   for i,e in enumerate(edges):
    self.adj[e['a']].append((e['b'],i));self.adj[e['b']].append((e['a'],i));coords=e['coordinates'];e['length']=sum(km(a,b)for a,b in zip(coords,coords[1:]))
    for a,b in zip(coords,coords[1:]):
@@ -98,7 +124,7 @@ class RailGraph:
   print('Reading attributed railway ways',flush=True);raw=read_index(directory/'way_to_meta.pkl');ways={}
   for id,item in raw.items():
    tags=item['tags']
-   if tags.get('railway')=='rail' and tags.get('service') not in ('yard','spur') and tags.get('usage') not in ('industrial','military','test'):
+   if (tags.get('railway')=='rail'or tags.get('railway')=='ferry'and id in {r['wayId']for r in RAIL_FERRIES}) and (tags.get('service') not in ('yard','spur')or id in FERRY_APPROACH_IDS or id in PASSENGER_TRACK_IDS) and tags.get('usage') not in ('industrial','military','test'):
     ways[id]={'nodes':item['nodes'],'tags':{k:tags[k]for k in TAG_FIELDS if k in tags}}
   del raw
   relations=read_index(directory/'relations.pkl')
@@ -210,7 +236,7 @@ class RailGraph:
   tags=[self.edges[id]['tags']for id in dict.fromkeys(edge_ids)];names=list(dict.fromkeys(t.get('name')for t in tags if t.get('name')))
   freight_edges=[self.edges[id]for id in edge_ids if self.edges[id]['tags'].get('railway:traffic_mode')=='freight']
   soft_edges=[e for e in freight_edges if not freight_override(e['tags'],profile,e['coordinates'][len(e['coordinates'])//2])]
-  return {'coordinates':points,'freightTagPolicy':'soft-penalty','freightTagPenalty':FREIGHT_TAG_PENALTY,'freightTaggedWayIds':list(dict.fromkeys(e['way']for e in freight_edges)),'softFreightWayIds':list(dict.fromkeys(e['way']for e in soft_edges)),'tagOverrides':sorted({freight_override(self.edges[id]['tags'],profile,self.edges[id]['coordinates'][len(self.edges[id]['coordinates'])//2])for id in edge_ids if self.edges[id]['tags'].get('railway:traffic_mode')=='freight'}-{None}),'mixedTrafficCorridors':sorted({mixed_corridor(self.edges[id]['tags'],profile,self.edges[id]['coordinates'][len(self.edges[id]['coordinates'])//2])for id in edge_ids}-{None}),'lengthKm':round(length,2),'wayIds':list(dict.fromkeys(self.edges[id]['way']for id in edge_ids)),'lineNames':names,'snapKm':[round(start[0],3),round(end[0],3)],'profile':profile},None
+  return {'coordinates':points,'freightTagPolicy':'soft-penalty','freightTagPenalty':FREIGHT_TAG_PENALTY,'freightTaggedWayIds':list(dict.fromkeys(e['way']for e in freight_edges)),'softFreightWayIds':list(dict.fromkeys(e['way']for e in soft_edges)),'tagOverrides':sorted({freight_override(self.edges[id]['tags'],profile,self.edges[id]['coordinates'][len(self.edges[id]['coordinates'])//2])for id in edge_ids if self.edges[id]['tags'].get('railway:traffic_mode')=='freight'}-{None}),'passengerTrackOverrides':sorted({r['id']for r in PASSENGER_TRACK_OVERRIDES if any(self.edges[id]['way']in r['wayIds']for id in edge_ids)}),'railFerryApproachWayIds':list(dict.fromkeys(self.edges[id]['way']for id in edge_ids if self.edges[id]['way']in FERRY_APPROACH_IDS)),'railFerryWayIds':list(dict.fromkeys(self.edges[id]['way']for id in edge_ids if self.edges[id]['tags'].get('railway')=='ferry')),'mixedTrafficCorridors':sorted({mixed_corridor(self.edges[id]['tags'],profile,self.edges[id]['coordinates'][len(self.edges[id]['coordinates'])//2])for id in edge_ids}-{None}),'lengthKm':round(length,2),'wayIds':list(dict.fromkeys(self.edges[id]['way']for id in edge_ids)),'lineNames':names,'snapKm':[round(start[0],3),round(end[0],3)],'profile':profile},None
 
 def simplify_coordinates(points,tolerance_km=.045):
  """Preserve endpoints while reducing map-display geometry to a 45m tolerance."""

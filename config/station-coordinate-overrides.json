@@ -340,5 +340,91 @@
     "source": "OSM railway=station, exact name and unique local cluster; connected to railway",
     "osmDate": "2026-11-24",
     "url": "https://www.openstreetmap.org/node/11296772793"
+  },
+  {
+    "id": "CPP",
+    "name": "昌平",
+    "originalCoordinates": [
+      40.219314,
+      116.227487
+    ],
+    "coordinates": [
+      40.1887146,
+      116.1882919
+    ],
+    "osmNodeId": 2662698203,
+    "offsetKm": 4.76,
+    "source": "OSM railway station on Jingzhang corridor; other same-name node is not served by these G/D trains.",
+    "osmDate": "2026-11-24",
+    "url": "https://www.openstreetmap.org/node/2662698203"
+  },
+  {
+    "id": "LIJ",
+    "name": "李家坪",
+    "originalCoordinates": [
+      35.693856,
+      104.455097
+    ],
+    "coordinates": [
+      35.6608163,
+      104.3246435
+    ],
+    "osmNodeId": 3182230198,
+    "offsetKm": 12.343,
+    "source": "Nearest exact-name OSM railway station on the existing Longhai corridor, constrained to the source region.",
+    "osmDate": "2026-11-24",
+    "url": "https://www.openstreetmap.org/node/3182230198"
+  },
+  {
+    "id": "QOL",
+    "name": "青沟子",
+    "originalCoordinates": [
+      42.0164,
+      126.442081
+    ],
+    "coordinates": [
+      42.0154959,
+      127.0678242
+    ],
+    "osmNodeId": 12844704701,
+    "offsetKm": 51.695,
+    "source": "OSM exact-name stop near 松树镇, consistent with timetable station order and local rail operator reporting. Original same-name OSM point is off the active rail network.",
+    "osmDate": "2026-11-24",
+    "url": "https://www.openstreetmap.org/node/12844704701",
+    "evidence": [
+      "https://jl.people.com.cn/n2/2026/0111/c349771-41469397.html"
+    ]
+  },
+  {
+    "id": "TTE",
+    "name": "天河潭",
+    "originalCoordinates": [
+      26.452795,
+      106.578062
+    ],
+    "coordinates": [
+      26.42602,
+      106.5675876
+    ],
+    "osmNodeId": 3740822572,
+    "source": "Disambiguated same-name metro and national railway stations. Reviewed OSM node belongs to the rail corridor served by this timetable; original point is the metro station.",
+    "osmDate": "2026-11-24",
+    "url": "https://www.openstreetmap.org/node/3740822572"
+  },
+  {
+    "id": "AOP",
+    "name": "燕山",
+    "originalCoordinates": [
+      39.718458,
+      115.967463
+    ],
+    "coordinates": [
+      39.7477611,
+      115.9521142
+    ],
+    "osmNodeId": 1938418680,
+    "source": "Disambiguated same-name metro and national railway stations. Reviewed OSM node belongs to the rail corridor served by this timetable; original point is the metro station.",
+    "osmDate": "2026-11-24",
+    "url": "https://www.openstreetmap.org/node/1938418680"
   }
 ]

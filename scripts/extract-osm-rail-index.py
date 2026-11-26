@@ -18,7 +18,7 @@ class Relations(osmium.SimpleHandler):
 class Stations(osmium.SimpleHandler):
  def __init__(self):super().__init__();self.items={}
  def node(self,n):
-  t=dict(n.tags);self.items[('n',n.id)]={'name':t.get('name:zh')or t.get('name',''),'coords':(n.location.lat,n.location.lon),'rail':True,'station_node':t.get('railway')in('station','halt'),'stop_position':t.get('railway')=='stop'}
+  t=dict(n.tags);self.items[('n',n.id)]={'name':t.get('name:zh')or t.get('name',''),'coords':(n.location.lat,n.location.lon),'rail':t.get('station')not in ('subway','light_rail')and t.get('subway')!='yes'and t.get('train')!='no','stationType':t.get('station'),'operator':t.get('operator'),'station_node':t.get('railway')in('station','halt'),'stop_position':t.get('railway')=='stop'}
 print('Extract railway ways',flush=True);ways=Ways()
 with osmium.io.Reader(args.pbf,osmium.osm.WAY)as reader:osmium.apply(reader,osmium.filter.TagFilter(('railway','rail')),ways)
 print('Extract connected railway coordinates',len(ways.ways),'ways',flush=True);nodes=Nodes()
@@ -30,7 +30,7 @@ with osmium.io.Reader(args.pbf,osmium.osm.NODE)as reader:osmium.apply(reader,osm
 for name,data in [('way_to_meta.pkl',ways.ways),('node_coords.pkl',nodes.coords),('relations.pkl',relations.items),('stations.pkl',{'features':stations.items})]:
  with (out/name).open('wb')as f:pickle.dump(data,f,protocol=4)
 with osmium.io.Reader(args.pbf)as reader:timestamp=reader.header().get('osmosis_replication_timestamp')
-meta={'index_format':1,'region':'china','data_timestamp':timestamp,'data_date':timestamp[:10]if timestamp else 'unknown','generated_at':datetime.datetime.now(datetime.timezone.utc).isoformat(),'source':'Geofabrik OpenStreetMap extract'}
+meta={'index_format':1,'region':Path(args.pbf).name.split('-')[0],'data_timestamp':timestamp,'data_date':timestamp[:10]if timestamp else 'unknown','generated_at':datetime.datetime.now(datetime.timezone.utc).isoformat(),'source':'Geofabrik OpenStreetMap extract'}
 (out/'metadata.json').write_text(json.dumps(meta))
 hash=hashlib.sha256()
 with open(args.pbf,'rb')as f:

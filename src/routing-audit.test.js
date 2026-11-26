@@ -57,3 +57,33 @@ test('Taiyuan-Shijiazhuang North and Guilin North-Liuzhou have audited mixed-tra
   assert.ok(checked>0,pair);
  }
 });
+
+test('rail ferry and cross-border gaps have real attributed geometry',()=>{
+ const data=read('data'),g=readRouteData();
+ const stationByName=new Map(data.stations.map(s=>[s.name,s.id]));
+ for(const [a,b,maxKm,proof]of [['鸡西','柳毛',30,'passengerTrackOverrides'],['太原','汾河',20,'mixedTrafficCorridors'],['昆明','玉溪',130,'mixedTrafficCorridors']]){
+  const pair=[stationByName.get(a),stationByName.get(b)].sort().join('|');let count=0;
+  for(const train of data.trains){
+   if(train.category!=='conventional'||!train.stops.some((id,i)=>i&&[id,train.stops[i-1]].sort().join('|')===pair))continue;
+   const segment=g.segments[g.trainRoutes[train.id].legs[pair]];assert.ok(segment,`${train.code}: ${a}-${b}`);
+   if(segment.source==='OSM inferred'){assert.ok(segment.inference.lengthKm<maxKm);assert.ok(segment.inference[proof].length);count++;}
+  }
+  assert.ok(count>=2);
+ }
+ for(const train of data.trains.filter(t=>['C4962','C4970','C4999'].includes(t.code))){
+  assert.equal(train.operator,'GDIC');assert.equal(Object.keys(g.trainRoutes[train.id].legs).length,train.stops.length-1);
+ }
+ for(const code of ['D84','D86','D87','D88']){
+  const train=data.trains.find(t=>t.code===code);assert.ok(train);
+  assert.equal(Object.keys(g.trainRoutes[train.id].legs).length,train.stops.length-1);
+ }
+ let ferryCount=0;
+ for(const train of data.trains){
+  if(!train.stops.some(id=>stationByName.get('海口')===id))continue;
+  for(const gid of Object.values(g.trainRoutes[train.id].legs)){
+   const info=g.segments[gid].inference;if(!info?.railFerryWayIds?.length)continue;
+   assert.deepEqual(info.railFerryWayIds,[25172513]);assert.ok(info.railFerryApproachWayIds.length);ferryCount++;
+  }
+ }
+ assert.ok(ferryCount>=11);
+});

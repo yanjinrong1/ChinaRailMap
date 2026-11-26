@@ -22,8 +22,10 @@ test('Guangdong Intercity is identified by corridor stations, not every C train'
  assert.deepEqual(routeParts(path,stations,geometry,{...gd,operator:'CR'}),[]);
 });
 test('missing source geometry never borrows another train or an unrestricted shortest path',()=>{
- const missing=data.trains.find(t=>!Object.keys(geometry.trainRoutes[t.id].legs).length);assert.ok(missing);
- assert.deepEqual(routeParts(missing.stops,stations,geometry,missing),[]);
+ // The snapshot now has full coverage. Remove one train's references explicitly
+ // while retaining other trains and all shapes, to exercise the missing-path case.
+ const missing=data.trains[0],withoutTrainPath={...geometry,trainRoutes:{...geometry.trainRoutes,[missing.id]:{...geometry.trainRoutes[missing.id],legs:{}}}};
+ assert.deepEqual(routeParts(missing.stops,stations,withoutTrainPath,missing),[]);
  const t=data.trains.find(t=>Object.keys(geometry.trainRoutes[t.id].legs).length);assert.deepEqual(routeParts(t.stops,stations,geometry,{...t,id:'unverified-import'}),[]);
  assert.deepEqual(routeParts(t.stops,stations,geometry,{...t,category:'wrong-class'}),[]);
 });

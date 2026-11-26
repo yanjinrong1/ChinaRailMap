@@ -1,0 +1,11 @@
+[
+  {
+    "id": "jixi-liumao-throat",
+    "wayIds": [1119200697],
+    "bounds": [45.3204, 130.8869, 45.3209, 130.8880],
+    "requiresAllTimetableStations": ["鸡西", "柳毛"],
+    "source": "https://www.openstreetmap.org/way/1119200697",
+    "osmDate": "2026-11-24",
+    "reason": "A roughly 54m track connecting the Linmi/Chengji passenger path is tagged yard. Allow only this actual OSM edge for conventional trains calling both stations; route remains inferred."
+  }
+]

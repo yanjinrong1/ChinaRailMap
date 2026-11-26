@@ -158,5 +158,564 @@
       "https://www.chinautc.com/upload/accessorychinautc/20186/201862214379664796.pdf"
     ],
     "uncertainty": "Shared approach track assignment inferred from OSM, not an official train working diagram."
+  },
+  {
+    "id": "ningrong-southwest",
+    "lines": [
+      "沪蓉线"
+    ],
+    "bounds": [
+      29.4,
+      103.7,
+      31.5,
+      111.6
+    ],
+    "maxspeed": 200,
+    "evidence": [
+      "https://jtj.cq.gov.cn/sy_240/bmdt/201910/t20191010_4370658.html"
+    ],
+    "reason": "Reviewed named mixed-traffic corridor or bounded shared passenger approach; OSM inferred geometry."
+  },
+  {
+    "id": "weijing",
+    "lines": [
+      "渭井线"
+    ],
+    "bounds": [
+      29.4,
+      106.2,
+      30.2,
+      106.8
+    ],
+    "maxspeed": 160,
+    "evidence": [
+      "https://www.12306.cn/mormhweb/zxdt/201801/t20180117_20798.html"
+    ],
+    "reason": "Reviewed named mixed-traffic corridor or bounded shared passenger approach; OSM inferred geometry."
+  },
+  {
+    "id": "yugui",
+    "lines": [
+      "渝贵线"
+    ],
+    "bounds": [
+      26.3,
+      106.2,
+      30,
+      107.5
+    ],
+    "maxspeed": 200,
+    "evidence": [
+      "https://www.xinhuanet.com/politics/2018-01/18/c_129793983.htm"
+    ],
+    "reason": "Reviewed named mixed-traffic corridor or bounded shared passenger approach; OSM inferred geometry."
+  },
+  {
+    "id": "loushao",
+    "lines": [
+      "益湛线"
+    ],
+    "bounds": [
+      27,
+      111.1,
+      28.5,
+      112.5
+    ],
+    "maxspeed": 200,
+    "evidence": [
+      "https://gxt.hunan.gov.cn/gxt/xxgk_71033/gzdt/gzdt_3/200907/t20090729_2843279.html"
+    ],
+    "reason": "Reviewed named mixed-traffic corridor or bounded shared passenger approach; OSM inferred geometry."
+  },
+  {
+    "id": "anliu",
+    "lines": [
+      "安六客专线"
+    ],
+    "bounds": [
+      26,
+      104.6,
+      26.8,
+      106.1
+    ],
+    "maxspeed": 250,
+    "evidence": [
+      "https://gz.cri.cn/2025-04-10/ee845d6f-f059-cf54-43dc-c778a0b3f29d.html"
+    ],
+    "reason": "Reviewed named mixed-traffic corridor or bounded shared passenger approach; OSM inferred geometry.",
+    "requiresAnyTimetableStation": [
+      "六枝南"
+    ]
+  },
+  {
+    "id": "nanning-shared-east",
+    "lines": [
+      "南广线",
+      "柳南客专线",
+      "贵南高速线"
+    ],
+    "bounds": [
+      22.825,
+      108.3,
+      22.86,
+      108.425
+    ],
+    "maxspeed": 250,
+    "evidence": [
+      "https://www.chinanews.com/sh/2014/06-20/6303293.shtml"
+    ],
+    "reason": "Reviewed named mixed-traffic corridor or bounded shared passenger approach; OSM inferred geometry.",
+    "requiresAnyTimetableStation": [
+      "南宁",
+      "南宁东"
+    ]
+  },
+  {
+    "id": "nanning-shared-west",
+    "lines": [
+      "南昆客专线",
+      "南凭高速线"
+    ],
+    "bounds": [
+      22.78,
+      108.27,
+      22.835,
+      108.315
+    ],
+    "maxspeed": 250,
+    "evidence": [
+      "https://www.chinanews.com/sh/2014/06-20/6303293.shtml"
+    ],
+    "reason": "Reviewed named mixed-traffic corridor or bounded shared passenger approach; OSM inferred geometry.",
+    "requiresAnyTimetableStation": [
+      "南宁"
+    ]
+  },
+  {
+    "id": "xiamen-north-shared",
+    "lines": [
+      "杭深线",
+      "厦禾联络线"
+    ],
+    "bounds": [
+      24.625,
+      118.05,
+      24.65,
+      118.085
+    ],
+    "maxspeed": 250,
+    "evidence": [
+      "https://static.cninfo.com.cn/finalpage/2026-06-08/1225356567.PDF"
+    ],
+    "reason": "Reviewed named mixed-traffic corridor or bounded shared passenger approach; OSM inferred geometry.",
+    "requiresAnyTimetableStation": [
+      "厦门北"
+    ]
+  },
+  {
+    "id": "longxia",
+    "lines": [
+      "龙漳线"
+    ],
+    "bounds": [
+      24.3,
+      116.9,
+      25.2,
+      118
+    ],
+    "maxspeed": 200,
+    "evidence": [
+      "https://www.crecg.com/web/xwzx61/zfgsdt39/2025021110085013173/index.html"
+    ],
+    "reason": "Reviewed named mixed-traffic corridor or bounded shared passenger approach; OSM inferred geometry."
+  },
+  {
+    "id": "jiaoji",
+    "lines": [
+      "胶济客专线",
+      "胶州北直通线"
+    ],
+    "bounds": [
+      36,
+      116.9,
+      37,
+      120.5
+    ],
+    "maxspeed": 250,
+    "evidence": [
+      "https://jtgc.cbpt.cnki.net/portal/journal/portal//client/paper/preview?cache=false&filePath=history%2FEditor%2F2021%2F0520%2Fjtgc%2Feb1d7033-9f98-46f3-b300-0f83683ea42d.pdf"
+    ],
+    "reason": "Reviewed named mixed-traffic corridor or bounded shared passenger approach; OSM inferred geometry."
+  },
+  {
+    "id": "baxu",
+    "lines": [
+      "霸徐线"
+    ],
+    "bounds": [
+      38.9,
+      115.5,
+      39.2,
+      116.4
+    ],
+    "maxspeed": 200,
+    "evidence": [
+      "https://ggzyfw.beijing.gov.cn/jyxxggjtbyqs/20241203/4753964.html"
+    ],
+    "reason": "Reviewed mixed traffic or named station approach, with timetable and/or OSM way scope where applicable."
+  },
+  {
+    "id": "guangkun",
+    "lines": [
+      "广昆线"
+    ],
+    "bounds": [
+      24.8,
+      101.7,
+      25.3,
+      102.8
+    ],
+    "maxspeed": 200,
+    "evidence": [
+      "https://www.yndaily.com/html/2014/yaowenyunnan_0326/3123.html"
+    ],
+    "reason": "Reviewed mixed traffic or named station approach, with timetable and/or OSM way scope where applicable."
+  },
+  {
+    "id": "qianzhangchang",
+    "lines": [
+      "渝厦高速线"
+    ],
+    "bounds": [
+      28.85,
+      109,
+      29.8,
+      111.7
+    ],
+    "maxspeed": 200,
+    "evidence": [
+      "https://www.hunan.gov.cn/hnyw/sy/hnyw1/201912/t20191227_11018106.html"
+    ],
+    "reason": "Reviewed mixed traffic or named station approach, with timetable and/or OSM way scope where applicable.",
+    "requiresAnyTimetableStation": [
+      "张家界西",
+      "牛车河",
+      "桃源",
+      "常德"
+    ]
+  },
+  {
+    "id": "sanya-shared",
+    "lines": [
+      "海南西环高速线"
+    ],
+    "bounds": [
+      18.29,
+      109.43,
+      18.32,
+      109.5
+    ],
+    "maxspeed": 200,
+    "evidence": [
+      "https://www.sxjzty.cn/qikanfile/2021/6/039.pdf"
+    ],
+    "reason": "Reviewed mixed traffic or named station approach, with timetable and/or OSM way scope where applicable.",
+    "requiresAnyTimetableStation": [
+      "三亚"
+    ]
+  },
+  {
+    "id": "baxu-connectors",
+    "lines": [],
+    "bounds": [
+      39.0665687,
+      115.8583481,
+      39.0957391,
+      116.3393507
+    ],
+    "maxspeed": 200,
+    "evidence": [
+      "https://ggzyfw.beijing.gov.cn/jyxxggjtbyqs/20241203/4753964.html"
+    ],
+    "reason": "Reviewed mixed traffic or named station approach, with timetable and/or OSM way scope where applicable.",
+    "wayIds": [
+      727703869,
+      838230457,
+      838230458,
+      1076016352,
+      1076314390,
+      1076404760
+    ],
+    "requiresAnyTimetableStation": [
+      "白洋淀",
+      "白沟"
+    ],
+    "osmDate": "2026-11-24"
+  },
+  {
+    "id": "guangkun-connectors",
+    "lines": [],
+    "bounds": [
+      24.9967457,
+      102.06184180000001,
+      25.121827399999997,
+      102.29661349999999
+    ],
+    "maxspeed": 200,
+    "evidence": [
+      "https://www.yndaily.com/html/2014/yaowenyunnan_0326/3123.html"
+    ],
+    "reason": "Reviewed mixed traffic or named station approach, with timetable and/or OSM way scope where applicable.",
+    "wayIds": [
+      709271877,
+      709280337,
+      709280343,
+      709280344
+    ],
+    "requiresAnyTimetableStation": [
+      "禄丰南"
+    ],
+    "osmDate": "2026-11-24"
+  },
+  {
+    "id": "qianzhangchang-connectors",
+    "lines": [],
+    "bounds": [
+      29.1629048,
+      110.45120460000001,
+      29.177275599999998,
+      110.4630241
+    ],
+    "maxspeed": 200,
+    "evidence": [
+      "https://www.hunan.gov.cn/hnyw/sy/hnyw1/201912/t20191227_11018106.html"
+    ],
+    "reason": "Reviewed mixed traffic or named station approach, with timetable and/or OSM way scope where applicable.",
+    "wayIds": [
+      1185032875,
+      1185032935,
+      1476147658
+    ],
+    "requiresAnyTimetableStation": [
+      "张家界西"
+    ],
+    "osmDate": "2026-11-24"
+  },
+  {
+    "id": "jiaozhou-shared",
+    "lines": [],
+    "bounds": [
+      36.396020699999994,
+      120.0327152,
+      36.4013,
+      120.04527689999999
+    ],
+    "maxspeed": 200,
+    "evidence": [
+      "https://jtgc.cbpt.cnki.net/portal/journal/portal//client/paper/preview?cache=false&filePath=history%2FEditor%2F2021%2F0520%2Fjtgc%2Feb1d7033-9f98-46f3-b300-0f83683ea42d.pdf"
+    ],
+    "reason": "Reviewed mixed traffic or named station approach, with timetable and/or OSM way scope where applicable.",
+    "wayIds": [
+      582838440
+    ],
+    "requiresAnyTimetableStation": [
+      "胶州北"
+    ],
+    "osmDate": "2026-11-24"
+  },
+  {
+    "id": "ningde-fuzhou",
+    "lines": [
+      "杭深线"
+    ],
+    "bounds": [
+      26,
+      119.25,
+      26.7,
+      119.7
+    ],
+    "maxspeed": 200,
+    "requiresAnyTimetableStation": [
+      "宁德",
+      "连江"
+    ],
+    "evidence": [
+      "https://fgw.fujian.gov.cn/zwgk/dbwyzs/rddbjy/202505/t20250519_6915772.htm"
+    ],
+    "reason": "Conventional Qu-Ning services calling Ningde and Fuzhou/ Lianjiang use this connecting corridor; train timetable anchors required."
+  },
+  {
+    "id": "ganruilong-local-passenger",
+    "lines": [
+      "赣瑞龙线"
+    ],
+    "bounds": [
+      24.8,
+      115,
+      26.2,
+      117.5
+    ],
+    "maxspeed": 200,
+    "requiresAnyTimetableStation": [
+      "古田会址"
+    ],
+    "evidence": [
+      "https://www.ganzhou.gov.cn/gzszf/c100022/202512/7133bbb0e18f415980e29798dcf63abd.shtml"
+    ],
+    "reason": "Source timetable V4752 explicitly calls at the unique new-line stations 古田会址 and 冠豸山南; named 200 km/h corridor only. Official source confirms line and station identities; per-train path remains inference."
+  },
+  {
+    "id": "panjin-north-shared",
+    "lines": [],
+    "wayIds": [
+      448262429,
+      558460717,
+      1251205690
+    ],
+    "bounds": [
+      41.33,
+      121.81,
+      41.36,
+      121.85
+    ],
+    "maxspeed": 160,
+    "requiresAnyTimetableStation": [
+      "盘锦",
+      "盘锦北"
+    ],
+    "reason": "Reviewed low-speed shared Pan-Wu approach, not permission for the Pan-Ying high-speed mainline.",
+    "evidence": [
+      "https://www.crsc.com.cn/news/tsi_5133_12211_90699.html"
+    ],
+    "osmDate": "2026-11-24"
+  },
+  {
+    "id": "qingyan",
+    "lines": [
+      "青盐线"
+    ],
+    "bounds": [
+      33.2,
+      119.5,
+      36.6,
+      120.5
+    ],
+    "maxspeed": 200,
+    "reason": "Named 200 km/h mixed-use railway; excludes the adjoining Ji-Qing high-speed mainline.",
+    "evidence": [
+      "https://www.thepaper.cn/newsDetail_forward_29288593"
+    ]
+  },
+  {
+    "id": "hongdao-shared-approach",
+    "lines": [
+      "红岛发车线"
+    ],
+    "wayIds": [
+      1176530550
+    ],
+    "bounds": [
+      36.23,
+      120.13,
+      36.26,
+      120.19
+    ],
+    "maxspeed": 160,
+    "requiresAnyTimetableStation": [
+      "红岛"
+    ],
+    "reason": "Low-speed departure/shared approach at Hongdao only. Do not permit the 250/350 km/h Ji-Qing mainline to eliminate a gap.",
+    "evidence": [
+      "https://jnggzy.jinan.gov.cn/jnggzyztb/front/showNotice.do?iid=7d6adca1ddf24106a491c0332af60f55&isnew=1&xuanxiang=1"
+    ]
+  },
+  {
+    "id": "yongpu",
+    "lines": [
+      "永莆线"
+    ],
+    "bounds": [
+      25.25,
+      118.5,
+      26.1,
+      119.3
+    ],
+    "maxspeed": 200,
+    "reason": "Putian branch of the documented Chang-Fu mixed-use corridor.",
+    "evidence": [
+      "https://www.nra.gov.cn/xxgk/gkml/ztjg/jybl/zxfk/202011/P020230414355543925786.pdf"
+    ]
+  },
+  {
+    "id": "fuxia-longxia-shared",
+    "lines": [
+      "杭深线"
+    ],
+    "bounds": [
+      24.3,
+      117.6,
+      25.6,
+      119.2
+    ],
+    "maxspeed": 250,
+    "requiresAnyTimetableStation": [
+      "厦门北",
+      "莆田",
+      "漳州"
+    ],
+    "reason": "Existing Fu-Xia / shared Long-Xia coastal corridor, not the new Fu-Xia high-speed railway. Train timetable station anchors required; exact per-train path remains inference.",
+    "evidence": [
+      "https://static.cninfo.com.cn/finalpage/2026-06-08/1225356567.PDF"
+    ]
+  },
+  {
+    "id": "taiyuan-north-shared-approach",
+    "lines": [],
+    "wayIds": [
+      772997339,
+      772997340,
+      834888080,
+      834888087,
+      933066048,
+      1071756473,
+      1071756474
+    ],
+    "bounds": [
+      37.89,
+      112.56,
+      37.915,
+      112.585
+    ],
+    "maxspeed": 160,
+    "requiresTimetableStation": "太原",
+    "reason": "Reviewed 100–140 km/h shared north station approach, not the Da-Xi high-speed mainline. Timetable calls Taiyuan, inferred physical rail path to Fenhe.",
+    "evidence": [
+      "https://www.chinautc.com/upload/accessorychinautc/20186/201862214379664796.pdf"
+    ],
+    "osmDate": "2026-11-24"
+  },
+  {
+    "id": "kunyu-shared",
+    "lines": [
+      "中老昆万线"
+    ],
+    "wayIds": [
+      709764759
+    ],
+    "bounds": [
+      24.3,
+      102.45,
+      24.7,
+      102.65
+    ],
+    "maxspeed": 200,
+    "requiresAnyTimetableStation": [
+      "玉溪"
+    ],
+    "reason": "Kunming-Yuxi mixed-use section, first operated with conventional K9832 in 2016. Does not allow the rest of the China-Laos line for every conventional train.",
+    "evidence": [
+      "https://www.xinhuanet.com/politics/2016-12/15/c_1120126804.htm"
+    ],
+    "osmDate": "2026-11-24"
   }
 ]

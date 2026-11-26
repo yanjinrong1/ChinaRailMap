@@ -1,0 +1,34 @@
+[
+  {
+    "wayId": 25172513,
+    "name": "粤海轮渡线",
+    "bounds": [
+      19.9,
+      110.0,
+      20.4,
+      110.3
+    ],
+    "source": "https://www.openstreetmap.org/way/25172513",
+    "osmDate": "2026-11-24",
+    "requiresIslandStation": [
+      "海口",
+      "三亚",
+      "乐东"
+    ],
+    "reason": "Explicit OSM railway=ferry geometry, connected only through shared OSM nodes. Requires conventional through-train timetable evidence on both sides of the strait.",
+    "boardingApproachWayIds": [
+      1432168212,
+      1432168227,
+      1432168231,
+      1432168218,
+      1432168220
+    ],
+    "boardingApproachBounds": [
+      20.22,
+      110.11,
+      20.25,
+      110.15
+    ],
+    "boardingApproachLengthKm": 1.098
+  }
+]

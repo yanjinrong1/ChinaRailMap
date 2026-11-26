@@ -2,10 +2,50 @@
   "guangdongIntercity": {
     "operator": "GDIC",
     "label": "广东城际",
-    "prefixes": ["C", "S"],
-    "bounds": [22, 111, 24.8, 115.5],
-    "distinctiveStations": ["番禺", "广州长隆", "广州莲花山", "东莞西", "小金口", "陈江南", "松山湖北", "常平南", "西平西", "大朗镇", "琶洲", "白云机场北", "白云机场东", "深圳机场", "清城", "乐同", "狮岭", "银盏", "龙塘镇"],
-    "sourceUrls": ["https://gzw.gz.gov.cn/qy/qydt/content/post_10911971.html", "https://www.huadu.gov.cn/zfxxgkml/gzshdqjtysj/content/post_10735957.html"]
+    "prefixes": [
+      "C",
+      "S"
+    ],
+    "bounds": [
+      22,
+      111,
+      24.8,
+      115.5
+    ],
+    "distinctiveStations": [
+      "番禺",
+      "广州长隆",
+      "广州莲花山",
+      "东莞西",
+      "小金口",
+      "陈江南",
+      "松山湖北",
+      "常平南",
+      "西平西",
+      "大朗镇",
+      "琶洲",
+      "白云机场北",
+      "白云机场东",
+      "深圳机场",
+      "清城",
+      "乐同",
+      "狮岭",
+      "银盏",
+      "龙塘镇",
+      "永宁南",
+      "永宁北",
+      "镇龙",
+      "新龙",
+      "佛塱",
+      "九佛",
+      "钟落潭东",
+      "竹料"
+    ],
+    "sourceUrls": [
+      "https://gzw.gz.gov.cn/qy/qydt/content/post_10911971.html",
+      "https://www.huadu.gov.cn/zfxxgkml/gzshdqjtysj/content/post_10735957.html",
+      "https://jtj.gz.gov.cn/gkmlpt/content/10/10947/post_10947514.html"
+    ]
   },
   "lanxinMixedTrafficEvidence": "https://www.12306.cn/mormhweb/zxdt_news/202306/t20230629_39558.html"
 }

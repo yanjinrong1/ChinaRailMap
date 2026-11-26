@@ -1,0 +1,2699 @@
+{
+  "baselinePairs": 101,
+  "baselineMissingTrainLegs": 267,
+  "remainingPairs": 0,
+  "remainingTrainLegs": 0,
+  "allTrainsScanned": true,
+  "note": "Coverage means geometry is available. OSM-inferred paths and track assignments are not official per-train routings. Diagnostic relaxed candidates were not automatically published.",
+  "pairs": [
+    {
+      "pair": "LZZ|NNZ",
+      "stations": "柳州—南宁",
+      "before": 15,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "有范围与停站条件的混跑／共用接入规则",
+      "trains": [
+        "N381",
+        "N382",
+        "N5",
+        "N6",
+        "V1136",
+        "V1192",
+        "V1194",
+        "V1523",
+        "V1524",
+        "V1556",
+        "V1558",
+        "Z336",
+        "Z338",
+        "Z396",
+        "Z398"
+      ],
+      "corridors": [
+        "nanning-shared-east"
+      ],
+      "lineNames": [
+        "南广线",
+        "湘桂线"
+      ],
+      "lengthKmRange": [
+        254.11,
+        254.11
+      ],
+      "evidence": [
+        "https://www.chinanews.com/sh/2014/06-20/6303293.shtml"
+      ]
+    },
+    {
+      "pair": "LYS|XKS",
+      "stations": "龙岩—厦门北",
+      "before": 10,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "有范围与停站条件的混跑／共用接入规则",
+      "trains": [
+        "V230",
+        "V232",
+        "V242",
+        "V404",
+        "V946",
+        "V948",
+        "V974",
+        "V976",
+        "Z102",
+        "Z104"
+      ],
+      "corridors": [
+        "fuxia-longxia-shared",
+        "longxia",
+        "xiamen-north-shared"
+      ],
+      "lineNames": [
+        "厦禾联络线",
+        "杭深线",
+        "龙漳线"
+      ],
+      "lengthKmRange": [
+        155.28,
+        155.28
+      ],
+      "evidence": [
+        "https://static.cninfo.com.cn/finalpage/2026-06-08/1225356567.PDF",
+        "https://www.crecg.com/web/xwzx61/zfgsdt39/2025021110085013173/index.html"
+      ]
+    },
+    {
+      "pair": "CPP|QIP",
+      "stations": "昌平—清河",
+      "before": 8,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "站点坐标／同名站消歧：昌平",
+      "trains": [
+        "D1051",
+        "D1063",
+        "D1124",
+        "D1127",
+        "D6702",
+        "G7842",
+        "G7850",
+        "G7885"
+      ],
+      "corridors": [],
+      "lineNames": [
+        "京包客专线"
+      ],
+      "lengthKmRange": [
+        19.76,
+        19.76
+      ],
+      "evidence": [
+        "https://www.openstreetmap.org/node/2662698203"
+      ]
+    },
+    {
+      "pair": "NFZ|NNZ",
+      "stations": "南宁东—南宁",
+      "before": 8,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "有范围与停站条件的混跑／共用接入规则",
+      "trains": [
+        "V3312",
+        "V3314",
+        "V3322",
+        "V3324",
+        "Z285",
+        "Z286",
+        "Z5",
+        "Z6"
+      ],
+      "corridors": [
+        "nanning-shared-east"
+      ],
+      "lineNames": [
+        "南广线"
+      ],
+      "lengthKmRange": [
+        11.16,
+        11.16
+      ],
+      "evidence": [
+        "https://www.chinanews.com/sh/2014/06-20/6303293.shtml"
+      ]
+    },
+    {
+      "pair": "NNZ|PGZ",
+      "stations": "南宁—平果",
+      "before": 8,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "有范围与停站条件的混跑／共用接入规则",
+      "trains": [
+        "V3303",
+        "V3304",
+        "V3305",
+        "V3306",
+        "V3307",
+        "V3308",
+        "V950",
+        "V952"
+      ],
+      "corridors": [
+        "nanning-shared-west"
+      ],
+      "lineNames": [
+        "南凭高速线",
+        "南昆客专线",
+        "南昆线",
+        "湘桂线"
+      ],
+      "lengthKmRange": [
+        111.42,
+        111.42
+      ],
+      "evidence": [
+        "https://www.chinanews.com/sh/2014/06-20/6303293.shtml"
+      ]
+    },
+    {
+      "pair": "FIQ|LDQ",
+      "stations": "邵东—娄底",
+      "before": 7,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "有范围与停站条件的混跑／共用接入规则",
+      "trains": [
+        "V1582",
+        "V1803",
+        "V3201",
+        "V3202",
+        "V576",
+        "V807",
+        "V809"
+      ],
+      "corridors": [
+        "loushao"
+      ],
+      "lineNames": [
+        "沪昆线",
+        "益湛线"
+      ],
+      "lengthKmRange": [
+        68.3,
+        68.3
+      ],
+      "evidence": [
+        "https://gxt.hunan.gov.cn/gxt/xxgk_71033/gzdt/gzdt_3/200907/t20090729_2843279.html"
+      ]
+    },
+    {
+      "pair": "BIZ|NNZ",
+      "stations": "百色—南宁",
+      "before": 6,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "有范围与停站条件的混跑／共用接入规则",
+      "trains": [
+        "N381",
+        "N382",
+        "V1206",
+        "V1208",
+        "V230",
+        "V232"
+      ],
+      "corridors": [
+        "nanning-shared-west"
+      ],
+      "lineNames": [
+        "南凭高速线",
+        "南昆客专线",
+        "南昆线",
+        "湘桂线",
+        "田靖线"
+      ],
+      "lengthKmRange": [
+        232.66,
+        232.66
+      ],
+      "evidence": [
+        "https://www.chinanews.com/sh/2014/06-20/6303293.shtml"
+      ]
+    },
+    {
+      "pair": "LTZ|NNZ",
+      "stations": "黎塘—南宁",
+      "before": 6,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "有范围与停站条件的混跑／共用接入规则",
+      "trains": [
+        "N172",
+        "N281",
+        "N282",
+        "V1138",
+        "V232",
+        "V950"
+      ],
+      "corridors": [
+        "nanning-shared-east"
+      ],
+      "lineNames": [
+        "南广线",
+        "湘桂线"
+      ],
+      "lengthKmRange": [
+        118.94,
+        118.94
+      ],
+      "evidence": [
+        "https://www.chinanews.com/sh/2014/06-20/6303293.shtml"
+      ]
+    },
+    {
+      "pair": "VUQ|XJQ",
+      "stations": "海口—徐闻",
+      "before": 6,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "OSM铁路轮渡及限定登船轨道",
+      "trains": [
+        "V458",
+        "V511",
+        "V512",
+        "Z112",
+        "Z1288",
+        "Z386"
+      ],
+      "corridors": [],
+      "lineNames": [
+        "湛海线",
+        "粤海轮渡线",
+        "西环货线"
+      ],
+      "lengthKmRange": [
+        39.58,
+        39.58
+      ],
+      "evidence": [
+        "https://www.openstreetmap.org/way/25172513"
+      ]
+    },
+    {
+      "pair": "ESN|HAN",
+      "stations": "恩施—宜昌东",
+      "before": 5,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "有范围与停站条件的混跑／共用接入规则",
+      "trains": [
+        "V1258",
+        "V504",
+        "Z218",
+        "Z220",
+        "Z334"
+      ],
+      "corridors": [
+        "ningrong-southwest"
+      ],
+      "lineNames": [
+        "沪蓉线"
+      ],
+      "lengthKmRange": [
+        212.83,
+        212.83
+      ],
+      "evidence": [
+        "https://jtj.cq.gov.cn/sy_240/bmdt/201910/t20191010_4370658.html"
+      ]
+    },
+    {
+      "pair": "ESN|LCN",
+      "stations": "恩施—利川",
+      "before": 5,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "有范围与停站条件的混跑／共用接入规则",
+      "trains": [
+        "V1258",
+        "V504",
+        "Z218",
+        "Z220",
+        "Z334"
+      ],
+      "corridors": [
+        "ningrong-southwest"
+      ],
+      "lineNames": [
+        "沪蓉线"
+      ],
+      "lengthKmRange": [
+        61.04,
+        61.04
+      ],
+      "evidence": [
+        "https://jtj.cq.gov.cn/sy_240/bmdt/201910/t20191010_4370658.html"
+      ]
+    },
+    {
+      "pair": "QZK|WFK",
+      "stations": "青州市—潍坊",
+      "before": 5,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "有范围与停站条件的混跑／共用接入规则",
+      "trains": [
+        "V1392",
+        "V884",
+        "Z352",
+        "Z356",
+        "Z358"
+      ],
+      "corridors": [
+        "jiaoji"
+      ],
+      "lineNames": [
+        "胶济客专线"
+      ],
+      "lengthKmRange": [
+        54.49,
+        54.49
+      ],
+      "evidence": [
+        "https://jtgc.cbpt.cnki.net/portal/journal/portal//client/paper/preview?cache=false&filePath=history%2FEditor%2F2021%2F0520%2Fjtgc%2Feb1d7033-9f98-46f3-b300-0f83683ea42d.pdf"
+      ]
+    },
+    {
+      "pair": "SEQ|UQQ",
+      "stations": "三亚—乐东",
+      "before": 5,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "有范围与停站条件的混跑／共用接入规则",
+      "trains": [
+        "V457",
+        "V458",
+        "Z1286",
+        "Z1288",
+        "Z55"
+      ],
+      "corridors": [
+        "sanya-shared"
+      ],
+      "lineNames": [
+        "天涯联络线",
+        "崖州联络线",
+        "海南西环高速线",
+        "西环货线"
+      ],
+      "lengthKmRange": [
+        71.64,
+        71.64
+      ],
+      "evidence": [
+        "https://www.sxjzty.cn/qikanfile/2021/6/039.pdf"
+      ]
+    },
+    {
+      "pair": "VUQ|ZWQ",
+      "stations": "海口—湛江西",
+      "before": 5,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "OSM铁路轮渡及限定登船轨道",
+      "trains": [
+        "V457",
+        "Z114",
+        "Z1286",
+        "Z384",
+        "Z55"
+      ],
+      "corridors": [],
+      "lineNames": [
+        "东海岛线",
+        "湛海线",
+        "粤海轮渡线",
+        "西环货线"
+      ],
+      "lengthKmRange": [
+        155.92,
+        155.92
+      ],
+      "evidence": [
+        "https://www.openstreetmap.org/way/25172513"
+      ]
+    },
+    {
+      "pair": "BDP|FWP",
+      "stations": "保定—白洋淀",
+      "before": 4,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "有范围与停站条件的混跑／共用接入规则",
+      "trains": [
+        "N124",
+        "N370",
+        "N54",
+        "V386"
+      ],
+      "corridors": [
+        "baxu"
+      ],
+      "lineNames": [
+        "京广线",
+        "霸徐线"
+      ],
+      "lengthKmRange": [
+        46.85,
+        46.85
+      ],
+      "evidence": [
+        "https://ggzyfw.beijing.gov.cn/jyxxggjtbyqs/20241203/4753964.html"
+      ]
+    },
+    {
+      "pair": "CEE|TVW",
+      "stations": "成都龙泉驿—潼南",
+      "before": 4,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "有范围与停站条件的混跑／共用接入规则",
+      "trains": [
+        "V1256",
+        "V1258",
+        "V502",
+        "V504"
+      ],
+      "corridors": [
+        "ningrong-southwest"
+      ],
+      "lineNames": [
+        "十院联络线",
+        "成渝线",
+        "成花线",
+        "沪蓉线"
+      ],
+      "lengthKmRange": [
+        197.49,
+        197.49
+      ],
+      "evidence": [
+        "https://jtj.cq.gov.cn/sy_240/bmdt/201910/t20191010_4370658.html"
+      ]
+    },
+    {
+      "pair": "GGZ|NNZ",
+      "stations": "贵港—南宁",
+      "before": 4,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "有范围与停站条件的混跑／共用接入规则",
+      "trains": [
+        "V1582",
+        "V1584",
+        "V230",
+        "V952"
+      ],
+      "corridors": [
+        "nanning-shared-east"
+      ],
+      "lineNames": [
+        "南广线",
+        "湘桂线",
+        "黎湛疏解II线",
+        "黎湛线"
+      ],
+      "lengthKmRange": [
+        172.71,
+        172.71
+      ],
+      "evidence": [
+        "https://www.chinanews.com/sh/2014/06-20/6303293.shtml"
+      ]
+    },
+    {
+      "pair": "QZK|ZBK",
+      "stations": "青州市—淄博",
+      "before": 4,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "有范围与停站条件的混跑／共用接入规则",
+      "trains": [
+        "V1392",
+        "Z352",
+        "Z356",
+        "Z358"
+      ],
+      "corridors": [
+        "jiaoji"
+      ],
+      "lineNames": [
+        "胶济客专线"
+      ],
+      "lengthKmRange": [
+        41.17,
+        41.17
+      ],
+      "evidence": [
+        "https://jtgc.cbpt.cnki.net/portal/journal/portal//client/paper/preview?cache=false&filePath=history%2FEditor%2F2021%2F0520%2Fjtgc%2Feb1d7033-9f98-46f3-b300-0f83683ea42d.pdf"
+      ]
+    },
+    {
+      "pair": "VJM|VOM",
+      "stations": "琅勃拉邦—万荣",
+      "before": 4,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "补充老挝OSM路网",
+      "trains": [
+        "D84",
+        "D86",
+        "D87",
+        "D88"
+      ],
+      "corridors": [],
+      "lineNames": [
+        "ທາງລົດໄຟ ລາວ-ຈີນ"
+      ],
+      "lengthKmRange": [
+        116.22,
+        116.22
+      ],
+      "evidence": [
+        "https://download.geofabrik.de/asia/laos.html"
+      ]
+    },
+    {
+      "pair": "VOM|YTM",
+      "stations": "万荣—万象",
+      "before": 4,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "补充老挝OSM路网",
+      "trains": [
+        "D84",
+        "D86",
+        "D87",
+        "D88"
+      ],
+      "corridors": [],
+      "lineNames": [
+        "ທາງລົດໄຟ ລາວ-ຈີນ"
+      ],
+      "lengthKmRange": [
+        123.5,
+        123.5
+      ],
+      "evidence": [
+        "https://download.geofabrik.de/asia/laos.html"
+      ]
+    },
+    {
+      "pair": "ASW|LOE",
+      "stations": "安顺—六枝南",
+      "before": 3,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "有范围与停站条件的混跑／共用接入规则",
+      "trains": [
+        "V4515",
+        "V517",
+        "V988"
+      ],
+      "corridors": [
+        "anliu"
+      ],
+      "lineNames": [
+        "安六客专线",
+        "沪昆线",
+        "黄化联络线",
+        "黄织疏解线"
+      ],
+      "lengthKmRange": [
+        59.69,
+        59.69
+      ],
+      "evidence": [
+        "https://gz.cri.cn/2025-04-10/ee845d6f-f059-cf54-43dc-c778a0b3f29d.html"
+      ]
+    },
+    {
+      "pair": "CUW|LCN",
+      "stations": "重庆北—利川",
+      "before": 3,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "有范围与停站条件的混跑／共用接入规则",
+      "trains": [
+        "V1258",
+        "V504",
+        "Z334"
+      ],
+      "corridors": [
+        "ningrong-southwest"
+      ],
+      "lineNames": [
+        "沪蓉线"
+      ],
+      "lengthKmRange": [
+        274.78,
+        274.78
+      ],
+      "evidence": [
+        "https://jtj.cq.gov.cn/sy_240/bmdt/201910/t20191010_4370658.html"
+      ]
+    },
+    {
+      "pair": "FZS|NES",
+      "stations": "福州—宁德",
+      "before": 3,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "有范围与停站条件的混跑／共用接入规则",
+      "trains": [
+        "V4745",
+        "V4746",
+        "V4748"
+      ],
+      "corridors": [
+        "ningde-fuzhou"
+      ],
+      "lineNames": [
+        "杭深线",
+        "杭福联络线",
+        "福州联络线",
+        "福马线"
+      ],
+      "lengthKmRange": [
+        95.8,
+        95.8
+      ],
+      "evidence": [
+        "https://fgw.fujian.gov.cn/zwgk/dbwyzs/rddbjy/202505/t20250519_6915772.htm"
+      ]
+    },
+    {
+      "pair": "JXA|VGQ",
+      "stations": "张家界西—常德",
+      "before": 3,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "有范围与停站条件的混跑／共用接入规则",
+      "trains": [
+        "Z1281",
+        "Z1282",
+        "Z297"
+      ],
+      "corridors": [
+        "qianzhangchang"
+      ],
+      "lineNames": [
+        "渝厦高速线"
+      ],
+      "lengthKmRange": [
+        140.6,
+        140.6
+      ],
+      "evidence": [
+        "https://www.hunan.gov.cn/hnyw/sy/hnyw1/201912/t20191227_11018106.html"
+      ]
+    },
+    {
+      "pair": "JZK|QHK",
+      "stations": "胶州北—青岛北",
+      "before": 3,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "有范围与停站条件的混跑／共用接入规则",
+      "trains": [
+        "V970",
+        "Z272",
+        "Z352"
+      ],
+      "corridors": [
+        "jiaoji"
+      ],
+      "lineNames": [
+        "胶济客专线"
+      ],
+      "lengthKmRange": [
+        47.2,
+        47.2
+      ],
+      "evidence": [
+        "https://jtgc.cbpt.cnki.net/portal/journal/portal//client/paper/preview?cache=false&filePath=history%2FEditor%2F2021%2F0520%2Fjtgc%2Feb1d7033-9f98-46f3-b300-0f83683ea42d.pdf"
+      ]
+    },
+    {
+      "pair": "KMM|LQM",
+      "stations": "昆明—禄丰南",
+      "before": 3,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "有范围与停站条件的混跑／共用接入规则",
+      "trains": [
+        "V7573",
+        "V7574",
+        "Z372"
+      ],
+      "corridors": [
+        "guangkun"
+      ],
+      "lineNames": [
+        "广昆线"
+      ],
+      "lengthKmRange": [
+        78.6,
+        78.6
+      ],
+      "evidence": [
+        "https://www.yndaily.com/html/2014/yaowenyunnan_0326/3123.html"
+      ]
+    },
+    {
+      "pair": "LOE|UMW",
+      "stations": "六枝南—六盘水",
+      "before": 3,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "有范围与停站条件的混跑／共用接入规则",
+      "trains": [
+        "V4515",
+        "V517",
+        "V988"
+      ],
+      "corridors": [
+        "anliu"
+      ],
+      "lineNames": [
+        "安六客专线",
+        "沪昆线"
+      ],
+      "lengthKmRange": [
+        75.26,
+        75.26
+      ],
+      "evidence": [
+        "https://gz.cri.cn/2025-04-10/ee845d6f-f059-cf54-43dc-c778a0b3f29d.html"
+      ]
+    },
+    {
+      "pair": "LYS|ZUS",
+      "stations": "龙岩—漳州",
+      "before": 3,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "有范围与停站条件的混跑／共用接入规则",
+      "trains": [
+        "V244",
+        "V571",
+        "V572"
+      ],
+      "corridors": [
+        "longxia"
+      ],
+      "lineNames": [
+        "龙漳线"
+      ],
+      "lengthKmRange": [
+        113.31,
+        113.31
+      ],
+      "evidence": [
+        "https://www.crecg.com/web/xwzx61/zfgsdt39/2025021110085013173/index.html"
+      ]
+    },
+    {
+      "pair": "NNZ|UBZ",
+      "stations": "南宁—来宾",
+      "before": 3,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "有范围与停站条件的混跑／共用接入规则",
+      "trains": [
+        "N171",
+        "V5",
+        "V6"
+      ],
+      "corridors": [
+        "nanning-shared-east"
+      ],
+      "lineNames": [
+        "南广线",
+        "湘桂线"
+      ],
+      "lengthKmRange": [
+        184.0,
+        184.0
+      ],
+      "evidence": [
+        "https://www.chinanews.com/sh/2014/06-20/6303293.shtml"
+      ]
+    },
+    {
+      "pair": "NUQ|YGA",
+      "stations": "新塘南—永宁南",
+      "before": 3,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "广东城际运营方识别",
+      "trains": [
+        "C4962",
+        "C4970",
+        "C4999"
+      ],
+      "corridors": [],
+      "lineNames": [
+        "穗深城际线"
+      ],
+      "lengthKmRange": [
+        5.68,
+        5.68
+      ],
+      "evidence": [
+        "https://jtj.gz.gov.cn/gkmlpt/content/10/10947/post_10947514.html"
+      ]
+    },
+    {
+      "pair": "TVW|WKW",
+      "stations": "潼南—合川",
+      "before": 3,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "有范围与停站条件的混跑／共用接入规则",
+      "trains": [
+        "V1258",
+        "V502",
+        "V504"
+      ],
+      "corridors": [
+        "ningrong-southwest"
+      ],
+      "lineNames": [
+        "沪蓉线"
+      ],
+      "lengthKmRange": [
+        49.47,
+        49.47
+      ],
+      "evidence": [
+        "https://jtj.cq.gov.cn/sy_240/bmdt/201910/t20191010_4370658.html"
+      ]
+    },
+    {
+      "pair": "VBM|VFM",
+      "stations": "磨丁—孟赛",
+      "before": 3,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "补充老挝OSM路网",
+      "trains": [
+        "D86",
+        "D87",
+        "D88"
+      ],
+      "corridors": [],
+      "lineNames": [
+        "ທາງລົດໄຟ ລາວ-ຈີນ"
+      ],
+      "lengthKmRange": [
+        66.74,
+        66.74
+      ],
+      "evidence": [
+        "https://download.geofabrik.de/asia/laos.html"
+      ]
+    },
+    {
+      "pair": "VFM|VJM",
+      "stations": "孟赛—琅勃拉邦",
+      "before": 3,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "补充老挝OSM路网",
+      "trains": [
+        "D86",
+        "D87",
+        "D88"
+      ],
+      "corridors": [],
+      "lineNames": [
+        "ທາງລົດໄຟ ລາວ-ຈີນ"
+      ],
+      "lengthKmRange": [
+        100.95,
+        100.95
+      ],
+      "evidence": [
+        "https://download.geofabrik.de/asia/laos.html"
+      ]
+    },
+    {
+      "pair": "XKS|ZUS",
+      "stations": "厦门北—漳州",
+      "before": 3,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "有范围与停站条件的混跑／共用接入规则",
+      "trains": [
+        "V244",
+        "V571",
+        "V572"
+      ],
+      "corridors": [
+        "fuxia-longxia-shared",
+        "longxia",
+        "xiamen-north-shared"
+      ],
+      "lineNames": [
+        "厦禾联络线",
+        "杭深线",
+        "龙漳线"
+      ],
+      "lengthKmRange": [
+        41.97,
+        41.97
+      ],
+      "evidence": [
+        "https://static.cninfo.com.cn/finalpage/2026-06-08/1225356567.PDF",
+        "https://www.crecg.com/web/xwzx61/zfgsdt39/2025021110085013173/index.html"
+      ]
+    },
+    {
+      "pair": "XLA|ZEA",
+      "stations": "新龙—镇龙",
+      "before": 3,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "广东城际运营方识别",
+      "trains": [
+        "C4962",
+        "C4970",
+        "C4999"
+      ],
+      "corridors": [],
+      "lineNames": [
+        "穗深城际线"
+      ],
+      "lengthKmRange": [
+        3.75,
+        3.75
+      ],
+      "evidence": [
+        "https://jtj.gz.gov.cn/gkmlpt/content/10/10947/post_10947514.html"
+      ]
+    },
+    {
+      "pair": "YGA|YVA",
+      "stations": "永宁南—永宁北",
+      "before": 3,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "广东城际运营方识别",
+      "trains": [
+        "C4962",
+        "C4970",
+        "C4999"
+      ],
+      "corridors": [],
+      "lineNames": [
+        "穗深城际线"
+      ],
+      "lengthKmRange": [
+        4.23,
+        4.23
+      ],
+      "evidence": [
+        "https://jtj.gz.gov.cn/gkmlpt/content/10/10947/post_10947514.html"
+      ]
+    },
+    {
+      "pair": "YVA|ZEA",
+      "stations": "永宁北—镇龙",
+      "before": 3,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "广东城际运营方识别",
+      "trains": [
+        "C4962",
+        "C4970",
+        "C4999"
+      ],
+      "corridors": [],
+      "lineNames": [
+        "穗深城际线"
+      ],
+      "lengthKmRange": [
+        7.86,
+        7.86
+      ],
+      "evidence": [
+        "https://jtj.gz.gov.cn/gkmlpt/content/10/10947/post_10947514.html"
+      ]
+    },
+    {
+      "pair": "AOP|LGP",
+      "stations": "燕山—良各庄",
+      "before": 2,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "站点坐标／同名站消歧：燕山",
+      "trains": [
+        "V7527",
+        "V7528"
+      ],
+      "corridors": [],
+      "lineNames": [
+        "京原线"
+      ],
+      "lengthKmRange": [
+        3.9,
+        3.9
+      ],
+      "evidence": [
+        "https://www.openstreetmap.org/node/1938418680"
+      ]
+    },
+    {
+      "pair": "AOP|NGP",
+      "stations": "燕山—南观村",
+      "before": 2,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "站点坐标／同名站消歧：燕山",
+      "trains": [
+        "V7527",
+        "V7528"
+      ],
+      "corridors": [],
+      "lineNames": [
+        "京原线"
+      ],
+      "lengthKmRange": [
+        3.81,
+        3.81
+      ],
+      "evidence": [
+        "https://www.openstreetmap.org/node/1938418680"
+      ]
+    },
+    {
+      "pair": "AXM|KMM",
+      "stations": "玉溪—昆明",
+      "before": 2,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "有范围与停站条件的混跑／共用接入规则",
+      "trains": [
+        "V4902",
+        "V4904"
+      ],
+      "corridors": [
+        "guangkun",
+        "kunyu-shared"
+      ],
+      "lineNames": [
+        "中老昆万线",
+        "广昆线",
+        "昆阳线",
+        "普家村联络线",
+        "玉河线"
+      ],
+      "lengthKmRange": [
+        101.83,
+        101.83
+      ],
+      "evidence": [
+        "https://www.xinhuanet.com/politics/2016-12/15/c_1120126804.htm",
+        "https://www.yndaily.com/html/2014/yaowenyunnan_0326/3123.html"
+      ]
+    },
+    {
+      "pair": "BNN|GGN",
+      "stations": "野三关—高坪",
+      "before": 2,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "有范围与停站条件的混跑／共用接入规则",
+      "trains": [
+        "V592",
+        "V594"
+      ],
+      "corridors": [
+        "ningrong-southwest"
+      ],
+      "lineNames": [
+        "沪蓉线"
+      ],
+      "lengthKmRange": [
+        26.8,
+        26.8
+      ],
+      "evidence": [
+        "https://jtj.cq.gov.cn/sy_240/bmdt/201910/t20191010_4370658.html"
+      ]
+    },
+    {
+      "pair": "BNN|HAN",
+      "stations": "野三关—宜昌东",
+      "before": 2,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "有范围与停站条件的混跑／共用接入规则",
+      "trains": [
+        "V592",
+        "V594"
+      ],
+      "corridors": [
+        "ningrong-southwest"
+      ],
+      "lineNames": [
+        "沪蓉线"
+      ],
+      "lengthKmRange": [
+        111.8,
+        111.8
+      ],
+      "evidence": [
+        "https://jtj.cq.gov.cn/sy_240/bmdt/201910/t20191010_4370658.html"
+      ]
+    },
+    {
+      "pair": "CPP|VJP",
+      "stations": "昌平—宣化北",
+      "before": 2,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "站点坐标／同名站消歧：昌平",
+      "trains": [
+        "G7842",
+        "G7885"
+      ],
+      "corridors": [],
+      "lineNames": [
+        "京包客专线"
+      ],
+      "lengthKmRange": [
+        120.8,
+        120.8
+      ],
+      "evidence": [
+        "https://www.openstreetmap.org/node/2662698203"
+      ]
+    },
+    {
+      "pair": "CUW|ESN",
+      "stations": "重庆北—恩施",
+      "before": 2,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "有范围与停站条件的混跑／共用接入规则",
+      "trains": [
+        "V592",
+        "V594"
+      ],
+      "corridors": [
+        "ningrong-southwest"
+      ],
+      "lineNames": [
+        "沪蓉线"
+      ],
+      "lengthKmRange": [
+        335.8,
+        335.8
+      ],
+      "evidence": [
+        "https://jtj.cq.gov.cn/sy_240/bmdt/201910/t20191010_4370658.html"
+      ]
+    },
+    {
+      "pair": "CZZ|NNZ",
+      "stations": "崇左—南宁",
+      "before": 2,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "有范围与停站条件的混跑／共用接入规则",
+      "trains": [
+        "V3701",
+        "V3702"
+      ],
+      "corridors": [
+        "nanning-shared-west"
+      ],
+      "lineNames": [
+        "南凭高速线",
+        "南昆客专线",
+        "南昆线",
+        "湘桂线"
+      ],
+      "lengthKmRange": [
+        122.98,
+        122.98
+      ],
+      "evidence": [
+        "https://www.chinanews.com/sh/2014/06-20/6303293.shtml"
+      ]
+    },
+    {
+      "pair": "DSJ|LIJ",
+      "stations": "定西—李家坪",
+      "before": 2,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "站点坐标／同名站消歧：李家坪",
+      "trains": [
+        "V7701",
+        "V7702"
+      ],
+      "corridors": [],
+      "lineNames": [
+        "陇海线"
+      ],
+      "lengthKmRange": [
+        37.19,
+        37.19
+      ],
+      "evidence": [
+        "https://www.openstreetmap.org/node/3182230198"
+      ]
+    },
+    {
+      "pair": "DWE|TTE",
+      "stations": "党武—天河潭",
+      "before": 2,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "站点坐标／同名站消歧：天河潭",
+      "trains": [
+        "C5885",
+        "C5891"
+      ],
+      "corridors": [],
+      "lineNames": [
+        "贵阳环线"
+      ],
+      "lengthKmRange": [
+        4.26,
+        4.26
+      ],
+      "evidence": [
+        "https://www.openstreetmap.org/node/3740822572"
+      ]
+    },
+    {
+      "pair": "FEP|FWP",
+      "stations": "白沟—白洋淀",
+      "before": 2,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "有范围与停站条件的混跑／共用接入规则",
+      "trains": [
+        "N52",
+        "V386"
+      ],
+      "corridors": [
+        "baxu"
+      ],
+      "lineNames": [
+        "霸徐线"
+      ],
+      "lengthKmRange": [
+        19.31,
+        19.31
+      ],
+      "evidence": [
+        "https://ggzyfw.beijing.gov.cn/jyxxggjtbyqs/20241203/4753964.html"
+      ]
+    },
+    {
+      "pair": "FEP|RMP",
+      "stations": "白沟—霸州",
+      "before": 2,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "有范围与停站条件的混跑／共用接入规则",
+      "trains": [
+        "N52",
+        "V386"
+      ],
+      "corridors": [
+        "baxu",
+        "baxu-connectors"
+      ],
+      "lineNames": [
+        "京九线",
+        "津霸线",
+        "霸徐线"
+      ],
+      "lengthKmRange": [
+        28.52,
+        28.52
+      ],
+      "evidence": [
+        "https://ggzyfw.beijing.gov.cn/jyxxggjtbyqs/20241203/4753964.html"
+      ]
+    },
+    {
+      "pair": "FEV|TYV",
+      "stations": "汾河—太原",
+      "before": 2,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "有范围与停站条件的混跑／共用接入规则",
+      "trains": [
+        "V6621",
+        "V6623"
+      ],
+      "corridors": [
+        "shitai",
+        "taiyuan-north-shared-approach"
+      ],
+      "lineNames": [
+        "上兰村线",
+        "大西高速线",
+        "太兴线",
+        "太北Ⅰ-Ⅵ场联络线",
+        "太原西南环线",
+        "汾太联络线",
+        "石太客专线",
+        "石太线"
+      ],
+      "lengthKmRange": [
+        12.34,
+        12.34
+      ],
+      "evidence": [
+        "https://ggzyfw.beijing.gov.cn/jyxxggjtbyqs/20240624/4571872.html",
+        "https://www.chinautc.com/upload/accessorychinautc/20186/201862214379664796.pdf"
+      ]
+    },
+    {
+      "pair": "FLA|JFA",
+      "stations": "佛塱—九佛",
+      "before": 2,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "广东城际运营方识别",
+      "trains": [
+        "C4962",
+        "C4970"
+      ],
+      "corridors": [],
+      "lineNames": [
+        "穗深城际线"
+      ],
+      "lengthKmRange": [
+        4.62,
+        4.62
+      ],
+      "evidence": [
+        "https://jtj.gz.gov.cn/gkmlpt/content/10/10947/post_10947514.html"
+      ]
+    },
+    {
+      "pair": "FLA|XLA",
+      "stations": "佛塱—新龙",
+      "before": 2,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "广东城际运营方识别",
+      "trains": [
+        "C4962",
+        "C4970"
+      ],
+      "corridors": [],
+      "lineNames": [
+        "穗深城际线"
+      ],
+      "lengthKmRange": [
+        7.29,
+        7.29
+      ],
+      "evidence": [
+        "https://jtj.gz.gov.cn/gkmlpt/content/10/10947/post_10947514.html"
+      ]
+    },
+    {
+      "pair": "FWP|TJP",
+      "stations": "白洋淀—天津",
+      "before": 2,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "有范围与停站条件的混跑／共用接入规则",
+      "trains": [
+        "N124",
+        "N370"
+      ],
+      "corridors": [
+        "baxu",
+        "baxu-connectors"
+      ],
+      "lineNames": [
+        "京九线",
+        "京沪线",
+        "津山线",
+        "津霸线",
+        "霸徐线"
+      ],
+      "lengthKmRange": [
+        136.93,
+        136.93
+      ],
+      "evidence": [
+        "https://ggzyfw.beijing.gov.cn/jyxxggjtbyqs/20241203/4753964.html"
+      ]
+    },
+    {
+      "pair": "GDJ|LIJ",
+      "stations": "甘草店—李家坪",
+      "before": 2,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "站点坐标／同名站消歧：李家坪",
+      "trains": [
+        "V7701",
+        "V7702"
+      ],
+      "corridors": [],
+      "lineNames": [
+        "陇海线"
+      ],
+      "lengthKmRange": [
+        17.8,
+        17.8
+      ],
+      "evidence": [
+        "https://www.openstreetmap.org/node/3182230198"
+      ]
+    },
+    {
+      "pair": "GMK|JZK",
+      "stations": "高密—胶州北",
+      "before": 2,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "有范围与停站条件的混跑／共用接入规则",
+      "trains": [
+        "V4276",
+        "V970"
+      ],
+      "corridors": [
+        "jiaoji"
+      ],
+      "lineNames": [
+        "胶济客专线"
+      ],
+      "lengthKmRange": [
+        25.86,
+        25.86
+      ],
+      "evidence": [
+        "https://jtgc.cbpt.cnki.net/portal/journal/portal//client/paper/preview?cache=false&filePath=history%2FEditor%2F2021%2F0520%2Fjtgc%2Feb1d7033-9f98-46f3-b300-0f83683ea42d.pdf"
+      ]
+    },
+    {
+      "pair": "GPM|LQM",
+      "stations": "广通北—禄丰南",
+      "before": 2,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "有范围与停站条件的混跑／共用接入规则",
+      "trains": [
+        "V7573",
+        "V7574"
+      ],
+      "corridors": [
+        "guangkun"
+      ],
+      "lineNames": [
+        "广昆线"
+      ],
+      "lengthKmRange": [
+        34.08,
+        34.08
+      ],
+      "evidence": [
+        "https://www.yndaily.com/html/2014/yaowenyunnan_0326/3123.html"
+      ]
+    },
+    {
+      "pair": "HQK|WFK",
+      "stations": "红岛—潍坊",
+      "before": 2,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "有范围与停站条件的混跑／共用接入规则",
+      "trains": [
+        "V4278",
+        "Z316"
+      ],
+      "corridors": [
+        "jiaoji",
+        "qingyan"
+      ],
+      "lineNames": [
+        "海青线",
+        "胶新疏解线",
+        "胶新线",
+        "胶济客专线",
+        "胶济线",
+        "胶黄线",
+        "蓝烟疏解线",
+        "青盐线"
+      ],
+      "lengthKmRange": [
+        138.32,
+        138.32
+      ],
+      "evidence": [
+        "https://jtgc.cbpt.cnki.net/portal/journal/portal//client/paper/preview?cache=false&filePath=history%2FEditor%2F2021%2F0520%2Fjtgc%2Feb1d7033-9f98-46f3-b300-0f83683ea42d.pdf",
+        "https://www.thepaper.cn/newsDetail_forward_29288593"
+      ]
+    },
+    {
+      "pair": "JFA|ZDA",
+      "stations": "九佛—钟落潭东",
+      "before": 2,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "广东城际运营方识别",
+      "trains": [
+        "C4962",
+        "C4970"
+      ],
+      "corridors": [],
+      "lineNames": [
+        "穗深城际线"
+      ],
+      "lengthKmRange": [
+        5.78,
+        5.78
+      ],
+      "evidence": [
+        "https://jtj.gz.gov.cn/gkmlpt/content/10/10947/post_10947514.html"
+      ]
+    },
+    {
+      "pair": "JOD|PVD",
+      "stations": "锦州南—盘锦",
+      "before": 2,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "有范围与停站条件的混跑／共用接入规则",
+      "trains": [
+        "N93",
+        "Z188"
+      ],
+      "corridors": [
+        "panjin-north-shared",
+        "qinshen"
+      ],
+      "lineNames": [
+        "京哈线",
+        "沟海线",
+        "盘五联络线",
+        "盘营高速线"
+      ],
+      "lengthKmRange": [
+        97.27,
+        97.27
+      ],
+      "evidence": [
+        "https://fgw.ln.gov.cn/fgw/xxgk/jyta/srddbjy/sssjrdechy2024n/2024082811183712102/",
+        "https://www.crsc.com.cn/news/tsi_5133_12211_90699.html"
+      ]
+    },
+    {
+      "pair": "JXB|LEB",
+      "stations": "鸡西—柳毛",
+      "before": 2,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "限定客运咽喉轨道",
+      "trains": [
+        "V7503",
+        "V7504"
+      ],
+      "corridors": [],
+      "lineNames": [
+        "城鸡线",
+        "林密线"
+      ],
+      "lengthKmRange": [
+        23.67,
+        23.67
+      ],
+      "evidence": [
+        "https://www.openstreetmap.org/way/1119200697"
+      ]
+    },
+    {
+      "pair": "JZK|WFK",
+      "stations": "胶州北—潍坊",
+      "before": 2,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "有范围与停站条件的混跑／共用接入规则",
+      "trains": [
+        "Z272",
+        "Z352"
+      ],
+      "corridors": [
+        "jiaoji"
+      ],
+      "lineNames": [
+        "胶济客专线"
+      ],
+      "lengthKmRange": [
+        98.24,
+        98.24
+      ],
+      "evidence": [
+        "https://jtgc.cbpt.cnki.net/portal/journal/portal//client/paper/preview?cache=false&filePath=history%2FEditor%2F2021%2F0520%2Fjtgc%2Feb1d7033-9f98-46f3-b300-0f83683ea42d.pdf"
+      ]
+    },
+    {
+      "pair": "LCN|WYW",
+      "stations": "利川—万州",
+      "before": 2,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "有范围与停站条件的混跑／共用接入规则",
+      "trains": [
+        "Z218",
+        "Z220"
+      ],
+      "corridors": [
+        "ningrong-southwest"
+      ],
+      "lineNames": [
+        "万凉线",
+        "沪蓉线"
+      ],
+      "lengthKmRange": [
+        101.51,
+        101.51
+      ],
+      "evidence": [
+        "https://jtj.cq.gov.cn/sy_240/bmdt/201910/t20191010_4370658.html"
+      ]
+    },
+    {
+      "pair": "NNZ|YLZ",
+      "stations": "南宁—玉林",
+      "before": 2,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "有范围与停站条件的混跑／共用接入规则",
+      "trains": [
+        "V1206",
+        "V1208"
+      ],
+      "corridors": [
+        "nanning-shared-east"
+      ],
+      "lineNames": [
+        "南广线",
+        "湘桂线",
+        "黎湛疏解II线",
+        "黎湛线"
+      ],
+      "lengthKmRange": [
+        262.2,
+        262.2
+      ],
+      "evidence": [
+        "https://www.chinanews.com/sh/2014/06-20/6303293.shtml"
+      ]
+    },
+    {
+      "pair": "NUQ|ZTA",
+      "stations": "新塘南—中堂",
+      "before": 2,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "广东城际运营方识别",
+      "trains": [
+        "C4962",
+        "C4999"
+      ],
+      "corridors": [],
+      "lineNames": [
+        "穗深城际线"
+      ],
+      "lengthKmRange": [
+        6.65,
+        6.65
+      ],
+      "evidence": [
+        "https://jtj.gz.gov.cn/gkmlpt/content/10/10947/post_10947514.html"
+      ]
+    },
+    {
+      "pair": "WKW|WSE",
+      "stations": "合川—武胜",
+      "before": 2,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "有范围与停站条件的混跑／共用接入规则",
+      "trains": [
+        "Z379",
+        "Z380"
+      ],
+      "corridors": [
+        "lanyu",
+        "ningrong-southwest"
+      ],
+      "lineNames": [
+        "兰渝线",
+        "沪蓉线"
+      ],
+      "lengthKmRange": [
+        52.33,
+        52.33
+      ],
+      "evidence": [
+        "https://fzggw.cq.gov.cn/zwxx/bmdt/202002/t20200212_5182684_wap.html",
+        "https://jtj.cq.gov.cn/sy_240/bmdt/201910/t20191010_4370658.html"
+      ]
+    },
+    {
+      "pair": "ZDA|ZUA",
+      "stations": "钟落潭东—竹料",
+      "before": 2,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "广东城际运营方识别",
+      "trains": [
+        "C4962",
+        "C4970"
+      ],
+      "corridors": [],
+      "lineNames": [
+        "穗深城际线"
+      ],
+      "lengthKmRange": [
+        8.71,
+        8.71
+      ],
+      "evidence": [
+        "https://jtj.gz.gov.cn/gkmlpt/content/10/10947/post_10947514.html"
+      ]
+    },
+    {
+      "pair": "AMM|LQM",
+      "stations": "元谋西—禄丰南",
+      "before": 1,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "有范围与停站条件的混跑／共用接入规则",
+      "trains": [
+        "Z372"
+      ],
+      "corridors": [
+        "guangkun"
+      ],
+      "lineNames": [
+        "峨广线",
+        "广昆线",
+        "成昆线"
+      ],
+      "lengthKmRange": [
+        99.52,
+        99.52
+      ],
+      "evidence": [
+        "https://www.yndaily.com/html/2014/yaowenyunnan_0326/3123.html"
+      ]
+    },
+    {
+      "pair": "CPP|OKP",
+      "stations": "昌平—下花园北",
+      "before": 1,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "站点坐标／同名站消歧：昌平",
+      "trains": [
+        "D1127"
+      ],
+      "corridors": [],
+      "lineNames": [
+        "京包客专线"
+      ],
+      "lengthKmRange": [
+        94.16,
+        94.16
+      ],
+      "evidence": [
+        "https://www.openstreetmap.org/node/2662698203"
+      ]
+    },
+    {
+      "pair": "CPP|QBP",
+      "stations": "昌平—东花园北",
+      "before": 1,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "站点坐标／同名站消歧：昌平",
+      "trains": [
+        "D1051"
+      ],
+      "corridors": [],
+      "lineNames": [
+        "京包客专线"
+      ],
+      "lengthKmRange": [
+        45.89,
+        45.89
+      ],
+      "evidence": [
+        "https://www.openstreetmap.org/node/2662698203"
+      ]
+    },
+    {
+      "pair": "CPP|VLP",
+      "stations": "昌平—八达岭长城",
+      "before": 1,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "站点坐标／同名站消歧：昌平",
+      "trains": [
+        "G7850"
+      ],
+      "corridors": [],
+      "lineNames": [
+        "京包客专线"
+      ],
+      "lengthKmRange": [
+        24.77,
+        24.77
+      ],
+      "evidence": [
+        "https://www.openstreetmap.org/node/2662698203"
+      ]
+    },
+    {
+      "pair": "CPP|VQP",
+      "stations": "昌平—怀来",
+      "before": 1,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "站点坐标／同名站消歧：昌平",
+      "trains": [
+        "D1124"
+      ],
+      "corridors": [],
+      "lineNames": [
+        "京包客专线"
+      ],
+      "lengthKmRange": [
+        67.0,
+        67.0
+      ],
+      "evidence": [
+        "https://www.openstreetmap.org/node/2662698203"
+      ]
+    },
+    {
+      "pair": "CPP|YNP",
+      "stations": "昌平—延庆",
+      "before": 1,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "站点坐标／同名站消歧：昌平",
+      "trains": [
+        "D6702"
+      ],
+      "corridors": [],
+      "lineNames": [
+        "京包客专线",
+        "延庆线"
+      ],
+      "lengthKmRange": [
+        38.23,
+        38.23
+      ],
+      "evidence": [
+        "https://www.openstreetmap.org/node/2662698203"
+      ]
+    },
+    {
+      "pair": "CPP|ZMP",
+      "stations": "昌平—张家口",
+      "before": 1,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "站点坐标／同名站消歧：昌平",
+      "trains": [
+        "D1063"
+      ],
+      "corridors": [],
+      "lineNames": [
+        "京包客专线"
+      ],
+      "lengthKmRange": [
+        140.98,
+        140.98
+      ],
+      "evidence": [
+        "https://www.openstreetmap.org/node/2662698203"
+      ]
+    },
+    {
+      "pair": "CSQ|JXA",
+      "stations": "长沙—张家界西",
+      "before": 1,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "有范围与停站条件的混跑／共用接入规则",
+      "trains": [
+        "Z295"
+      ],
+      "corridors": [
+        "qianzhangchang"
+      ],
+      "lineNames": [
+        "京广线",
+        "渝厦高速线",
+        "石长线",
+        "石长联络线",
+        "长沙客车外绕线"
+      ],
+      "lengthKmRange": [
+        336.87,
+        336.87
+      ],
+      "evidence": [
+        "https://www.hunan.gov.cn/hnyw/sy/hnyw1/201912/t20191227_11018106.html"
+      ]
+    },
+    {
+      "pair": "CUW|TVW",
+      "stations": "重庆北—潼南",
+      "before": 1,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "有范围与停站条件的混跑／共用接入规则",
+      "trains": [
+        "V1256"
+      ],
+      "corridors": [
+        "ningrong-southwest",
+        "weijing"
+      ],
+      "lineNames": [
+        "沪蓉线",
+        "渝怀线",
+        "渝怀郑渝联络线",
+        "渭井线"
+      ],
+      "lengthKmRange": [
+        104.9,
+        104.9
+      ],
+      "evidence": [
+        "https://jtj.cq.gov.cn/sy_240/bmdt/201910/t20191010_4370658.html",
+        "https://www.12306.cn/mormhweb/zxdt/201801/t20180117_20798.html"
+      ]
+    },
+    {
+      "pair": "ESN|GGN",
+      "stations": "恩施—高坪",
+      "before": 1,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "有范围与停站条件的混跑／共用接入规则",
+      "trains": [
+        "V594"
+      ],
+      "corridors": [
+        "ningrong-southwest"
+      ],
+      "lineNames": [
+        "沪蓉线"
+      ],
+      "lengthKmRange": [
+        74.22,
+        74.22
+      ],
+      "evidence": [
+        "https://jtj.cq.gov.cn/sy_240/bmdt/201910/t20191010_4370658.html"
+      ]
+    },
+    {
+      "pair": "ESN|JRN",
+      "stations": "恩施—建始",
+      "before": 1,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "有范围与停站条件的混跑／共用接入规则",
+      "trains": [
+        "V592"
+      ],
+      "corridors": [
+        "ningrong-southwest"
+      ],
+      "lineNames": [
+        "沪蓉线"
+      ],
+      "lengthKmRange": [
+        35.24,
+        35.24
+      ],
+      "evidence": [
+        "https://jtj.cq.gov.cn/sy_240/bmdt/201910/t20191010_4370658.html"
+      ]
+    },
+    {
+      "pair": "FWP|RMP",
+      "stations": "白洋淀—霸州",
+      "before": 1,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "有范围与停站条件的混跑／共用接入规则",
+      "trains": [
+        "N54"
+      ],
+      "corridors": [
+        "baxu",
+        "baxu-connectors"
+      ],
+      "lineNames": [
+        "京九线",
+        "津霸线",
+        "霸徐线"
+      ],
+      "lengthKmRange": [
+        47.84,
+        47.84
+      ],
+      "evidence": [
+        "https://ggzyfw.beijing.gov.cn/jyxxggjtbyqs/20241203/4753964.html"
+      ]
+    },
+    {
+      "pair": "FWP|XSP",
+      "stations": "白洋淀—徐水",
+      "before": 1,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "有范围与停站条件的混跑／共用接入规则",
+      "trains": [
+        "N52"
+      ],
+      "corridors": [
+        "baxu"
+      ],
+      "lineNames": [
+        "京广线",
+        "霸徐线"
+      ],
+      "lengthKmRange": [
+        23.0,
+        23.0
+      ],
+      "evidence": [
+        "https://ggzyfw.beijing.gov.cn/jyxxggjtbyqs/20241203/4753964.html"
+      ]
+    },
+    {
+      "pair": "FZS|LKS",
+      "stations": "福州—连江",
+      "before": 1,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "有范围与停站条件的混跑／共用接入规则",
+      "trains": [
+        "V4747"
+      ],
+      "corridors": [
+        "ningde-fuzhou"
+      ],
+      "lineNames": [
+        "杭深线",
+        "杭福联络线",
+        "福州联络线",
+        "福马线"
+      ],
+      "lengthKmRange": [
+        39.86,
+        39.86
+      ],
+      "evidence": [
+        "https://fgw.fujian.gov.cn/zwgk/dbwyzs/rddbjy/202505/t20250519_6915772.htm"
+      ]
+    },
+    {
+      "pair": "GAE|TTE",
+      "stations": "贵安—天河潭",
+      "before": 1,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "站点坐标／同名站消歧：天河潭",
+      "trains": [
+        "C5885"
+      ],
+      "corridors": [],
+      "lineNames": [
+        "贵阳环线"
+      ],
+      "lengthKmRange": [
+        15.89,
+        15.89
+      ],
+      "evidence": [
+        "https://www.openstreetmap.org/node/3740822572"
+      ]
+    },
+    {
+      "pair": "GGN|JRN",
+      "stations": "高坪—建始",
+      "before": 1,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "有范围与停站条件的混跑／共用接入规则",
+      "trains": [
+        "V592"
+      ],
+      "corridors": [
+        "ningrong-southwest"
+      ],
+      "lineNames": [
+        "沪蓉线"
+      ],
+      "lengthKmRange": [
+        38.98,
+        38.98
+      ],
+      "evidence": [
+        "https://jtj.cq.gov.cn/sy_240/bmdt/201910/t20191010_4370658.html"
+      ]
+    },
+    {
+      "pair": "GIW|ZNE",
+      "stations": "贵阳—乌江寨",
+      "before": 1,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "有范围与停站条件的混跑／共用接入规则",
+      "trains": [
+        "V988"
+      ],
+      "corridors": [
+        "yugui"
+      ],
+      "lineNames": [
+        "上都联络线",
+        "川黔线",
+        "渝贵线",
+        "贵阳客车外绕线"
+      ],
+      "lengthKmRange": [
+        107.35,
+        107.35
+      ],
+      "evidence": [
+        "https://www.xinhuanet.com/politics/2018-01/18/c_129793983.htm"
+      ]
+    },
+    {
+      "pair": "GMK|HQK",
+      "stations": "高密—红岛",
+      "before": 1,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "有范围与停站条件的混跑／共用接入规则",
+      "trains": [
+        "Z168"
+      ],
+      "corridors": [
+        "jiaoji",
+        "qingyan"
+      ],
+      "lineNames": [
+        "海青线",
+        "胶新疏解线",
+        "胶新线",
+        "胶济客专线",
+        "胶济线",
+        "胶黄线",
+        "蓝烟疏解线",
+        "青盐线"
+      ],
+      "lengthKmRange": [
+        65.94,
+        65.94
+      ],
+      "evidence": [
+        "https://jtgc.cbpt.cnki.net/portal/journal/portal//client/paper/preview?cache=false&filePath=history%2FEditor%2F2021%2F0520%2Fjtgc%2Feb1d7033-9f98-46f3-b300-0f83683ea42d.pdf",
+        "https://www.thepaper.cn/newsDetail_forward_29288593"
+      ]
+    },
+    {
+      "pair": "GSS|STS",
+      "stations": "冠豸山南—古田会址",
+      "before": 1,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "有范围与停站条件的混跑／共用接入规则",
+      "trains": [
+        "V4752"
+      ],
+      "corridors": [
+        "ganruilong-local-passenger"
+      ],
+      "lineNames": [
+        "赣瑞龙线"
+      ],
+      "lengthKmRange": [
+        39.62,
+        39.62
+      ],
+      "evidence": [
+        "https://www.ganzhou.gov.cn/gzszf/c100022/202512/7133bbb0e18f415980e29798dcf63abd.shtml"
+      ]
+    },
+    {
+      "pair": "HPD|PVD",
+      "stations": "葫芦岛北—盘锦",
+      "before": 1,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "有范围与停站条件的混跑／共用接入规则",
+      "trains": [
+        "V388"
+      ],
+      "corridors": [
+        "panjin-north-shared",
+        "qinshen"
+      ],
+      "lineNames": [
+        "京哈线",
+        "沟海线",
+        "盘五联络线",
+        "盘营高速线"
+      ],
+      "lengthKmRange": [
+        141.05,
+        141.05
+      ],
+      "evidence": [
+        "https://fgw.ln.gov.cn/fgw/xxgk/jyta/srddbjy/sssjrdechy2024n/2024082811183712102/",
+        "https://www.crsc.com.cn/news/tsi_5133_12211_90699.html"
+      ]
+    },
+    {
+      "pair": "HQK|JZK",
+      "stations": "红岛—胶州北",
+      "before": 1,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "有范围与停站条件的混跑／共用接入规则",
+      "trains": [
+        "V4276"
+      ],
+      "corridors": [
+        "jiaoji",
+        "qingyan"
+      ],
+      "lineNames": [
+        "胶济客专线",
+        "胶济线",
+        "青盐线"
+      ],
+      "lengthKmRange": [
+        73.99,
+        73.99
+      ],
+      "evidence": [
+        "https://jtgc.cbpt.cnki.net/portal/journal/portal//client/paper/preview?cache=false&filePath=history%2FEditor%2F2021%2F0520%2Fjtgc%2Feb1d7033-9f98-46f3-b300-0f83683ea42d.pdf",
+        "https://www.thepaper.cn/newsDetail_forward_29288593"
+      ]
+    },
+    {
+      "pair": "JAK|QZK",
+      "stations": "大明湖—青州市",
+      "before": 1,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "有范围与停站条件的混跑／共用接入规则",
+      "trains": [
+        "V884"
+      ],
+      "corridors": [
+        "jiaoji"
+      ],
+      "lineNames": [
+        "京胶联络线",
+        "胶济客专线",
+        "胶济线"
+      ],
+      "lengthKmRange": [
+        142.06,
+        142.06
+      ],
+      "evidence": [
+        "https://jtgc.cbpt.cnki.net/portal/journal/portal//client/paper/preview?cache=false&filePath=history%2FEditor%2F2021%2F0520%2Fjtgc%2Feb1d7033-9f98-46f3-b300-0f83683ea42d.pdf"
+      ]
+    },
+    {
+      "pair": "JFA|XLA",
+      "stations": "九佛—新龙",
+      "before": 1,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "广东城际运营方识别",
+      "trains": [
+        "C4999"
+      ],
+      "corridors": [],
+      "lineNames": [
+        "穗深城际线"
+      ],
+      "lengthKmRange": [
+        11.91,
+        11.91
+      ],
+      "evidence": [
+        "https://jtj.gz.gov.cn/gkmlpt/content/10/10947/post_10947514.html"
+      ]
+    },
+    {
+      "pair": "JFA|ZUA",
+      "stations": "九佛—竹料",
+      "before": 1,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "广东城际运营方识别",
+      "trains": [
+        "C4999"
+      ],
+      "corridors": [],
+      "lineNames": [
+        "穗深城际线"
+      ],
+      "lengthKmRange": [
+        14.48,
+        14.48
+      ],
+      "evidence": [
+        "https://jtj.gz.gov.cn/gkmlpt/content/10/10947/post_10947514.html"
+      ]
+    },
+    {
+      "pair": "LDQ|SYQ",
+      "stations": "娄底—邵阳",
+      "before": 1,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "有范围与停站条件的混跑／共用接入规则",
+      "trains": [
+        "V1804"
+      ],
+      "corridors": [
+        "loushao"
+      ],
+      "lineNames": [
+        "沪昆线",
+        "益湛线"
+      ],
+      "lengthKmRange": [
+        98.72,
+        98.72
+      ],
+      "evidence": [
+        "https://gxt.hunan.gov.cn/gxt/xxgk_71033/gzdt/gzdt_3/200907/t20090729_2843279.html"
+      ]
+    },
+    {
+      "pair": "LKS|NES",
+      "stations": "连江—宁德",
+      "before": 1,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "有范围与停站条件的混跑／共用接入规则",
+      "trains": [
+        "V4747"
+      ],
+      "corridors": [
+        "ningde-fuzhou"
+      ],
+      "lineNames": [
+        "杭深线"
+      ],
+      "lengthKmRange": [
+        55.95,
+        55.95
+      ],
+      "evidence": [
+        "https://fgw.fujian.gov.cn/zwgk/dbwyzs/rddbjy/202505/t20250519_6915772.htm"
+      ]
+    },
+    {
+      "pair": "LSE|ZNE",
+      "stations": "娄山关南—乌江寨",
+      "before": 1,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "有范围与停站条件的混跑／共用接入规则",
+      "trains": [
+        "V988"
+      ],
+      "corridors": [
+        "yugui"
+      ],
+      "lineNames": [
+        "渝贵线"
+      ],
+      "lengthKmRange": [
+        56.83,
+        56.83
+      ],
+      "evidence": [
+        "https://www.xinhuanet.com/politics/2018-01/18/c_129793983.htm"
+      ]
+    },
+    {
+      "pair": "LYS|STS",
+      "stations": "龙岩—古田会址",
+      "before": 1,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "有范围与停站条件的混跑／共用接入规则",
+      "trains": [
+        "V4752"
+      ],
+      "corridors": [
+        "ganruilong-local-passenger"
+      ],
+      "lineNames": [
+        "赣瑞龙线"
+      ],
+      "lengthKmRange": [
+        27.73,
+        27.73
+      ],
+      "evidence": [
+        "https://www.ganzhou.gov.cn/gzszf/c100022/202512/7133bbb0e18f415980e29798dcf63abd.shtml"
+      ]
+    },
+    {
+      "pair": "PBD|PVD",
+      "stations": "盘锦北—盘锦",
+      "before": 1,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "有范围与停站条件的混跑／共用接入规则",
+      "trains": [
+        "N94"
+      ],
+      "corridors": [
+        "panjin-north-shared",
+        "qinshen"
+      ],
+      "lineNames": [
+        "京哈线",
+        "沟海线",
+        "盘五联络线",
+        "盘营高速线"
+      ],
+      "lengthKmRange": [
+        28.82,
+        28.82
+      ],
+      "evidence": [
+        "https://fgw.ln.gov.cn/fgw/xxgk/jyta/srddbjy/sssjrdechy2024n/2024082811183712102/",
+        "https://www.crsc.com.cn/news/tsi_5133_12211_90699.html"
+      ]
+    },
+    {
+      "pair": "PTS|SHS",
+      "stations": "莆田—三明北",
+      "before": 1,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "有范围与停站条件的混跑／共用接入规则",
+      "trains": [
+        "Z126"
+      ],
+      "corridors": [
+        "changfu",
+        "yongpu"
+      ],
+      "lineNames": [
+        "东吴支线",
+        "昌福线",
+        "永莆线"
+      ],
+      "lengthKmRange": [
+        195.74,
+        195.74
+      ],
+      "evidence": [
+        "https://www.nra.gov.cn/xxgk/gkml/ztjg/jybl/zxfk/202011/P020230414355543925786.pdf"
+      ]
+    },
+    {
+      "pair": "PTS|XKS",
+      "stations": "莆田—厦门北",
+      "before": 1,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "有范围与停站条件的混跑／共用接入规则",
+      "trains": [
+        "Z126"
+      ],
+      "corridors": [
+        "fuxia-longxia-shared",
+        "xiamen-north-shared"
+      ],
+      "lineNames": [
+        "东吴支线",
+        "厦禾联络线",
+        "杭深线"
+      ],
+      "lengthKmRange": [
+        140.46,
+        140.46
+      ],
+      "evidence": [
+        "https://static.cninfo.com.cn/finalpage/2026-06-08/1225356567.PDF"
+      ]
+    },
+    {
+      "pair": "QOL|SZL",
+      "stations": "青沟子—江源",
+      "before": 1,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "站点坐标／同名站消歧：青沟子",
+      "trains": [
+        "V6565"
+      ],
+      "corridors": [],
+      "lineNames": [
+        "浑白线"
+      ],
+      "lengthKmRange": [
+        50.68,
+        50.68
+      ],
+      "evidence": [
+        "https://www.openstreetmap.org/node/12844704701"
+      ]
+    },
+    {
+      "pair": "SHS|XKS",
+      "stations": "三明北—厦门北",
+      "before": 1,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "有范围与停站条件的混跑／共用接入规则",
+      "trains": [
+        "Z128"
+      ],
+      "corridors": [
+        "changfu",
+        "fuxia-longxia-shared",
+        "xiamen-north-shared",
+        "yongpu"
+      ],
+      "lineNames": [
+        "东吴支线",
+        "厦禾联络线",
+        "昌福线",
+        "杭深线",
+        "永莆线"
+      ],
+      "lengthKmRange": [
+        336.2,
+        336.2
+      ],
+      "evidence": [
+        "https://static.cninfo.com.cn/finalpage/2026-06-08/1225356567.PDF",
+        "https://www.nra.gov.cn/xxgk/gkml/ztjg/jybl/zxfk/202011/P020230414355543925786.pdf"
+      ]
+    },
+    {
+      "pair": "VAG|XKS",
+      "stations": "吉安—厦门北",
+      "before": 1,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "有范围与停站条件的混跑／共用接入规则",
+      "trains": [
+        "V403"
+      ],
+      "corridors": [
+        "fuxia-longxia-shared",
+        "longxia",
+        "nanlong",
+        "xiamen-north-shared"
+      ],
+      "lineNames": [
+        "京九线",
+        "兴泉线",
+        "南龙线",
+        "厦禾联络线",
+        "杭深线",
+        "清冠线",
+        "漳龙线",
+        "赣龙线",
+        "陈坡疏解线",
+        "龙漳线"
+      ],
+      "lengthKmRange": [
+        605.36,
+        605.36
+      ],
+      "evidence": [
+        "https://fgw.fujian.gov.cn/ztzl/tljsbgs/fjstlfzqk/fjtljscg/201812/t20181229_4728818.htm",
+        "https://static.cninfo.com.cn/finalpage/2026-06-08/1225356567.PDF",
+        "https://www.crecg.com/web/xwzx61/zfgsdt39/2025021110085013173/index.html"
+      ]
+    },
+    {
+      "pair": "VBM|VJM",
+      "stations": "磨丁—琅勃拉邦",
+      "before": 1,
+      "remaining": 0,
+      "status": "已补齐",
+      "diagnosis": "补充老挝OSM路网",
+      "trains": [
+        "D84"
+      ],
+      "corridors": [],
+      "lineNames": [
+        "ທາງລົດໄຟ ລາວ-ຈີນ"
+      ],
+      "lengthKmRange": [
+        167.68,
+        167.68
+      ],
+      "evidence": [
+        "https://download.geofabrik.de/asia/laos.html"
+      ]
+    }
+  ]
+}

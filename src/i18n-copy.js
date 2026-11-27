@@ -16,5 +16,5 @@ export default {
   "qETRC 车次缺少 checi。": "qETRC train is missing its checi identifier.",
   "高铁／动车（G/D）": "HSR / EMU (G/D)",
   "城际／市域（C/S）": "Intercity (C/S)",
-  "共线区间交替显示颜色": "Shared routes alternate colors"
+  "共线区间并行显示颜色": "Shared routes use parallel colors"
 };

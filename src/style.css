@@ -87,8 +87,8 @@ html:lang(en) .station-chip{max-width:260px}
 
 .journey summary span{min-width:0;max-width:100%;white-space:normal;overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
 
-:root{--route-highspeed:#d92535;--route-conventional:#14563e;--route-intercity:#173f80}
-.dark-map{--route-highspeed:#ff5a63;--route-conventional:#398c66;--route-intercity:#527fb5}
+:root{--route-highspeed:#d92535;--route-conventional:#14563e;--route-intercity:#1678d4}
+.dark-map{--route-highspeed:#ff5a63;--route-conventional:#398c66;--route-intercity:#58acff}
 .legend .route-highspeed{background:var(--route-highspeed)}
 .legend .route-conventional{background:var(--route-conventional)}
 .legend .route-intercity{background:var(--route-intercity)}

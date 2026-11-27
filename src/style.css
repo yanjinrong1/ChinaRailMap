@@ -84,3 +84,5 @@ html:lang(en) .journey summary{flex-wrap:wrap}
 html:lang(en) .station-chip{max-width:260px}
 @media(prefers-reduced-motion:reduce){.language-knob{transition:none}}
 @media(max-width:650px){.brand-row{padding-bottom:6px;margin-bottom:5px}.brand-row .app-brand h1{font-size:15px}.brand-row .app-brand-en{font-size:10px}}
+
+.journey summary span{min-width:0;max-width:100%;white-space:normal;overflow-wrap:anywhere;font-variant-numeric:tabular-nums}

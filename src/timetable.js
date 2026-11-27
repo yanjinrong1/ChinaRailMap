@@ -6,7 +6,7 @@ export {shiftDate,runsOnDate,timeMinutes} from './service-calendar.js';
 import {timeMinutes} from './service-calendar.js';
 export function displayTime(time,originTime='00:00:00'){
  if(!time)return '—';const minutes=timeMinutes(time),day=Math.floor(minutes/1440)-Math.floor(timeMinutes(originTime)/1440);
- return `${day>0?day===1?'次日 ':`${day}天后 `:''}${String(Math.floor(minutes/60)%24).padStart(2,'0')}:${String(minutes%60).padStart(2,'0')}`;
+ return `${String(Math.floor(minutes/60)%24).padStart(2,'0')}:${String(minutes%60).padStart(2,'0')}${day>0?`+${day}`:''}`;
 }
 export function importTimetable(input,knownStations){
  if(Array.isArray(input?.stations))return validateData(input);

@@ -13,7 +13,7 @@ test('boarding date is converted to origin service date after midnight',()=>{
 });
 test('times are displayed relative to boarding day and use China date',()=>{
  assert.equal(displayTime('27:00:00','25:05:00'),'03:00');
- assert.equal(displayTime('27:00:00','23:00:00'),'次日 03:00');
+ assert.equal(displayTime('27:00:00','23:00:00'),'03:00+1');
  assert.equal(chinaToday(new Date('2026-11-25T20:00:00Z')),'2026-11-26');
 });
 test('qETRC imports use real coordinate matching and roll midnight times',()=>{
@@ -27,4 +27,10 @@ test('published snapshot is valid, keeps real stop order and includes calendars 
  for(const t of d.trains){assert.equal(t.times.length,t.stops.length);assert.ok(d.services[t.serviceId]?.length);assert.ok(!t.code.startsWith('DEMO'));}
  const origin=d.stations.find(s=>s.name==='珠海'),target=d.stations.find(s=>s.name==='北京西');
  const r=reachable(d,origin.id,'2026-11-26');assert.ok(r.destinations.get(target.id)?.some(t=>t.code==='G1044'));assert.equal(reachable(d,origin.id,'2030-01-01').services.length,0);
+});
+
+test('compact day offsets support multi-day trips and boarding after midnight',()=>{
+ assert.equal(displayTime('54:53:00','21:25:00'),'06:53+2');
+ assert.equal(displayTime('54:53:00','25:25:00'),'06:53+1');
+ assert.equal(displayTime('25:53:00','25:25:00'),'01:53');
 });

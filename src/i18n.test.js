@@ -39,7 +39,7 @@ test('country detection falls back from unavailable API to trace, and handles to
  assert.equal(await detectCountry(async()=>{throw Error('offline');}),null);
 });
 test('overnight arrival/departure pairs translate both dates',()=>{
- assert.equal(translateText('次日 01:05 / 次日 01:15'),'Next day 01:05 / Next day 01:15');
+ assert.equal(translateText('次日 01:05 / 次日 01:15'),'01:05+1 / 01:15+1');
 });
 test('initial interface copy has no untranslated Chinese text in English mode',async()=>{
  const fs=await import('node:fs');
@@ -50,4 +50,8 @@ test('initial interface copy has no untranslated Chinese text in English mode',a
  const walker=document.createTreeWalker(document.body,4);let node;
  while((node=walker.nextNode()))assert.equal(/[\u3400-\u9fff]/u.test(node.nodeValue),false,node.nodeValue);
  translator.disconnect();delete globalThis.MutationObserver;
+});
+
+test('train summary abbreviates departure and arrival without widening overnight times',()=>{
+ assert.equal(translateText('21:25 出发 · 06:53+1 到达'),'21:25 dep · 06:53+1 arr');
 });

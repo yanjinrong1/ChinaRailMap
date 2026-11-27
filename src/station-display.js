@@ -7,7 +7,7 @@ export function stationDisplayGroups(data){
  for(const train of data.trains)for(const id of train.stops)operators.get(id)?.add(train.operator||'unknown');
  const find=i=>parents[i]===i?i:(parents[i]=find(parents[i]));
  for(let i=0;i<stations.length;i++)for(let j=i+1;j<stations.length;j++){
-  const a=stations[i],b=stations[j];if(Math.abs(a.lat-b.lat)>.00032)continue;
+  const a=stations[i],b=stations[j];if([...operators.get(a.id)].sort().join('|')===[...operators.get(b.id)].sort().join('|'))continue;if(Math.abs(a.lat-b.lat)>.00032)continue;
   const x=(a.lng-b.lng)*111320*Math.cos(a.lat*Math.PI/180),y=(a.lat-b.lat)*111320;
   if(Math.hypot(x,y)<=35)parents[find(j)]=find(i);
  }
@@ -34,4 +34,21 @@ export function includeStationCompanions(visible,ranked,groups,zoom){
  const ids=new Set(visible.map(s=>s.id)),wanted=new Set();
  for(const s of visible)for(const id of groups.get(s.id)?.members||[])wanted.add(id);
  return ranked.filter(s=>ids.has(s.id)||wanted.has(s.id)&&s.frequency>0);
+}
+
+// Collapse duplicate source codes only for the same nearby named station and
+// the same known operator set. Raw IDs remain available for timetable geometry.
+export function stationAliases(data){
+ const operators=new Map(data.stations.map(s=>[s.id,new Set()]));
+ for(const t of data.trains)for(const id of t.stops)operators.get(id)?.add(t.operator||'unknown');
+ const aliases=new Map(),representatives=[];
+ for(const s of [...data.stations].sort((a,b)=>a.id.localeCompare(b.id))){
+  const ops=[...operators.get(s.id)].sort().join('|');
+  const match=ops&&!ops.includes('unknown')&&representatives.find(r=>r.name===s.name&&[...operators.get(r.id)].sort().join('|')===ops&&Math.hypot((r.lat-s.lat)*111320,(r.lng-s.lng)*111320*Math.cos(s.lat*Math.PI/180))<=35);
+  aliases.set(s.id,match?match.id:s.id);if(!match)representatives.push(s);
+ }
+ return aliases;
+}
+export function stationDisplayDataset(data,aliases){
+ return {...data,stations:data.stations.filter(s=>aliases.get(s.id)===s.id),trains:data.trains.map(t=>({...t,stops:t.stops.map(id=>aliases.get(id)||id)}))};
 }

@@ -14,14 +14,16 @@ export function validateData(data) {
   }
   return data;
 }
-export function reachable(data, origin, date) {
+export function reachable(data, origin, date, aliases=new Map()) {
   const destinations = new Map();
   const services = [];
   for (const train of data.trains) {
-    const index = train.stops.indexOf(origin);
+    const canonical=id=>aliases.get(id)||id;
+    const index = train.stops.findIndex(id=>canonical(id)===canonical(origin));
     if (index < 0 || index === train.stops.length - 1 || !runsOnDate(data,train,index,date)) continue;
     services.push({...train, originIndex:index, path:train.stops.slice(index)});
-    train.stops.slice(index+1).forEach((id,offset)=>{
+    train.stops.slice(index+1).forEach((rawId,offset)=>{
+      const id=canonical(rawId);if(id===canonical(origin))return;
       if (!destinations.has(id)) destinations.set(id,[]);
       destinations.get(id).push({...train,originIndex:index,path:train.stops.slice(index,index+offset+2)});
     });

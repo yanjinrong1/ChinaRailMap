@@ -5,6 +5,8 @@ import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import {createIcons, Upload, Info, Plus, Minus, X, Download, Layers, Maximize, ArrowLeftRight} from 'lucide';
 const icons={Upload,Info,Plus,Minus,X,Download,Layers,Maximize,ArrowLeftRight};
+import {stationDisplayGroups,stationDisplayPoint,includeStationCompanions,STATION_SEPARATION_ZOOM} from './station-display.js';
+import {englishStationName} from './i18n.js';
 import {demoData} from './data.js';
 import {mergeDisplayRoutes,routeCoverage,focusedStopIds} from './route-display.js';
 import {reachable,validateData} from './network.js';
@@ -17,6 +19,7 @@ const icon = name => `<i data-lucide="${name}"></i>`;
 const escape = value => String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let data={metadata:{kind:'loading'},stations:[],trains:[]}, snapshot=null, snapshotGeometry=null, selected=null, result=null, destination=null;
 let stationById=new Map(), rankedStations=[], visibleMarkers=new Map();
+let stationGroups=new Map();
 let geometryPromise=null;
 let travelDate=chinaToday(),focusedTrainId=null;
 document.querySelector('#app').innerHTML=`<main><aside><div class="brand-row"><a class="app-brand" href="/" aria-label="中国铁路可达地图首页"><img src="/china-railway.svg" width="40" height="44" alt="国铁标志"><span><h1>中国铁路可达地图</h1><span class="app-brand-en">China Interactive Rail Map</span></span></a><button id="language-toggle" class="language-switch" type="button" role="switch" aria-label="English interface" aria-checked="false"><span class="language-text">CN</span><span class="language-knob" aria-hidden="true"></span></button></div><div id="panel"></div><footer class="database-footer"><span id="data-summary" role="status">正在加载数据库…</span></footer></aside><section class="map-area" aria-label="中国铁路地图"><div id="map"></div><div class="map-top-right"><span id="station-count"></span> 个站点</div><div id="routing-status" role="status">正在加载铁路路径…</div><div class="map-tools" role="group" aria-label="地图工具"><button id="about" aria-label="数据来源与说明" title="数据来源与说明" aria-expanded="false" aria-controls="source-panel">${icon('info')}</button><button id="layers-toggle" aria-label="地图与线条" aria-expanded="false" aria-controls="layer-panel" title="地图与线条">${icon('layers')}</button><button id="reset-view" aria-label="回到全国视图" title="回到全国视图">${icon('maximize')}</button><button id="zoom-in" aria-label="放大地图" title="放大">${icon('plus')}</button><button id="zoom-out" aria-label="缩小地图" title="缩小">${icon('minus')}</button></div><section id="layer-panel" role="dialog" aria-modal="false" aria-labelledby="layer-heading" hidden><div class="layer-heading"><h2 id="layer-heading">地图与线条</h2><button id="layers-close" aria-label="关闭地图与线条">${icon('x')}</button></div><fieldset class="basemap-options"><legend class="sr-only">底图风格</legend><label class="basemap-option"><input type="radio" name="basemap" data-basemap="dark" value="dark"><span class="map-swatch swatch-dark" aria-hidden="true"></span><span><strong>深色</strong><small>OpenFreeMap Dark</small></span></label><label class="basemap-option"><input type="radio" name="basemap" data-basemap="positron" value="positron"><span class="map-swatch swatch-light" aria-hidden="true"></span><span><strong>简洁浅色</strong><small>OpenFreeMap Positron</small></span></label><label class="basemap-option"><input type="radio" name="basemap" data-basemap="liberty" value="liberty"><span class="map-swatch swatch-liberty" aria-hidden="true"></span><span><strong>彩色地图</strong><small>OpenFreeMap Liberty</small></span></label><label class="basemap-option"><input type="radio" name="basemap" data-basemap="osm" value="osm"><span class="map-swatch swatch-osm" aria-hidden="true"></span><span><strong>OSM 标准</strong><small>完整街道信息</small></span></label></fieldset><fieldset class="line-options"><legend>线条粗细 · 全局</legend><label><input type="radio" name="line-weight" value="fine" checked><span class="line-sample fine"></span>细（默认）</label><label><input type="radio" name="line-weight" value="bold"><span class="line-sample bold"></span>粗</label></fieldset><p id="basemap-status" role="status">地图数据来自 OpenStreetMap</p><button id="basemap-retry" hidden>重新加载底图</button></section><div class="legend"><strong>地图图例</strong><span><b class="legend-major"></b>主要枢纽</span><span><b class="legend-regional"></b>区域枢纽</span><span><b class="legend-minor"></b>一般车站</span><span><b class="legend-route"></b>可达线路</span><small>大小按车次，显示兼顾区域</small></div><section id="source-panel" role="dialog" aria-modal="false" aria-labelledby="source-heading" hidden><button id="source-close" class="close-dialog" aria-label="关闭">${icon('x')}</button><h2 id="source-heading">数据来源与说明</h2><p><span id="data-mode">正在加载时刻表</span></p><p id="data-origin"></p><p>默认使用 wensimehrp / chinese-railway-gtfs 发布的真实时刻表快照，运行数据由 RailGo-Parser 获取，站点坐标来自 OpenStreetMap。按乘车站当地日期筛选开行车次，跨午夜时按始发日换算。这里不查询实时余票或临时停运。</p><p id="snapshot-details">正在读取数据版本…</p><p>可达指同一趟列车在所选站之后的停站，不计算换乘。线路优先采用每趟车自己的来源走向；缺失时使用保留线路名、高速线、运营方、轨距等属性的 OSM 路网逐站推算，并明确标注。OSM 货运标签仅增加寻路代价，不再直接禁行；工业专用线、车种与运营方等约束仍保留。仍无法通过约束检查的区间列入自动缺线清单。铁路几何不等同于经官方核实的车次经由。</p><p>支持导入 qETRC .pyetgr / .pyetdb 文件，按车站名称匹配内置坐标。导入内容的真实性和有效日期由文件提供者负责。</p><a href="https://github.com/wensimehrp/chinese-railway-gtfs" target="_blank" rel="noreferrer">时刻表来源与更新</a> · <a href="/timetable/routing-audit.json" target="_blank" rel="noreferrer">自动缺线清单</a> · <a href="https://github.com/CDK6182CHR/qETRC" target="_blank" rel="noreferrer">qETRC 项目</a><div class="source-actions"><button id="import" class="primary">${icon('upload')} 导入时刻表</button><button id="restore-snapshot" hidden>恢复内置快照</button></div><button id="download" class="primary">下载时刻表格式示例 ${icon('download')}</button><p class="fine">导入在浏览器本地完成，刷新后恢复内置真实时刻表快照。深浅底图来自 OpenFreeMap，无法连接时使用 OSM 栅格的备用视觉样式。铁路几何 © OpenStreetMap contributors，ODbL 1.0；OSM 路网日期与推算来源见自动审计记录；时刻表与上游线路走向快照见版本说明。</p></section><div id="toast" role="status"></div></section></main><input id="file" type="file" accept=".json,.pyetgr,.pyetdb,application/json" hidden>`;
@@ -85,6 +88,9 @@ function applyDataset(next,geometry){
  registerStationNames(next.stations);
  data={...next,metadata:next.metadata||{kind:'import'}};railGeometry=geometry||{segments:{}};geometryReady=!!geometry;
  stationById=new Map(data.stations.map(s=>[s.id,s]));
+ stationGroups=stationDisplayGroups(data);
+ const suffixes={'国铁':'China Railway','城际':'Intercity','城际／国铁':'Intercity / China Railway','独立站点':'Separate station'};
+ addTranslations(Object.fromEntries([...stationGroups].map(([id,g])=>[g.name,`${englishStationName(stationById.get(id).name)} (${g.suffix.split(' · ').map(part=>suffixes[part]||part).join(' · ')})`])));
  rebuildPriorities();
  visibleMarkers.forEach(marker=>marker.remove());visibleMarkers.clear();
  const meta=data.metadata||{},isSnapshot=meta.kind==='snapshot';
@@ -96,12 +102,15 @@ function applyDataset(next,geometry){
  if(sm)document.querySelector('#snapshot-details').textContent=`内置版本 ${sm.release}，${snapshot.stations.length} 个站点、${snapshot.trains.length} 趟车次；开行日记录范围 ${sm.validFrom} 至 ${sm.validTo}。CC BY 4.0，作者 wensimehrp (Jeremy Gao)。快照不代表所有日期的全部列车。`;
  clear();
 }
+const stationLeaders=L.layerGroup().addTo(map);
 const markers=L.layerGroup().addTo(map),activeLines=L.layerGroup().addTo(map),selectionChips=L.layerGroup().addTo(map);
 let routeRevision=0,drawnRouteRevision=-1,drawnStyle='',chipKey='';
 const refreshIcons=()=>createIcons({icons,attrs:{'stroke-width':1.7}});
 let toastTimer;
 function toast(message){const el=document.querySelector('#toast');el.textContent=message;el.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),3400);}
 function stationPosition(s){return [s.lat,s.lng];}
+function stationDisplayPosition(s){const point=stationDisplayPoint(s,stationGroups,map.getZoom());return map.unproject(L.point(point.x,point.y),map.getZoom());}
+function stationName(id){return stationGroups.get(id)?.name||stationById.get(id)?.name||id;}
 function drawRoutes(){
  const style=`${dark}-${lineWeight}-${map.getZoom()}`;
  if(drawnRouteRevision===routeRevision&&drawnStyle===style)return;
@@ -128,30 +137,34 @@ function drawRoutes(){
  }
 }
 function drawChips(){
- const key=`${selected}|${destination}`;if(key===chipKey)return;chipKey=key;selectionChips.clearLayers();
+ const key=`${selected}|${destination}|${map.getZoom()}`;if(key===chipKey)return;chipKey=key;selectionChips.clearLayers();
  for(const [id,role]of [[selected,'origin'],[destination,'destination']]){
   if(!id)continue;const station=stationById.get(id);
-  const marker=L.marker(stationPosition(station),{keyboard:false,zIndexOffset:1000,icon:L.divIcon({className:'station-chip-anchor',iconSize:[1,1],iconAnchor:role==='origin'?[-12,20]:[12,20],html:`<div class="station-chip ${role}"><span><small>${role==='origin'?'始发':'目的地'}</small><strong>${escape(station.name)}</strong></span><button type="button" aria-label="取消${role==='origin'?'始发':'目的地'}站 ${escape(station.name)}">×</button></div>`})}).addTo(selectionChips);
+  const marker=L.marker(stationDisplayPosition(station),{keyboard:false,zIndexOffset:1000,icon:L.divIcon({className:'station-chip-anchor',iconSize:[1,1],iconAnchor:role==='origin'?[-12,20]:[12,20],html:`<div class="station-chip ${role}"><span><small>${role==='origin'?'始发':'目的地'}</small><strong>${escape(stationName(station.id))}</strong></span><button type="button" aria-label="取消${role==='origin'?'始发':'目的地'}站 ${escape(stationName(station.id))}">×</button></div>`})}).addTo(selectionChips);
   const element=marker.getElement();L.DomEvent.disableClickPropagation(element);element.querySelector('button').onclick=()=>changeSelection({type:role==='origin'?'remove-origin':'remove-destination'});
  }
 }
 function drawStations(){
  const bounds=map.getBounds().pad(.08),ids=new Set(result?.destinations.keys()||[]),viaIds=focusedStopIds(selectedPaths(result,destination),focusedTrainId);
- const stations=visibleStations(rankedStations,{zoom:map.getZoom(),contains:s=>bounds.contains([s.lat,s.lng]),origin:selected,destination,reachableIds:ids,viaIds,project:s=>map.latLngToContainerPoint([s.lat,s.lng])});
+ let stations=visibleStations(rankedStations,{zoom:map.getZoom(),contains:s=>bounds.contains([s.lat,s.lng]),origin:selected,destination,reachableIds:ids,viaIds,project:s=>map.latLngToContainerPoint([s.lat,s.lng])});
+ if(!selected)stations=includeStationCompanions(stations,rankedStations,stationGroups,map.getZoom());
+ stationLeaders.clearLayers();
  const focusedTrain=selectedPaths(result,destination).find(t=>t.id===focusedTrainId);
  const wanted=new Set(stations.map(s=>s.id));
  for(const[id,marker]of visibleMarkers)if(!wanted.has(id)){markers.removeLayer(marker);visibleMarkers.delete(id);}
  for(const station of stations){
   const isSelected=station.id===selected||station.id===destination;
   const style={radius:isSelected?8:viaIds.has(station.id)?5:station.radius,color:isSelected?'#fff':dark?'#d5e4ec':'#fff',weight:isSelected?2.5:1.2,fillColor:station.id===selected?'#f39a37':station.id===destination?'#b468eb':viaIds.has(station.id)?'#ffbd69':station.tier==='major'?'#198bd2':station.tier==='regional'?'#64b7d1':'#a2abb5',fillOpacity:1};
+  const position=stationDisplayPosition(station);
+  if(map.getZoom()>=STATION_SEPARATION_ZOOM&&stationGroups.has(station.id))L.polyline([stationPosition(station),position],{color:'#8096a3',weight:1,opacity:.65,dashArray:'2 3',interactive:false}).addTo(stationLeaders);
   const elapsed=elapsedAtStation(focusedTrain,station.id);
-  const tooltip=`${escape(station.name)} <small>${elapsed||`${station.frequency} 趟车次${station.regionalRepresentative?' · 区域代表站':''}`}</small>`;
+  const tooltip=`${escape(stationName(station.id))} <small>${elapsed||`${station.frequency} 趟车次${station.regionalRepresentative?' · 区域代表站':''}`}</small>`;
   let marker=visibleMarkers.get(station.id);
   if(!marker){
-   marker=L.circleMarker(stationPosition(station),style).addTo(markers);
+   marker=L.circleMarker(position,style).addTo(markers);
    marker.bindTooltip(tooltip,{permanent:false,direction:'top',className:'station-hover',offset:[0,-5]});
    marker.on('click',()=>choose(station.id));visibleMarkers.set(station.id,marker);
-  }else {marker.setStyle(style).setRadius(style.radius);marker.setTooltipContent(tooltip);}
+  }else {marker.setLatLng(position).setStyle(style).setRadius(style.radius);marker.setTooltipContent(tooltip);}
  }
  document.querySelector('#station-count').textContent=`${stations.length} / ${data.stations.length}`;
 }
@@ -176,10 +189,10 @@ function choose(id){changeSelection({type:'pick',id});}
 function clear(){changeSelection({type:'reset'});}
 function renderPanel(){
   const panel=document.querySelector('#panel');
-  if(!selected){panel.innerHTML=`<div class="section-heading"><h2>选择始发站</h2><span>点击地图车站</span></div><div class="popular">${['珠海','广州南','广州白云','北京西','上海虹桥','成都东','武汉','西安北','杭州东','深圳北','重庆北','郑州东'].map(name=>data.stations.find(s=>s.name===name)?.id).filter(Boolean).map(id=>`<button data-station="${escape(id)}">${escape(stationById.get(id).name)}</button>`).join('')}</div><p class="selection-hint">放大地图可选择更多车站</p>`;}
+  if(!selected){panel.innerHTML=`<div class="section-heading"><h2>选择始发站</h2><span>点击地图车站</span></div><div class="popular">${['珠海','广州南','广州白云','北京西','上海虹桥','成都东','武汉','西安北','杭州东','深圳北','重庆北','郑州东'].map(name=>data.stations.find(s=>s.name===name)?.id).filter(Boolean).map(id=>`<button data-station="${escape(id)}">${escape(stationName(id))}</button>`).join('')}</div><p class="selection-hint">放大地图可选择更多车站</p>`;}
   else{
     const origin=stationById.get(selected),target=stationById.get(destination);
-    panel.innerHTML=`<div class="selection-summary"><div class="endpoint"><span><small>始发车站</small><strong>${escape(origin.name)}</strong></span><button id="clear-origin" aria-label="取消始发站">${icon('x')}</button></div>${target?`<button type="button" id="swap-stations" class="swap-stations" aria-label="交换始发站和目的地" title="交换始发站和目的地">${icon('arrow-left-right')}</button><div class="endpoint destination-endpoint"><span><small>目的地</small><strong>${escape(target.name)}</strong></span><button id="clear-destination" aria-label="取消目的地站">${icon('x')}</button></div>`:'<p>点击可达车站选择目的地。</p>'}</div>`;
+    panel.innerHTML=`<div class="selection-summary"><div class="endpoint"><span><small>始发车站</small><strong>${escape(stationName(origin.id))}</strong></span><button id="clear-origin" aria-label="取消始发站">${icon('x')}</button></div>${target?`<button type="button" id="swap-stations" class="swap-stations" aria-label="交换始发站和目的地" title="交换始发站和目的地">${icon('arrow-left-right')}</button><div class="endpoint destination-endpoint"><span><small>目的地</small><strong>${escape(stationName(target.id))}</strong></span><button id="clear-destination" aria-label="取消目的地站">${icon('x')}</button></div>`:'<p>点击可达车站选择目的地。</p>'}</div>`;
     document.querySelector('#clear-origin').onclick=()=>changeSelection({type:'remove-origin'});
     if(target){
      document.querySelector('#swap-stations').onclick=()=>{changeSelection({type:'swap'});document.querySelector('#swap-stations')?.focus();};
@@ -196,7 +209,7 @@ function renderPanel(){
 function renderDestinations(){
  const entries=[...result.destinations].sort((a,b)=>b[1].length-a[1].length);
  const container=document.querySelector('#destinations');if(!container)return;
- container.innerHTML=entries.length?entries.map(([id,trains])=>`<button class="destination" data-destination="${escape(id)}"><span class="destination-dot"></span><span><strong>${escape(stationById.get(id).name)}</strong><small>${trains.length} 趟直达车次</small></span></button>`).join(''):'<div class="empty">所选日期及当前数据中没有匹配的直达车次。</div>';
+ container.innerHTML=entries.length?entries.map(([id,trains])=>`<button class="destination" data-destination="${escape(id)}"><span class="destination-dot"></span><span><strong>${escape(stationName(id))}</strong><small>${trains.length} 趟直达车次</small></span></button>`).join(''):'<div class="empty">所选日期及当前数据中没有匹配的直达车次。</div>';
  container.querySelectorAll('[data-destination]').forEach(b=>b.onclick=()=>choose(b.dataset.destination));refreshIcons();
 }
 document.querySelector('#zoom-in').onclick=()=>map.zoomIn();document.querySelector('#zoom-out').onclick=()=>map.zoomOut();document.querySelector('#reset-view').onclick=()=>map.setView([34.5,106.5],4);
@@ -222,7 +235,7 @@ document.querySelector('#download').onclick=()=>{
 function renderJourneys(trains){
  return `<div class="journey-list">${trains.map(t=>{
   const i=t.originIndex||0,j=i+t.path.length-1,origin=t.times?.[i]?.[1];
-  return `<details class="journey" data-train-id="${escape(t.id)}" ${focusedTrainId===t.id?'open':''}><summary><strong>${escape(t.code||t.id)}</strong><span>${displayTime(origin,origin)} 出发 · ${displayTime(t.times?.[j]?.[0],origin)} 到达</span></summary><dl class="train-endpoints" aria-label="车次完整始终站"><div><dt>始发站</dt><dd>${escape(stationById.get(t.stops[0])?.name||t.stops[0])}</dd></div><div><dt>终点站</dt><dd>${escape(stationById.get(t.stops.at(-1))?.name||t.stops.at(-1))}</dd></div></dl><p class="route-availability" data-route-availability="${escape(t.id)}">${escape(routeAvailabilityText(t))}</p><ol>${t.path.map((id,k)=>`<li><b>${escape(stationById.get(id).name)}</b><span>${displayTime(t.times?.[i+k]?.[0],origin)} / ${displayTime(t.times?.[i+k]?.[1],origin)}</span></li>`).join('')}</ol><small>${escape(operatorLabels[t.operator]||'运营方未核验')} · ${escape(categoryLabels[t.category]||'车种未核验')}<br>到达 / 发车 · 不含实时余票</small></details>`;
+  return `<details class="journey" data-train-id="${escape(t.id)}" ${focusedTrainId===t.id?'open':''}><summary><strong>${escape(t.code||t.id)}</strong><span>${displayTime(origin,origin)} 出发 · ${displayTime(t.times?.[j]?.[0],origin)} 到达</span></summary><dl class="train-endpoints" aria-label="车次完整始终站"><div><dt>始发站</dt><dd>${escape(stationById.get(t.stops[0])?.name||t.stops[0])}</dd></div><div><dt>终点站</dt><dd>${escape(stationById.get(t.stops.at(-1))?.name||t.stops.at(-1))}</dd></div></dl><p class="route-availability" data-route-availability="${escape(t.id)}">${escape(routeAvailabilityText(t))}</p><ol>${t.path.map((id,k)=>`<li><b>${escape(stationName(id))}</b><span>${displayTime(t.times?.[i+k]?.[0],origin)} / ${displayTime(t.times?.[i+k]?.[1],origin)}</span></li>`).join('')}</ol><small>${escape(operatorLabels[t.operator]||'运营方未核验')} · ${escape(categoryLabels[t.category]||'车种未核验')}<br>到达 / 发车 · 不含实时余票</small></details>`;
  }).join('')}</div>`;
 }
 function routeAvailabilityText(train){
@@ -258,7 +271,7 @@ document.querySelectorAll('[name="basemap"]').forEach(r=>r.onchange=()=>{if(r.ch
 document.querySelector('#basemap-retry').onclick=()=>{vectorPromise=null;setBasemap(basemapStyle);};
 document.querySelectorAll('[name="line-weight"]').forEach(r=>{r.checked=r.value===lineWeight;r.onchange=()=>{lineWeight=r.value;try{localStorage.setItem('xinggui-line-weight',lineWeight);}catch{}drawMap();};});
 let initialBasemap='dark';try{initialBasemap=localStorage.getItem('xinggui-basemap')||'dark';}catch{}
-map.on('moveend',drawStations);map.on('zoomend',drawRoutes);renderPanel();setBasemap(initialBasemap);refreshIcons();loadSnapshot();
+map.on('moveend',drawStations);map.on('zoomend',()=>{drawRoutes();drawChips();});renderPanel();setBasemap(initialBasemap);refreshIcons();loadSnapshot();
 
 const translator=createTranslator(document.querySelector('#app'));
 let language=languageForBrowser(navigator.languages||[navigator.language]),manualLanguage=false;

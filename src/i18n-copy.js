@@ -1,4 +1,6 @@
 export default {
+  "线路降噪与内存优化": "Route detail and memory",
+  "缩小时简化展线和细碎弯折，放大后恢复细节；近似上下行轨道合并显示，并减少非绘图数据加载。": "Simplify small bends when zoomed out and restore detail when zoomed in. Combine near-identical directional tracks and skip data not needed for rendering.",
   "并行线路连续性": "Continuous parallel routes",
   "各颜色独立连续绘制，共线颜色变化时保持偏移位置，分段交界共用节点，修复短段跳位和缝隙。": "Each color is drawn continuously with consistent lanes and shared junctions, preventing offset jumps and gaps where shared colors change.",
   "通过（路径推算）": "Pass-through (inferred)",

@@ -1,0 +1,19 @@
+{
+  "scope": "Isolated Node/V8 geometry heap with explicit GC; not complete browser, map tiles, Leaflet or GPU memory",
+  "geometryHeapMiB": {
+    "beforeTopologyArchitecture": 91.3,
+    "previousFullTopologyRuntime": 78.4,
+    "optimizedRuntime": 62.3
+  },
+  "runtimeReductionPercent": 20.5,
+  "excludedRuntimeTables": ["sectionIds", "trainPaths"],
+  "sample": {
+    "origin": "广州白云",
+    "zoom": 7,
+    "previousRenderAllocationBeforeGC_MiB": 56.3,
+    "optimizedRenderAllocationBeforeGC_MiB": 18.4,
+    "previousDrawnVertices": 28585,
+    "optimizedDrawnVertices": 6724
+  },
+  "reproduce": "node --expose-gc scripts/measure-route-memory.mjs dist --runtime --render --optimize"
+}

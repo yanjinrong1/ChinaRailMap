@@ -45,3 +45,23 @@ junction has one shared projected offset frame, oriented across its connected
 component; all incident chains use that exact offset point. This prevents gaps
 from per-chain offset direction changes or changes in local color membership.
 A single focused service is centered. Geometry and routing references are unchanged.
+
+## Display detail and memory
+
+Screen-space Douglas–Peucker simplification runs on shared geometry before offset
+frames are built. Color boundaries and graph junctions remain fixed, so parallel
+colors simplify together and continue to meet. Pixel tolerances decrease from
+3.5px at zoom <=5 to zero at zoom 13. Detailed routing and passing-station logic
+continue to use the original graph.
+
+Near-identical directional leg variants may use one display representative when
+they have the same operator, color and station pair and their full bidirectional
+geometric deviation is within 400m. This allowance also accommodates differences
+in source shape sampling. Large detours and different operators remain distinct.
+Representative selection is cached for the current journey, independent of zoom;
+opening one service still retains its original train-to-route association.
+
+The browser runtime skips the stable-ID strings and redundant full train-path
+lookup table, which remain available as downloadable audit artifacts. Geometry
+memory benchmarks use isolated Node/V8 with explicit GC, not whole-tab/GPU memory.
+Run `node --expose-gc scripts/measure-route-memory.mjs dist --runtime --render --optimize`.

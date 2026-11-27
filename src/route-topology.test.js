@@ -1,6 +1,6 @@
 import {test} from 'node:test';import assert from 'node:assert/strict';
 import {buildRouteTopology} from '../scripts/build-route-topology.mjs';
-import {topologyDisplayRoutes,passedStations} from './route-topology.js';
+import {topologyDisplayRoutes,passedStations,deduplicateParallelLegs} from './route-topology.js';
 import {topologyCoordinates} from './rail-geometry.js';
 function fixture(){
  const stations=[{id:'A',lat:30,lng:110},{id:'B',lat:30,lng:110.01},{id:'C',lat:30,lng:110.02},{id:'Nearby',lat:30.002,lng:110.01}];
@@ -70,4 +70,13 @@ test('opposite section traversal and reordered legs produce the same parallel la
  const a=topologyDisplayRoutes([{id:'forward',routeClass:'highspeed'},{id:'reverse',routeClass:'intercity'}],topology,screen);
  const b=topologyDisplayRoutes([{id:'reverse',routeClass:'intercity'},{id:'forward',routeClass:'highspeed'}],topology,screen);
  const normalize=batches=>batches.map(b=>[b.classes[0],b.coordinates.flat().map(p=>p.join(',')).sort()]).sort();assert.deepEqual(normalize(a),normalize(b));
+});
+
+test('up/down paths in one visual corridor share a line; operators and substantial detours stay separate',()=>{
+ const {geometry:g}=fixture();
+ g.segments.detour={...g.segments.AC,coordinates:[[30,110],[30.1,110.01],[30,110.02]]};g.topology=buildRouteTopology(g,[]);
+ const project=([lat,lng])=>({x:lng*1000,y:lat*1000});
+ const legs=['AC','parallel','other','detour'].map(id=>({id,routeClass:'highspeed'}));
+ const result=deduplicateParallelLegs(legs,g,project,{pixelTolerance:.01,corridorMeters:400});
+ assert.equal(result.length,3);assert.ok(result.some(s=>s.id==='detour'));assert.ok(result.some(s=>s.id==='other'));
 });

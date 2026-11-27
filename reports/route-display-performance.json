@@ -1,0 +1,60 @@
+{
+  "measurementScope": "Display vertex counts on current snapshot, Guangzhou Baiyun reachable network; original paths and timetable unchanged.",
+  "corridorToleranceMeters": 400,
+  "corridors": [
+    {
+      "stations": [
+        "天水南",
+        "宝鸡南"
+      ],
+      "sourceVariants": 4,
+      "displayVariants": 1
+    },
+    {
+      "stations": [
+        "兰州西",
+        "定西北"
+      ],
+      "sourceVariants": 4,
+      "displayVariants": 1
+    },
+    {
+      "stations": [
+        "宝鸡南",
+        "西安北"
+      ],
+      "sourceVariants": 5,
+      "displayVariants": 1
+    }
+  ],
+  "levels": [
+    {
+      "zoom": 4,
+      "tolerancePixels": 3.5,
+      "beforeVertices": 28585,
+      "afterVertices": 5731,
+      "reductionPercent": 80
+    },
+    {
+      "zoom": 7,
+      "tolerancePixels": 2.5,
+      "beforeVertices": 28585,
+      "afterVertices": 6724,
+      "reductionPercent": 76.5
+    },
+    {
+      "zoom": 10,
+      "tolerancePixels": 0.75,
+      "beforeVertices": 28585,
+      "afterVertices": 20968,
+      "reductionPercent": 26.6
+    },
+    {
+      "zoom": 13,
+      "tolerancePixels": 0,
+      "beforeVertices": 28585,
+      "afterVertices": 28010,
+      "reductionPercent": 2
+    }
+  ]
+}

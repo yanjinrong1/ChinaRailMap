@@ -1,4 +1,5 @@
-import {segmentKey,trainReference} from './rail-geometry.js';
+import {simplifySelection} from './route-lod.js';
+import {segmentKey,trainReference,topologyCoordinates} from './rail-geometry.js';
 export function topologyLeg(train,a,b,geometry,stations){
  const ref=trainReference(train,geometry),id=ref?.legs[segmentKey(a,b)],segment=geometry.segments[id];
  if(!segment||segment.status!=='routed'||segment.operator!==train.operator||segment.category!==train.category||segment.stations.join('|')!==segmentKey(a,b))return null;
@@ -9,8 +10,9 @@ export function topologyLeg(train,a,b,geometry,stations){
 // Draw each service color continuously, independent of changes in the other
 // colors sharing an edge. All chains use the same projected junction positions.
 export function topologyDisplayRoutes(legs,topology,options={}){
- const edges=new Map();
+ let edges=new Map();
  for(const {id,routeClass}of legs)for(const ref of topology.legs[id]||[]){const index=Math.abs(ref)-1;if(!edges.has(index))edges.set(index,new Set());edges.get(index).add(routeClass);}
+ ({topology,edges}=simplifySelection(topology,edges,options.project,options.tolerance));
  const operators=new Map();
  for(const [index,classes]of edges){const operator=topology.sections[index][2];if(!operators.has(operator))operators.set(operator,{edges:[],classes:new Set()});const group=operators.get(operator);group.edges.push(index);for(const type of classes)group.classes.add(type);}
  const batches=[];
@@ -57,4 +59,22 @@ export function passedStations(train,geometry,stations){
   for(const entry of entries)if(!stops.has(entry.id)&&!seen.has(entry.id)){seen.add(entry.id);result.push({id:entry.id,status:'pass',inferred:true});}
  }
  return result;
+}
+
+// Display-only corridor matching: ignore up/down shape differences for the same
+// operator, service color and station pair. Never replace a train's stored path.
+export function deduplicateParallelLegs(legs,geometry,project,{pixelTolerance=1,corridorMeters=400,stationKey=id=>id}={}){
+ const groups=new Map(),kept=[],cache=new Map();
+ const points=id=>{if(!cache.has(id)){const path=topologyCoordinates(geometry.topology,id).map(project);cache.set(id,path);}return cache.get(id);};
+ const near=(a,b,tolerance)=>a.every(p=>{let min=Infinity;for(let i=1;i<b.length;i++){const x=b[i].x-b[i-1].x,y=b[i].y-b[i-1].y,den=x*x+y*y,t=den?Math.max(0,Math.min(1,((p.x-b[i-1].x)*x+(p.y-b[i-1].y)*y)/den)):0;min=Math.min(min,Math.hypot(p.x-b[i-1].x-t*x,p.y-b[i-1].y-t*y));if(min<=tolerance)break;}return min<=tolerance;});
+ const sorted=[...legs].sort((a,b)=>(geometry.topology.legs[b.id]?.length||0)-(geometry.topology.legs[a.id]?.length||0)||a.id.localeCompare(b.id));
+ for(const leg of sorted){
+  const segment=geometry.segments[leg.id],key=segment.operator+'|'+leg.routeClass+'|'+segment.stations.map(stationKey).sort().join('|'),path=points(leg.id);
+  if(path.length<2){kept.push(leg);continue;}
+  const coordinate=geometry.topology.nodes[geometry.topology.sections[Math.abs(geometry.topology.legs[leg.id][0])-1][0]],p=project(coordinate),q=project([coordinate[0]+corridorMeters/111320,coordinate[1]]),tolerance=Math.max(pixelTolerance,Math.hypot(p.x-q.x,p.y-q.y));
+  const group=groups.get(key)||[];
+  if(group.some(other=>near(path,other,tolerance)&&near(other,path,tolerance)))continue;
+  group.push(path);groups.set(key,group);kept.push(leg);
+ }
+ return kept;
 }

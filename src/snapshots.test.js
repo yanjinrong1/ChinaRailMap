@@ -36,3 +36,9 @@ test('historical calendars use the snapshot date while the current version uses 
  assert.equal(snapshotTravelDate(old,'old','2026-11-27'),'2026-11-27');
  assert.equal(snapshotTravelDate(old,'old','2027-03-01'),'2027-02-13');
 });
+
+test('runtime geometry skips audit-only tables while retaining shared routes and passing stations',async()=>{
+ const responses={'routes.json':{topologyFile:'topology.json',segments:{}},'topology.json':{files:['topology/nodes.json','topology/sectionIds.json','topology/trainPaths.json','topology/legs.json']},'topology/nodes.json':{nodes:[]},'topology/legs.json':{legs:{}}},calls=[];
+ const g=await loadSnapshotGeometry('',async url=>{calls.push(url);return {ok:true,json:async()=>structuredClone(responses[url])};},{runtime:true});
+ assert.equal(g.topology.sectionIds,undefined);assert.equal(g.topology.trainPaths,undefined);assert.ok(g.topology.legs);assert.ok(calls.every(url=>!/sectionIds|trainPaths/.test(url)));
+});

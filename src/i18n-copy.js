@@ -1,4 +1,9 @@
 export default {
+  "拖动图例": "Move legend",
+  "拖动以移动图例": "Drag to move the legend",
+  "关闭图例": "Close legend",
+  "可拖动图例": "Draggable legend",
+  "图例独立为浮窗，可从工具栏开关，拖动标题栏移动，右上角关闭。": "The legend is now a floating window. Toggle it from the toolbar, drag its header to move it, or close it at the top right.",
   "车站与线路对齐": "Station and route alignment",
   "简化线路时保留停靠和通过站锚点，平行线在车站附近收拢，防止线路拉直后偏离站点。": "Keep stops and passing-station anchors during simplification, and bring parallel lines together near stations so routes stay aligned with markers.",
   "线路降噪与内存优化": "Route detail and memory",

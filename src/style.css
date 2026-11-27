@@ -129,3 +129,17 @@ html:lang(en) .station-chip{max-width:260px}
 .snapshot-control select:disabled{cursor:wait;opacity:.65}
 .snapshot-control option{color:#233c35;background:#fff}
 @media(max-width:700px){.snapshot-control{top:10px;left:10px;gap:5px;padding:5px 7px}.snapshot-control select{min-width:110px;max-width:170px}.map-top-right{top:62px}}
+
+/* Independent, compact legend window. */
+#legend-panel{position:absolute;z-index:1150;right:65px;bottom:16px;width:240px;max-width:calc(100% - 80px);max-height:calc(100% - 24px);overflow:auto;background:var(--control-bg);color:var(--control-text);border:1px solid var(--control-border);border-radius:10px;box-shadow:0 5px 22px #10242b25;padding:10px;font-size:12px;overscroll-behavior:contain}
+#legend-panel[hidden]{display:none}
+.legend-window-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;cursor:grab;touch-action:none;user-select:none;padding:0 0 7px;border-bottom:1px solid var(--control-border);margin-bottom:8px}
+.legend-window-heading h3{font-size:13px;line-height:20px;margin:0;font-weight:650}
+.legend-window-heading button{display:grid;place-items:center;width:24px;height:24px;padding:2px;border-radius:4px;color:var(--control-muted);cursor:pointer}
+.legend-window-heading button:hover{background:#8096a322}
+.legend-window-heading svg{width:16px;height:16px}
+#legend-panel.dragging .legend-window-heading{cursor:grabbing}
+#legend-panel .legend{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 12px;position:static;width:auto;margin:0;padding:0;background:transparent;border:0;border-radius:0;box-shadow:none;font-size:12px;line-height:18px}
+#legend-panel .legend span{color:var(--control-text);margin:0;gap:6px;min-width:0}
+#legend-panel .legend-route{width:18px;flex-shrink:0}
+#legend-toggle[aria-expanded=true]{color:var(--control-accent)}

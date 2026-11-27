@@ -19,7 +19,7 @@
       "sectionReferences": 45771,
       "uniqueSections": 14844,
       "sharedSectionReduction": 67.6,
-      "renderedChains": 2941
+      "renderedChains": 3305
     },
     {
       "station": "重庆西",
@@ -28,7 +28,7 @@
       "sectionReferences": 38570,
       "uniqueSections": 19081,
       "sharedSectionReduction": 50.5,
-      "renderedChains": 2768
+      "renderedChains": 2995
     },
     {
       "station": "广州白云",
@@ -37,7 +37,7 @@
       "sectionReferences": 53982,
       "uniqueSections": 25878,
       "sharedSectionReduction": 52.1,
-      "renderedChains": 2348
+      "renderedChains": 2707
     }
   ],
   "trainsWithPassages": 1409,

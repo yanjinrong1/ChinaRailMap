@@ -1,0 +1,33 @@
+{
+  "cause": "Local color-set changes split chains and recomputed lane positions; independent chain orientation could also flip offsets.",
+  "fix": "Continuous per-color chains, consistent operator-wide lanes, and shared oriented offset junctions.",
+  "region": {
+    "south": 26.5,
+    "north": 28.1,
+    "west": 112.2,
+    "east": 114
+  },
+  "examples": [
+    {
+      "origin": "广州南",
+      "hengyangZhuzhouOldStyleBoundaries": 0,
+      "colorBatches": 2,
+      "renderedChains": 3305,
+      "renderMilliseconds": 96
+    },
+    {
+      "origin": "广州白云",
+      "hengyangZhuzhouOldStyleBoundaries": 54,
+      "colorBatches": 3,
+      "renderedChains": 2707,
+      "renderMilliseconds": 87
+    },
+    {
+      "origin": "珠海",
+      "hengyangZhuzhouOldStyleBoundaries": 0,
+      "colorBatches": 2,
+      "renderedChains": 591,
+      "renderMilliseconds": 6
+    }
+  ]
+}

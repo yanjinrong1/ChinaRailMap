@@ -36,3 +36,12 @@ Validation: `npm test`, `npm run build`, then
 `node scripts/audit-route-topology.mjs`. The audit verifies every original route
 vertex survives reconstruction, checks stable ID uniqueness, and reports sample
 rendering reductions and inferred passages in `reports/topology-audit.json`.
+
+## Parallel-line continuity
+
+Rendering stitches each color independently, even where companion colors start or
+end. Each operator uses a consistent lane order for the selected color set. Every
+junction has one shared projected offset frame, oriented across its connected
+component; all incident chains use that exact offset point. This prevents gaps
+from per-chain offset direction changes or changes in local color membership.
+A single focused service is centered. Geometry and routing references are unchanged.

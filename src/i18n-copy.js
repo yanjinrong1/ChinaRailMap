@@ -1,4 +1,6 @@
 export default {
+  "并行线路连续性": "Continuous parallel routes",
+  "各颜色独立连续绘制，共线颜色变化时保持偏移位置，分段交界共用节点，修复短段跳位和缝隙。": "Each color is drawn continuously with consistent lanes and shared junctions, preventing offset jumps and gaps where shared colors change.",
   "通过（路径推算）": "Pass-through (inferred)",
   "共享路段与通过站": "Shared sections and passing stations",
   "已计算的车次路径拆为共享路段，同类别共线路段只绘制一次。展开车次可查看路径识别的通过站，不提供推算通过时间。": "Completed routes now share track sections, drawn once per service group. Open a train to see inferred passing stations; passage times are not estimated.",

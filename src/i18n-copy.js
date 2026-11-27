@@ -1,4 +1,14 @@
 export default {
+  "更新日志": "Changelog",
+  "信息面板整理": "Information panel",
+  "图例移入信息面板底部并默认收起，新增可滚动的更新日志。": "Moved the legend to the bottom of the information panel, collapsed by default, and added a scrollable changelog.",
+  "站点合并与场区区分": "Station grouping",
+  "同站同运营单位的重复代码合并显示并汇总车次，只有运营单位不同时才区分站点。": "Combined duplicate codes and train services for the same station and operator. Different operators remain separate.",
+  "线路配色与并行显示": "Route colors and parallel lines",
+  "G/D 车次用红色、C/S 用蓝色，其他车次用深绿色；共线区间使用错开的并行实线，蓝色已调亮。": "G/D services use red, C/S blue, and other services dark green. Shared routes use parallel solid lines, with a brighter blue.",
+  "双语与行程交互": "Languages and journey controls",
+  "支持中英文切换、始发地与目的地互换、途中站点已行走时间，以及紧凑的跨日时间标记。": "Added Chinese/English switching, departure/destination swapping, elapsed time at intermediate stops, and compact day offsets.",
+
   "默认使用 wensimehrp / chinese-railway-gtfs 发布的真实时刻表快照，运行数据由 RailGo-Parser 获取，站点坐标来自 OpenStreetMap。按乘车站当地日期筛选开行车次，跨午夜时按始发日换算。这里不查询实时余票或临时停运。": "The default timetable is a published snapshot from wensimehrp / chinese-railway-gtfs, collected by RailGo-Parser, with station coordinates from OpenStreetMap. Trains are filtered by the boarding date; overnight journeys use the corresponding origin service date. This map does not check live seat availability or temporary cancellations.",
   "可达指同一趟列车在所选站之后的停站，不计算换乘。线路优先采用每趟车自己的来源走向；缺失时使用保留线路名、高速线、运营方、轨距等属性的 OSM 路网逐站推算，并明确标注。OSM 货运标签仅增加寻路代价，不再直接禁行；工业专用线、车种与运营方等约束仍保留。仍无法通过约束检查的区间列入自动缺线清单。铁路几何不等同于经官方核实的车次经由。": "Reachability means later stops on the same train, without transfers. Routes prefer each train’s own source geometry. Missing geometry is inferred through an attributed OSM railway graph with line, speed, operator and gauge constraints, and is labeled accordingly. Freight tags add a routing cost; industrial lines and operator / train-category restrictions remain enforced. Failed sections appear in the coverage audit. Railway geometry is not an officially verified train itinerary.",
   "支持导入 qETRC .pyetgr / .pyetdb 文件，按车站名称匹配内置坐标。导入内容的真实性和有效日期由文件提供者负责。": "Import qETRC .pyetgr / .pyetdb files by matching names to known station coordinates. The imported file determines data accuracy and service dates.",

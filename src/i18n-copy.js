@@ -1,4 +1,7 @@
 export default {
+  "通过（路径推算）": "Pass-through (inferred)",
+  "共享路段与通过站": "Shared sections and passing stations",
+  "已计算的车次路径拆为共享路段，同类别共线路段只绘制一次。展开车次可查看路径识别的通过站，不提供推算通过时间。": "Completed routes now share track sections, drawn once per service group. Open a train to see inferred passing stations; passage times are not estimated.",
   "正在加载…": "Loading…",
   "数据库日期": "Database date",
   "历史数据库切换": "Historical databases",

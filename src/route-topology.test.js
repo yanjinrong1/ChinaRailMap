@@ -1,0 +1,52 @@
+import {test} from 'node:test';import assert from 'node:assert/strict';
+import {buildRouteTopology} from '../scripts/build-route-topology.mjs';
+import {topologyDisplayRoutes,passedStations} from './route-topology.js';
+import {topologyCoordinates} from './rail-geometry.js';
+function fixture(){
+ const stations=[{id:'A',lat:30,lng:110},{id:'B',lat:30,lng:110.01},{id:'C',lat:30,lng:110.02},{id:'Nearby',lat:30.002,lng:110.01}];
+ const segment=(ids,coordinates,operator='CR')=>({status:'routed',stations:ids,coordinates,operator,category:'emu'});
+ const train=(id,stops,legs,operator='CR')=>({id,code:id,stops,operator,category:'emu',legs});
+ const geometry={version:2,segments:{AC:segment(['A','C'],[[30,110],[30,110.02]]),AB:segment(['A','B'],[[30,110],[30,110.01]]),BC:segment(['B','C'],[[30,110.01],[30,110.02]]),parallel:segment(['A','C'],[[30.0001,110],[30.0001,110.02]]),other:segment(['A','C'],[[30,110],[30,110.02]],'GDIC')},trainRoutes:{D1:train('D1',['A','C'],{'A|C':'AC'}),D2:train('D2',['A','B','C'],{'A|B':'AB','B|C':'BC'})},stationCoordinates:Object.fromEntries(stations.map(s=>[s.id,[s.lat,s.lng]]))};
+ geometry.topology=buildRouteTopology(geometry,stations);return {stations,geometry};
+}
+test('express and stopping services share atomic sections despite different stop patterns',()=>{
+ const {geometry:g}=fixture(),t=g.topology;
+ assert.deepEqual(t.legs.AC,[...t.legs.AB,...t.legs.BC]);
+ const batches=topologyDisplayRoutes([{id:'AC',routeClass:'highspeed'},{id:'AB',routeClass:'highspeed'},{id:'BC',routeClass:'highspeed'}],t);
+ assert.equal(batches.length,1);assert.equal(batches[0].coordinates.length,1);assert.equal(batches[0].coordinates[0].length,3);
+ assert.deepEqual(t.trainPaths.D1,[{leg:'AC',reverse:false}]);assert.equal(t.trainPaths.D2.length,2);
+ assert.deepEqual(topologyCoordinates(t,'AC'),[[30,110],[30,110.01],[30,110.02]]);
+});
+test('parallel tracks and separate operators are never merged',()=>{
+ const {geometry:g}=fixture(),t=g.topology;
+ for(const id of ['parallel','other'])assert.ok(t.legs[id].every(ref=>!t.legs.AC.includes(ref)));
+});
+test('passing stations require a shared stopping-track anchor, never just proximity',()=>{
+ const {geometry:g,stations}=fixture(),byId=new Map(stations.map(s=>[s.id,s]));
+ const express={...g.trainRoutes.D1,path:['A','C']},stopping={...g.trainRoutes.D2,path:['A','B','C']};
+ assert.deepEqual(passedStations(express,g,byId),[{id:'B',status:'pass',inferred:true}]);assert.deepEqual(passedStations(stopping,g,byId),[]);
+ const reverse={...express,id:'D3',code:'D3',stops:['C','A'],path:['C','A']};g.trainRoutes.D3={...reverse,legs:{'A|C':'AC'}};
+ assert.equal(passedStations(reverse,g,byId)[0].id,'B');
+ assert.deepEqual(passedStations({...express,operator:'GDIC'},g,byId),[]);
+});
+test('shared classes are drawn once each and reversed paths retain direction',()=>{
+ const {geometry:g}=fixture(),t=g.topology;
+ const batches=topologyDisplayRoutes([{id:'AC',routeClass:'highspeed'},{id:'AC',routeClass:'highspeed'},{id:'AB',routeClass:'conventional'}],t);
+ assert.ok(batches.some(b=>b.classes.length===2));assert.equal(batches.reduce((n,b)=>n+b.coordinates.reduce((m,c)=>m+c.length-1,0),0),2);
+});
+
+test('section IDs remain stable if source route order is changed',()=>{
+ const {geometry:g,stations}=fixture(),ids=new Set(g.topology.sectionIds);
+ const reversed={...g,segments:Object.fromEntries(Object.entries(g.segments).reverse())};
+ assert.deepEqual(new Set(buildRouteTopology(reversed,stations).sectionIds),ids);
+});
+
+test('zero-length source legs retain their location without inventing a section',()=>{
+ const {geometry:g,stations}=fixture();g.segments.zero={...g.segments.AB,coordinates:[[30,110],[30,110]]};
+ const topology=buildRouteTopology(g,stations);assert.deepEqual(topology.legs.zero,[]);assert.deepEqual(topologyCoordinates(topology,'zero'),[[30,110]]);
+});
+
+test('ambiguous station locations with different names cannot become inferred passing stations',()=>{
+ const {geometry:g,stations}=fixture();stations.forEach(s=>s.name=s.id);stations.push({id:'Wrong',name:'Different station',lat:30,lng:110.01});
+ g.topology=buildRouteTopology(g,stations);assert.deepEqual(passedStations({...g.trainRoutes.D1,path:['A','C']},g,new Map(stations.map(s=>[s.id,s]))),[]);
+});

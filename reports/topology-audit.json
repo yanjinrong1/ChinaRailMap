@@ -1,0 +1,80 @@
+{
+  "snapshot": "gtfs-20261124-112841",
+  "sourceLegs": 20723,
+  "sourcePoints": 930362,
+  "sharedNodes": 151832,
+  "sharedSections": 175023,
+  "legSectionReferences": 910509,
+  "trains": 11569,
+  "passageCandidates": 39404,
+  "topologyBytes": 22977307,
+  "policy": "Exact shared track geometry; station passage inferred only at a shared stopping-route anchor within 120m, without inferred times.",
+  "verifiedOriginalLegs": 20723,
+  "originalPathVerticesPreserved": true,
+  "examples": [
+    {
+      "station": "广州南",
+      "trains": 584,
+      "sourceLegs": 1202,
+      "sectionReferences": 45771,
+      "uniqueSections": 14844,
+      "sharedSectionReduction": 67.6,
+      "renderedChains": 2941
+    },
+    {
+      "station": "重庆西",
+      "trains": 226,
+      "sourceLegs": 1072,
+      "sectionReferences": 38570,
+      "uniqueSections": 19081,
+      "sharedSectionReduction": 50.5,
+      "renderedChains": 2768
+    },
+    {
+      "station": "广州白云",
+      "trains": 149,
+      "sourceLegs": 757,
+      "sectionReferences": 53982,
+      "uniqueSections": 25878,
+      "sharedSectionReduction": 52.1,
+      "renderedChains": 2348
+    }
+  ],
+  "trainsWithPassages": 1409,
+  "totalPassages": 1585,
+  "passageSamples": [
+    {
+      "code": "Z392",
+      "passingStations": [
+        "南昌",
+        "武昌"
+      ]
+    },
+    {
+      "code": "Z218",
+      "passingStations": [
+        "南昌",
+        "武昌",
+        "宜昌东"
+      ]
+    },
+    {
+      "code": "G712",
+      "passingStations": [
+        "沈阳北"
+      ]
+    },
+    {
+      "code": "G732",
+      "passingStations": [
+        "沈阳北"
+      ]
+    },
+    {
+      "code": "G714",
+      "passingStations": [
+        "沈阳北"
+      ]
+    }
+  ]
+}

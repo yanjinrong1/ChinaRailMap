@@ -1,0 +1,38 @@
+# Shared route topology (work prototype)
+
+`npm run build` derives a graph from completed per-train geometry; it does not run
+another pathfinder or replace the source routing database. Published artifacts use:
+
+- `nodes`: common track geometry vertices.
+- `sections` and `sectionIds`: undirected atomic edges isolated by operator, with
+  stable IDs hashed from operator and endpoint coordinates. Signed numeric refs
+  encode traversal direction without duplicating geometry.
+- `legs`: ordered section references for every original stop-to-stop variant.
+- `trainPaths`: ordered leg references keyed by train ID.
+- `passages`: ordered station anchors encountered along each routed leg. Joining
+  these with `trainPaths` yields train-specific stop/pass status.
+
+A-C and A-B-C share atomic edges after splitting at existing collinear vertices.
+Only common geometry is joined: nearby parallel lines, crossing lines without a
+common vertex, and separate operators are not snapped together. Existing input
+coordinates have five-decimal precision; the builder uses that precision and a
+sub-centimeter collinearity test. Different simplifications of the same real
+railway may remain separate. This is conservative geometry-derived topology,
+not an authoritative OSM node-ID graph.
+
+A passing station requires traversal of a node used as the endpoint of another
+routed service stopping at that station, within 120m of the station coordinates.
+Coincident station coordinates carrying different names are excluded as ambiguous.
+Candidates are labeled inferred; no passing times or new passenger destinations
+are created. Opening a train shows inferred passing stations as smaller gray dots.
+
+The map unions selected section IDs per service color, then stitches chains for
+rendering. Different service colors retain parallel offsets. Each train's original
+stop list, geometry binding, operator checks, calendars and times remain intact.
+Source coordinates remain in `public/timetable/`; packaged geometry reconstructs
+from the topology. Files are sharded under `dist/timetable/topology/`.
+
+Validation: `npm test`, `npm run build`, then
+`node scripts/audit-route-topology.mjs`. The audit verifies every original route
+vertex survives reconstruction, checks stable ID uniqueness, and reports sample
+rendering reductions and inferred passages in `reports/topology-audit.json`.

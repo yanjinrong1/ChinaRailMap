@@ -1,7 +1,11 @@
 export default {
+  "信息": "Information",
+  "G/D 车次": "G/D services",
+  "C/S 车次": "C/S services",
+  "其他车次": "Other services",
   "更新日志": "Changelog",
   "信息面板整理": "Information panel",
-  "图例移入信息面板底部并默认收起，新增可滚动的更新日志。": "Moved the legend to the bottom of the information panel, collapsed by default, and added a scrollable changelog.",
+  "信息面板分为说明、更新日志和图例：说明默认收起，日志独立滚动，图例始终显示。": "Split the information panel into collapsed source notes, a scrollable changelog, and an always-visible legend.",
   "站点合并与场区区分": "Station grouping",
   "同站同运营单位的重复代码合并显示并汇总车次，只有运营单位不同时才区分站点。": "Combined duplicate codes and train services for the same station and operator. Different operators remain separate.",
   "线路配色与并行显示": "Route colors and parallel lines",

@@ -86,3 +86,12 @@ html:lang(en) .station-chip{max-width:260px}
 @media(max-width:650px){.brand-row{padding-bottom:6px;margin-bottom:5px}.brand-row .app-brand h1{font-size:15px}.brand-row .app-brand-en{font-size:10px}}
 
 .journey summary span{min-width:0;max-width:100%;white-space:normal;overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
+
+:root{--route-highspeed:#d92535;--route-conventional:#14563e;--route-intercity:#173f80}
+.dark-map{--route-highspeed:#ff5a63;--route-conventional:#398c66;--route-intercity:#527fb5}
+.legend .route-highspeed{background:var(--route-highspeed)}
+.legend .route-conventional{background:var(--route-conventional)}
+.legend .route-intercity{background:var(--route-intercity)}
+.journey summary .train-code[data-route-class=highspeed]{color:var(--route-highspeed)}
+.journey summary .train-code[data-route-class=conventional]{color:var(--route-conventional)}
+.journey summary .train-code[data-route-class=intercity]{color:var(--route-intercity)}

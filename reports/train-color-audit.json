@@ -1,0 +1,21 @@
+{
+  "snapshot": "gtfs-20261124-112841",
+  "totalTrains": 11569,
+  "prefixCounts": {
+    "C": 2503,
+    "D": 2463,
+    "G": 4355,
+    "N": 110,
+    "S": 894,
+    "V": 1075,
+    "Y": 12,
+    "Z": 157
+  },
+  "displayGroupCounts": {
+    "conventional": 1354,
+    "highspeed": 6818,
+    "intercity": 3397
+  },
+  "rule": "G/D red; C/S dark blue; all other prefixes dark green. Visual grouping does not alter routing categories or operator isolation.",
+  "officialNotice": "https://www.12306.cn/mormhweb/zxdt/202611/t20261105_46591.html"
+}

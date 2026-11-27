@@ -23,3 +23,20 @@ export function routeCoverage(train,geometry){
  return {total:Math.max(0,path.length-1),available,inferred,sourceGeometryMissing:!!ref&&!ref.shapeId,sourceMissing:!!ref&&!ref.shapeId&&available===0};
 }
 export function focusedStopIds(trains,id){return new Set(trains.find(t=>t.id===id)?.path||[]);}
+
+// Shared geometry is represented once, carrying every service color that uses it.
+// Alternating strokes can then show mixed services without inventing parallel tracks.
+export function coloredDisplayRoutes(routes,project,tolerance=1.25){
+ const groups=new Map(),kept=[];
+ for(const route of routes){
+  if(route.coordinates.length<2)continue;
+  const points=compact(route.coordinates.map(project));let group=groups.get(route.pair);
+  if(!group){group=[];groups.set(route.pair,group);}
+  let match=group.find(other=>near(points,other.points,tolerance)&&near(other.points,points,tolerance));
+  if(!match){match={points,coordinates:route.coordinates,classes:new Set()};group.push(match);kept.push(match);}
+  match.classes.add(route.routeClass);
+ }
+ const batches=new Map();
+ for(const route of kept){const classes=[...route.classes].sort(),key=classes.join('|');if(!batches.has(key))batches.set(key,{classes,coordinates:[]});batches.get(key).coordinates.push(route.coordinates);}
+ return [...batches.values()];
+}

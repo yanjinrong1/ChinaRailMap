@@ -13,5 +13,8 @@ export default {
   "车次须有唯一 id 和至少两个按运行方向排列、已定义且不重复的停站。": "Each train needs a unique ID and at least two distinct, defined stops in travel order.",
   "请选择统一 JSON 或含 trains 的 qETRC .pyetgr / .pyetdb 文件。": "Select the unified JSON format or a qETRC .pyetgr / .pyetdb file containing trains.",
   "qETRC 站名 zhanming 必须为字符串。": "qETRC station names (zhanming) must be strings.",
-  "qETRC 车次缺少 checi。": "qETRC train is missing its checi identifier."
+  "qETRC 车次缺少 checi。": "qETRC train is missing its checi identifier.",
+  "高铁／动车（G/D）": "HSR / EMU (G/D)",
+  "城际／市域（C/S）": "Intercity (C/S)",
+  "共线区间交替显示颜色": "Shared routes alternate colors"
 };

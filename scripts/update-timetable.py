@@ -2,7 +2,7 @@
 """Fetch the latest published CC BY 4.0 GTFS and atomically build the website snapshot.
 Usage: python scripts/update-timetable.py [local_gtfs.zip] [release_tag]
 """
-import csv,io,json,zipfile,sys,urllib.request,re,tempfile,os,hashlib,math
+import csv,io,json,zipfile,sys,urllib.request,re,tempfile,os,hashlib,math,subprocess
 from pathlib import Path
 from collections import defaultdict,Counter
 ROOT=Path(__file__).resolve().parents[1]
@@ -105,7 +105,11 @@ meta={'name':'中国铁路真实时刻表快照','kind':'snapshot','sourceName':
 meta['stationCoordinateCorrections']=coordinate_corrections
 payload={'metadata':meta,'stations':list(stations.values()),'trains':list(trips.values()),'services':dict(services)}
 geometry={'metadata':{'source':BASE,'license':'CC BY 4.0','snapshot':meta['updatedAt']},'stationCoordinates':{id:[s['lat'],s['lng']]for id,s in stations.items()},'segments':segments,'version':2,'trainRoutes':train_routes}
+# Preserve the complete previous release, including inferred geometry, before replacement.
+subprocess.run(['node',str(ROOT/'scripts/snapshot-history.mjs'),'archive',tag],cwd=ROOT,check=True)
 for name,obj in [('data.json',payload),('routes.json',geometry)]:
  target=ROOT/'public/timetable'/name;target.parent.mkdir(parents=True,exist_ok=True)
  tmp=target.with_suffix('.tmp');tmp.write_text(json.dumps(obj,ensure_ascii=False,separators=(',',':')));os.replace(tmp,target)
 print(json.dumps({'stations':len(stations),'trips':len(trips),'services':len(services),'geometryVariants':len(segments),'trainSpecificLegs':sum(len(r['legs'])for r in train_routes.values()),'unmatchedLegs':unmatched,'shapes':shape_count,'metadata':meta},ensure_ascii=False,indent=2))
+
+subprocess.run(['node',str(ROOT/'scripts/snapshot-history.mjs'),'index'],cwd=ROOT,check=True)

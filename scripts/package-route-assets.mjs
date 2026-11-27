@@ -1,9 +1,10 @@
 // Keep detailed OSM provenance in the downloadable audit database, outside the
 // browser's live geometry objects. Split display assets below CDN file limits.
 import fs from 'node:fs';
+import pathModule from 'node:path';
 import {readRouteData} from './read-route-data.mjs';
-const path='dist/timetable/';
-const data=readRouteData(new URL('../dist/timetable/routes.json',import.meta.url));
+function packageRoutes(path){
+const data=readRouteData(new URL('file://'+pathModule.resolve(path,'routes.json')));
 for(const ref of Object.values(data.trainRoutes))for(const id of Object.values(ref.legs))if(!data.segments[id])throw Error(`Missing route variant: ${id}`);
 const buckets=Array.from({length:16},()=>({}));
 for(const [id,segment] of Object.entries(data.segments)){
@@ -19,3 +20,8 @@ data.segmentFiles=buckets.map((segments,i)=>{
 data.segments={};
 fs.writeFileSync(path+'routes.json',JSON.stringify(data));
 console.log('Packaged railway geometry in 16 display shards');
+
+}
+packageRoutes('dist/timetable/');
+const history='dist/timetable/snapshots/';
+if(fs.existsSync(history))for(const entry of fs.readdirSync(history,{withFileTypes:true}))if(entry.isDirectory()&&!entry.name.startsWith('.'))packageRoutes(history+entry.name+'/');

@@ -1,4 +1,10 @@
 export default {
+  "正在加载…": "Loading…",
+  "数据库日期": "Database date",
+  "历史数据库切换": "Historical databases",
+  "地图左上角可按数据库日期切换快照。更新时保留旧时刻表及对应线路，历史版本按当时日期查看车次。": "Choose a database date at the top left. Updates preserve old timetables and matching routes; historical snapshots show services for their original date.",
+  "数据库版本列表加载失败": "Failed to load database versions",
+  "数据库版本不匹配": "Database version mismatch",
   "信息": "Information",
   "G/D 车次": "G/D services",
   "C/S 车次": "C/S services",

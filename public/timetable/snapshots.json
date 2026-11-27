@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "current": "gtfs-20261124-112841",
+  "snapshots": [
+    {
+      "id": "gtfs-20261124-112841",
+      "date": "2026-11-24",
+      "base": "/timetable/",
+      "validFrom": "2026-11-09",
+      "validTo": "2027-02-13"
+    }
+  ]
+}

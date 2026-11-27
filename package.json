@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host 0.0.0.0",
-    "build": "vite build && node scripts/package-route-assets.mjs",
+    "build": "node scripts/snapshot-history.mjs index && vite build && node scripts/package-route-assets.mjs",
     "preview": "vite preview --host 0.0.0.0",
     "test": "node --test",
     "data:update": "python scripts/update-timetable.py && node scripts/fill-timetable-routes.mjs",

@@ -30,24 +30,24 @@
   "levels": [
     {
       "zoom": 4,
-      "tolerancePixels": 3.5,
+      "tolerancePixels": 1.5,
       "beforeVertices": 28585,
-      "afterVertices": 5731,
-      "reductionPercent": 80
+      "afterVertices": 6058,
+      "reductionPercent": 78.8
     },
     {
       "zoom": 7,
-      "tolerancePixels": 2.5,
+      "tolerancePixels": 1,
       "beforeVertices": 28585,
-      "afterVertices": 6724,
-      "reductionPercent": 76.5
+      "afterVertices": 8423,
+      "reductionPercent": 70.5
     },
     {
       "zoom": 10,
-      "tolerancePixels": 0.75,
+      "tolerancePixels": 0.3,
       "beforeVertices": 28585,
-      "afterVertices": 20968,
-      "reductionPercent": 26.6
+      "afterVertices": 27889,
+      "reductionPercent": 2.4
     },
     {
       "zoom": 13,

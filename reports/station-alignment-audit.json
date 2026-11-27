@@ -1,0 +1,59 @@
+{
+  "scope": "Production renderer, 2026-11-28 services, Dongguan and Guangzhou Baiyun; every unambiguous station anchor must survive and align exactly at all tested zoom levels.",
+  "results": [
+    {
+      "origin": "东莞",
+      "zoom": 5,
+      "protectedStationNodes": 251,
+      "alignedStationNodes": 251,
+      "maximumOldGapPixels": 6.23,
+      "newAnchorGapPixels": 0,
+      "drawnVertices": 2167
+    },
+    {
+      "origin": "东莞",
+      "zoom": 7,
+      "protectedStationNodes": 251,
+      "alignedStationNodes": 251,
+      "maximumOldGapPixels": 5.59,
+      "newAnchorGapPixels": 0,
+      "drawnVertices": 2954
+    },
+    {
+      "origin": "东莞",
+      "zoom": 9,
+      "protectedStationNodes": 251,
+      "alignedStationNodes": 251,
+      "maximumOldGapPixels": 4.77,
+      "newAnchorGapPixels": 0,
+      "drawnVertices": 6012
+    },
+    {
+      "origin": "广州白云",
+      "zoom": 5,
+      "protectedStationNodes": 556,
+      "alignedStationNodes": 556,
+      "maximumOldGapPixels": 6.92,
+      "newAnchorGapPixels": 0,
+      "drawnVertices": 6197
+    },
+    {
+      "origin": "广州白云",
+      "zoom": 7,
+      "protectedStationNodes": 556,
+      "alignedStationNodes": 556,
+      "maximumOldGapPixels": 5.61,
+      "newAnchorGapPixels": 0,
+      "drawnVertices": 8374
+    },
+    {
+      "origin": "广州白云",
+      "zoom": 9,
+      "protectedStationNodes": 556,
+      "alignedStationNodes": 556,
+      "maximumOldGapPixels": 6.93,
+      "newAnchorGapPixels": 0,
+      "drawnVertices": 16792
+    }
+  ]
+}

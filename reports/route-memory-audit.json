@@ -6,14 +6,18 @@
     "optimizedRuntime": 62.3
   },
   "runtimeReductionPercent": 20.5,
-  "excludedRuntimeTables": ["sectionIds", "trainPaths"],
+  "excludedRuntimeTables": [
+    "sectionIds",
+    "trainPaths"
+  ],
   "sample": {
     "origin": "广州白云",
     "zoom": 7,
     "previousRenderAllocationBeforeGC_MiB": 56.3,
-    "optimizedRenderAllocationBeforeGC_MiB": 18.4,
+    "optimizedRenderAllocationBeforeGC_MiB": 40.7,
     "previousDrawnVertices": 28585,
-    "optimizedDrawnVertices": 6724
+    "optimizedDrawnVertices": 8423,
+    "note": "Gentler station-pinned LOD; isolated one-run V8 allocation is GC-sensitive."
   },
   "reproduce": "node --expose-gc scripts/measure-route-memory.mjs dist --runtime --render --optimize"
 }

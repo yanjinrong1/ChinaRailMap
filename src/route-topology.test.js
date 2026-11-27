@@ -1,6 +1,6 @@
 import {test} from 'node:test';import assert from 'node:assert/strict';
 import {buildRouteTopology} from '../scripts/build-route-topology.mjs';
-import {topologyDisplayRoutes,passedStations,deduplicateParallelLegs} from './route-topology.js';
+import {topologyDisplayRoutes,passedStations,deduplicateParallelLegs,stationAnchorNodes} from './route-topology.js';
 import {topologyCoordinates} from './rail-geometry.js';
 function fixture(){
  const stations=[{id:'A',lat:30,lng:110},{id:'B',lat:30,lng:110.01},{id:'C',lat:30,lng:110.02},{id:'Nearby',lat:30.002,lng:110.01}];
@@ -79,4 +79,18 @@ test('up/down paths in one visual corridor share a line; operators and substanti
  const legs=['AC','parallel','other','detour'].map(id=>({id,routeClass:'highspeed'}));
  const result=deduplicateParallelLegs(legs,g,project,{pixelTolerance:.01,corridorMeters:400});
  assert.equal(result.length,3);assert.ok(result.some(s=>s.id==='detour'));assert.ok(result.some(s=>s.id==='other'));
+});
+
+test('station pins survive coarse simplification and every service color meets the station',()=>{
+ const topology={nodes:[[0,0],[10,1],[20,0]],sections:[[0,1,'CR'],[1,2,'CR']],legs:{through:[1,2]},passages:{through:[{id:'B',nodeIndex:1}]}};
+ const legs=[{id:'through',routeClass:'highspeed'},{id:'through',routeClass:'intercity'}],pins=stationAnchorNodes(legs,topology);
+ assert.deepEqual(pins,new Set([0,1,2]));
+ const routes=topologyDisplayRoutes(legs,topology,{...screen,tolerance:100,protectedNodes:pins});
+ for(const route of routes)assert.ok(route.coordinates.some(line=>line.some(p=>p[0]===10&&p[1]===1)));
+});
+
+test('station render coordinates override the display node without moving source geometry',()=>{
+ const topology={nodes:[[0,0],[10,1],[20,0]],sections:[[0,1,'CR'],[1,2,'CR']],legs:{through:[1,2]}},before=JSON.stringify(topology);
+ const routes=topologyDisplayRoutes([{id:'through',routeClass:'highspeed'}],topology,{...screen,tolerance:100,protectedNodes:new Set([1]),anchorPositions:new Map([[1,[10,2]]])});
+ assert.ok(routes[0].coordinates.some(line=>line.some(p=>p[0]===10&&p[1]===2)));assert.equal(JSON.stringify(topology),before);
 });

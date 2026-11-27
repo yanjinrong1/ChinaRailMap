@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import {loadSnapshotGeometry} from '../src/snapshots.js';
-import {deduplicateParallelLegs,topologyDisplayRoutes,topologyLeg} from '../src/route-topology.js';
+import {deduplicateParallelLegs,topologyDisplayRoutes,topologyLeg,stationAnchorNodes,stationAnchorPositions} from '../src/route-topology.js';
 import {stationWorldPoint} from '../src/map-model.js';
 import {reachable} from '../src/network.js';
 import {trainRouteClass} from '../src/route-colors.js';
@@ -16,7 +16,7 @@ for(const train of result.services)for(let i=1;i<train.path.length;i++){const le
 const selected=deduplicateParallelLegs(legs,geometry,project,{pixelTolerance:0}),levels=[];
 for(const zoom of [4,7,10,13]){
  const projection=([lat,lng])=>stationWorldPoint({lat,lng},zoom),options={project:projection,unproject:p=>[p.x,p.y],gap:3.5},count=batches=>batches.reduce((n,b)=>n+b.coordinates.reduce((m,c)=>m+c.length,0),0);
- const before=count(topologyDisplayRoutes(legs,geometry.topology,options)),after=count(topologyDisplayRoutes(selected,geometry.topology,{...options,tolerance:routeTolerance(zoom)}));
+ const before=count(topologyDisplayRoutes(legs,geometry.topology,options)),after=count(topologyDisplayRoutes(selected,geometry.topology,{...options,tolerance:routeTolerance(zoom),protectedNodes:stationAnchorNodes(selected,geometry.topology),anchorPositions:stationAnchorPositions(selected,geometry,stations)}));
  levels.push({zoom,tolerancePixels:routeTolerance(zoom),beforeVertices:before,afterVertices:after,reductionPercent:Math.round((1-after/before)*1000)/10});
 }
 const report={measurementScope:'Display vertex counts on current snapshot, Guangzhou Baiyun reachable network; original paths and timetable unchanged.',corridorToleranceMeters:400,corridors,levels};

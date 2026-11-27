@@ -51,7 +51,7 @@ A single focused service is centered. Geometry and routing references are unchan
 Screen-space Douglas–Peucker simplification runs on shared geometry before offset
 frames are built. Color boundaries and graph junctions remain fixed, so parallel
 colors simplify together and continue to meet. Pixel tolerances decrease from
-3.5px at zoom <=5 to zero at zoom 13. Detailed routing and passing-station logic
+1.5px at zoom <=5 to zero at zoom 13. Detailed routing and passing-station logic
 continue to use the original graph.
 
 Near-identical directional leg variants may use one display representative when
@@ -65,3 +65,17 @@ The browser runtime skips the stable-ID strings and redundant full train-path
 lookup table, which remain available as downloadable audit artifacts. Geometry
 memory benchmarks use isolated Node/V8 with explicit GC, not whole-tab/GPU memory.
 Run `node --expose-gc scripts/measure-route-memory.mjs dist --runtime --render --optimize`.
+
+## Station alignment
+
+Selected display-leg endpoints and their inferred station-passage nodes are hard
+pins in the display graph. Simplification splits chains at those nodes before
+removing bends. Parallel strokes taper together within 10 screen pixels of these
+pins, meeting the original routed station anchor exactly. Leaflet's second
+simplification pass is disabled for these already-simplified topology strokes.
+Station coordinates, source route topology and timetable data remain unchanged.
+
+After visual review, display tolerances were reduced to 1.5px (zoom <=5), 1px
+(<=7), .65px (<=9), .3px (<=11), .1px (12), and zero (13). Station nodes remain
+protected at every level. Unambiguous routed station anchors within 500m use the
+station marker coordinates for display only; conflicting anchors are excluded.

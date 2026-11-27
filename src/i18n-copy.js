@@ -1,4 +1,6 @@
 export default {
+  "车站与线路对齐": "Station and route alignment",
+  "简化线路时保留停靠和通过站锚点，平行线在车站附近收拢，防止线路拉直后偏离站点。": "Keep stops and passing-station anchors during simplification, and bring parallel lines together near stations so routes stay aligned with markers.",
   "线路降噪与内存优化": "Route detail and memory",
   "缩小时简化展线和细碎弯折，放大后恢复细节；近似上下行轨道合并显示，并减少非绘图数据加载。": "Simplify small bends when zoomed out and restore detail when zoomed in. Combine near-identical directional tracks and skip data not needed for rendering.",
   "并行线路连续性": "Continuous parallel routes",

@@ -1,4 +1,8 @@
 export default {
+  "查看车次": "Show trains",
+  "收起车次": "Hide trains",
+  "移动版布局": "Mobile layout",
+  "标题栏置顶，选好两站后展开车次面板，可随时向下收起；数据库日期与车站数量同排对齐。": "The title stays at the top. Choose both stations to open the train panel, then collapse it whenever needed. Database date and station count share an aligned row.",
   "不同停站车次共线合并": "Shared tracks across stop patterns",
   "按共同车站拆分显示区间，让直达车和分段停站车共享同一条线，修复深圳北至葵潭、合肥至六安等区域的同色重线。": "Split display paths at shared stations so express and stopping trains use one line, removing duplicate same-color tracks around Shenzhen North–Kuitan and Hefei–Luan.",
   "车站": "Stations",

@@ -146,3 +146,33 @@ html:lang(en) .station-chip{max-width:260px}
 
 #legend-panel .legend-column{display:flex;flex-direction:column;gap:8px;min-width:0}
 #legend-panel .legend-column h4{font-size:11px;line-height:16px;font-weight:600;margin:0;color:var(--control-muted)}
+
+/* Desktop keeps its sidebar; mobile gets a top brand and a collapsible sheet. */
+.sidebar-content,.journey-sheet-content{display:flex;flex-direction:column;flex:1;min-height:0}
+.mobile-sheet-toggle{display:none}
+.map-summary{display:contents}
+@media(max-width:650px){
+ main{display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:auto minmax(0,1fr) auto;height:100dvh;min-height:0;overflow:hidden}
+ main>aside{display:contents}
+ .brand-row{grid-column:1;grid-row:1;display:flex;margin:0;padding:9px 12px;border-bottom:1px solid #e2e8ed;background:#fff;z-index:1200;min-height:58px}
+ .brand-row .app-brand{padding:0;margin:0}
+ .brand-row .app-brand h1{font-size:15px;line-height:1.3}
+ .brand-row .app-brand-en{font-size:10px;line-height:1.3}
+ .map-area{grid-column:1;grid-row:2;width:100%;height:100%;min-height:0;min-width:0}
+ .sidebar-content{grid-column:1;grid-row:3;display:flex;flex:none;min-height:0;height:auto;overflow:hidden;background:#fff;z-index:1100}
+ .sidebar-content[data-has-journey=false]{display:none}
+ .sidebar-content[data-expanded=true]{height:min(42dvh,420px);max-height:calc(100dvh - 180px);border-top:1px solid #dce5e7;box-shadow:0 -3px 16px #18302a12}
+ .mobile-sheet-toggle{display:flex;align-items:center;justify-content:center;gap:7px;flex-shrink:0;min-height:36px;width:100%;padding:6px 12px;font-size:12px;color:#526d78;background:#fff;border-top:1px solid #e2e8ed}
+ .sidebar-content[data-expanded=true] .mobile-sheet-toggle{border-top:0}
+ .mobile-sheet-toggle svg{width:16px;height:16px}
+ .sidebar-content[data-expanded=false] .mobile-sheet-toggle svg{transform:rotate(180deg)}
+ .journey-sheet-content{padding:0 12px;min-height:0;overflow:hidden}
+ .sidebar-content[data-expanded=false] .journey-sheet-content{display:none}
+ .journey-sheet-content #panel{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain}
+ .journey-sheet-content .database-footer{padding-bottom:max(5px,env(safe-area-inset-bottom))}
+ .map-summary{display:flex;position:absolute;top:10px;left:10px;right:10px;align-items:center;justify-content:space-between;gap:8px;z-index:1000;pointer-events:none}
+ .map-summary .snapshot-control{position:static;margin:0;height:36px;min-width:0;max-width:none;padding:4px 7px;gap:5px;pointer-events:auto;flex:0 1 auto;font-size:11px}
+ .map-summary .snapshot-control select{font-size:12px;min-width:108px;max-width:175px;min-height:26px;padding-top:1px;padding-bottom:1px}
+ .map-summary .map-top-right{position:static;display:flex;align-items:center;gap:3px;height:36px;margin:0;padding:0 8px;white-space:nowrap;font-size:11px;line-height:1;flex-shrink:0;pointer-events:auto}
+}
+@media(max-width:380px){.map-summary .snapshot-control>span{display:none}.map-summary .snapshot-control select{border-left:0;padding-left:0;min-width:105px}}

@@ -1,4 +1,7 @@
 export default {
+  "精简数据操作": "Simplified data controls",
+  "移除公开页面的时刻表导入和格式示例下载，保留已发布数据库的日期切换。": "Removed timetable imports and example downloads from the public interface. Published database dates remain available.",
+  "时刻表加载失败，请刷新重试。": "Timetable failed to load. Please refresh and try again.",
   "全端站点密度优化": "Station spacing on all screens",
   "移动端和桌面端按屏幕间距筛选站点，低缩放优先枢纽和区域代表站；选中站始终显示，通过站放大后出现，站点列表保持完整。": "Space station markers by screen distance on mobile and desktop. Hubs and regional representatives appear first; selected stations stay visible and passing stations appear when zoomed in. Station lists remain complete.",
   "查看车次": "Show trains",

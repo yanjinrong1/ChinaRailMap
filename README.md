@@ -1,6 +1,6 @@
 # 中国铁路互动地图 · China Railway Map
 
-中国铁路同车可达地图，Vite / Leaflet / MapLibre。内置真实时刻表快照，支持 qETRC 文件导入，以及浅色、深色、OSM 标准底图。
+中国铁路同车可达地图，Vite / Leaflet / MapLibre。内置真实时刻表快照，支持浅色、深色、OSM 标准底图。
 
 ## 数据来源与范围
 
@@ -40,11 +40,11 @@ python scripts/update-timetable.py /absolute/path/output_gtfs.zip gtfs-20261124-
 node scripts/fill-timetable-routes.mjs
 ```
 
-## 导入 qETRC
+## 公开站点数据入口
 
-网站“导入时刻表”接受 `.pyetgr`、`.pyetdb` 和 JSON。读取 `trains[].checi` 与 `trains[].timetable` 中的 `zhanming`、`ddsj`、`cfsj`，按名称匹配内置站点坐标，并处理午夜时刻回绕。未知站点会列出错误并拒绝整次导入，避免偷偷缩短停站序列。qETRC 不含可验证开行日历时，页面明确标记“开行日期未核验”，不冒充当前真实数据。导入仅保存在页面内存，可恢复内置快照。
+公开页面只读取已发布的时刻表快照，用户可通过数据库日期切换版本。时刻表导入、文件选择、格式示例下载及恢复导入数据的交互均已移除。数据更新通过维护者的离线更新脚本与发布流程完成。
 
-统一 JSON 支持 `stations`、`trains` 数组；站点含 `id,name,lat,lng,level`，车次含 `id,stops`，可选 `code,times`。示例下载仍为明确标注的 DEMO 格式示例，默认地图不再使用它。
+qETRC 解析工具和测试保留供开发使用，不作为公开页面功能。
 
 旧演示路径 `public/rail-routes.json` 与 Natural Earth `public/world.json` 仅作为原型资料保留；默认不加载。
 

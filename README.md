@@ -1,4 +1,4 @@
-# 中国铁路可达地图 · China Railway Map
+# 中国铁路互动地图 · China Railway Map
 
 中国铁路同车可达地图，Vite / Leaflet / MapLibre。内置真实时刻表快照，支持 qETRC 文件导入，以及浅色、深色、OSM 标准底图。
 

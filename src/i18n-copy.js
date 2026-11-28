@@ -1,4 +1,8 @@
 export default {
+  "车站": "Stations",
+  "车次类型": "Services",
+  "图例布局与绿皮车配色": "Legend layout and railway green",
+  "图例默认关闭，车站大小和车次类型分列展示；打开时避开工具栏，普速线改用更明亮的绿皮车绿色。": "The legend starts closed, with station sizes and service types in separate columns. It opens clear of the toolbar, and conventional routes use a brighter classic railway green.",
   "拖动图例": "Move legend",
   "拖动以移动图例": "Drag to move the legend",
   "关闭图例": "Close legend",

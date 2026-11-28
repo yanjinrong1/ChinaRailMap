@@ -87,8 +87,8 @@ html:lang(en) .station-chip{max-width:260px}
 
 .journey summary span{min-width:0;max-width:100%;white-space:normal;overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
 
-:root{--route-highspeed:#d92535;--route-conventional:#14563e;--route-intercity:#1678d4}
-.dark-map{--route-highspeed:#ff5a63;--route-conventional:#398c66;--route-intercity:#58acff}
+:root{--route-highspeed:#d92535;--route-conventional:#3d8b40;--route-intercity:#1678d4}
+.dark-map{--route-highspeed:#ff5a63;--route-conventional:#69b85d;--route-intercity:#58acff}
 .legend .route-highspeed{background:var(--route-highspeed)}
 .legend .route-conventional{background:var(--route-conventional)}
 .legend .route-intercity{background:var(--route-intercity)}
@@ -131,7 +131,7 @@ html:lang(en) .station-chip{max-width:260px}
 @media(max-width:700px){.snapshot-control{top:10px;left:10px;gap:5px;padding:5px 7px}.snapshot-control select{min-width:110px;max-width:170px}.map-top-right{top:62px}}
 
 /* Independent, compact legend window. */
-#legend-panel{position:absolute;z-index:1150;right:65px;bottom:16px;width:240px;max-width:calc(100% - 80px);max-height:calc(100% - 24px);overflow:auto;background:var(--control-bg);color:var(--control-text);border:1px solid var(--control-border);border-radius:10px;box-shadow:0 5px 22px #10242b25;padding:10px;font-size:12px;overscroll-behavior:contain}
+#legend-panel{position:absolute;z-index:1150;right:88px;bottom:16px;width:256px;max-width:calc(100% - 96px);max-height:calc(100% - 24px);overflow:auto;background:var(--control-bg);color:var(--control-text);border:1px solid var(--control-border);border-radius:10px;box-shadow:0 5px 22px #10242b25;padding:10px;font-size:12px;overscroll-behavior:contain}
 #legend-panel[hidden]{display:none}
 .legend-window-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;cursor:grab;touch-action:none;user-select:none;padding:0 0 7px;border-bottom:1px solid var(--control-border);margin-bottom:8px}
 .legend-window-heading h3{font-size:13px;line-height:20px;margin:0;font-weight:650}
@@ -143,3 +143,6 @@ html:lang(en) .station-chip{max-width:260px}
 #legend-panel .legend span{color:var(--control-text);margin:0;gap:6px;min-width:0}
 #legend-panel .legend-route{width:18px;flex-shrink:0}
 #legend-toggle[aria-expanded=true]{color:var(--control-accent)}
+
+#legend-panel .legend-column{display:flex;flex-direction:column;gap:8px;min-width:0}
+#legend-panel .legend-column h4{font-size:11px;line-height:16px;font-weight:600;margin:0;color:var(--control-muted)}

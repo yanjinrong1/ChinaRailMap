@@ -8,8 +8,8 @@
       "zoom": 4,
       "reachableStations": 331,
       "beforeVisible": 332,
-      "afterVisible": 34,
-      "minimumGapPixels": 28.1
+      "afterVisible": 151,
+      "minimumGapPixels": 7
     },
     {
       "origin": "哈尔滨",
@@ -17,8 +17,8 @@
       "zoom": 4,
       "reachableStations": 331,
       "beforeVisible": 332,
-      "afterVisible": 34,
-      "minimumGapPixels": 28.1
+      "afterVisible": 151,
+      "minimumGapPixels": 7
     },
     {
       "origin": "哈尔滨",
@@ -26,8 +26,8 @@
       "zoom": 6,
       "reachableStations": 331,
       "beforeVisible": 130,
-      "afterVisible": 48,
-      "minimumGapPixels": 28.5
+      "afterVisible": 107,
+      "minimumGapPixels": 7.7
     },
     {
       "origin": "哈尔滨",
@@ -35,8 +35,8 @@
       "zoom": 6,
       "reachableStations": 331,
       "beforeVisible": 213,
-      "afterVisible": 83,
-      "minimumGapPixels": 28.3
+      "afterVisible": 170,
+      "minimumGapPixels": 7.7
     },
     {
       "origin": "哈尔滨",
@@ -53,8 +53,8 @@
       "zoom": 9,
       "reachableStations": 331,
       "beforeVisible": 17,
-      "afterVisible": 16,
-      "minimumGapPixels": 30
+      "afterVisible": 17,
+      "minimumGapPixels": 19.8
     },
     {
       "origin": "广州南",
@@ -62,8 +62,8 @@
       "zoom": 4,
       "reachableStations": 424,
       "beforeVisible": 425,
-      "afterVisible": 35,
-      "minimumGapPixels": 28
+      "afterVisible": 181,
+      "minimumGapPixels": 7
     },
     {
       "origin": "广州南",
@@ -71,8 +71,8 @@
       "zoom": 4,
       "reachableStations": 424,
       "beforeVisible": 425,
-      "afterVisible": 35,
-      "minimumGapPixels": 28
+      "afterVisible": 181,
+      "minimumGapPixels": 7
     },
     {
       "origin": "广州南",
@@ -80,8 +80,8 @@
       "zoom": 6,
       "reachableStations": 424,
       "beforeVisible": 141,
-      "afterVisible": 66,
-      "minimumGapPixels": 29.3
+      "afterVisible": 134,
+      "minimumGapPixels": 7
     },
     {
       "origin": "广州南",
@@ -89,8 +89,8 @@
       "zoom": 6,
       "reachableStations": 424,
       "beforeVisible": 328,
-      "afterVisible": 150,
-      "minimumGapPixels": 28.1
+      "afterVisible": 310,
+      "minimumGapPixels": 7
     },
     {
       "origin": "广州南",
@@ -116,8 +116,8 @@
       "zoom": 4,
       "reachableStations": 211,
       "beforeVisible": 158,
-      "afterVisible": 34,
-      "minimumGapPixels": 28.6
+      "afterVisible": 99,
+      "minimumGapPixels": 7.1
     },
     {
       "origin": "乌鲁木齐",
@@ -125,8 +125,8 @@
       "zoom": 4,
       "reachableStations": 211,
       "beforeVisible": 212,
-      "afterVisible": 46,
-      "minimumGapPixels": 28.2
+      "afterVisible": 135,
+      "minimumGapPixels": 7.1
     },
     {
       "origin": "乌鲁木齐",
@@ -134,8 +134,8 @@
       "zoom": 6,
       "reachableStations": 211,
       "beforeVisible": 20,
-      "afterVisible": 12,
-      "minimumGapPixels": 37.1
+      "afterVisible": 16,
+      "minimumGapPixels": 10.3
     },
     {
       "origin": "乌鲁木齐",
@@ -143,8 +143,8 @@
       "zoom": 6,
       "reachableStations": 211,
       "beforeVisible": 76,
-      "afterVisible": 44,
-      "minimumGapPixels": 28.4
+      "afterVisible": 66,
+      "minimumGapPixels": 7
     },
     {
       "origin": "乌鲁木齐",

@@ -4,7 +4,7 @@ Desktop and mobile use the same CSS-pixel distance rule. Both selected endpoints
 are always retained, even if they overlap. Other candidates are selected by an
 actual Euclidean-distance check across neighboring grid buckets:
 
-- Zoom <=8: 28px; zoom 9: 24px; 10: 20px; 11: 16px; 12: 12px; 13: 8px.
+- Minimum center-to-center distance: 7 CSS pixels at all zoom levels.
 - Eligible candidates come from the current mode: global overview, reachable
   stations, or the focused train's intermediate stations.
 - Focused stops and separately operated station companions have priority; then

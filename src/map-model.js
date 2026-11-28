@@ -27,14 +27,14 @@ function assignVisibility(stations){
  const regional=[...active].sort((a,b)=>b.displayPriority-a.displayPriority||b.frequency-a.frequency||a.id.localeCompare(b.id));
  const chosen=new Set();
  for(let zoom=3;zoom<=13;zoom++){
-  const occupied=new Map(),coverage=new Set(),cellSize=28,coverageSize=64;
+  const occupied=new Map(),coverage=new Set(),cellSize=7,coverageSize=64;
   const bucket=p=>[Math.floor(p.x/cellSize),Math.floor(p.y/cellSize)];
   const coverageKey=p=>`${Math.floor(p.x/coverageSize)}|${Math.floor(p.y/coverageSize)}`;
   function add(s){const p=stationWorldPoint(s,zoom),k=bucket(p).join('|');if(!occupied.has(k))occupied.set(k,[]);occupied.get(k).push(p);coverage.add(coverageKey(p));if(!chosen.has(s.id)){chosen.add(s.id);s.minZoom=zoom;}}
   function fits(s,distance){const p=stationWorldPoint(s,zoom),[x,y]=bucket(p),span=Math.ceil(distance/cellSize);for(let dx=-span;dx<=span;dx++)for(let dy=-span;dy<=span;dy++)for(const other of occupied.get(`${x+dx}|${y+dy}`)||[])if(Math.hypot(p.x-other.x,p.y-other.y)<distance)return false;return true;}
   for(const s of active)if(chosen.has(s.id))add(s);
   // Preserve absolute-frequency hubs, with actual distance avoidance across cell edges.
-  for(const s of active)if(!chosen.has(s.id)&&zoom>=s.nationalMinZoom&&fits(s,28))add(s);
+  for(const s of active)if(!chosen.has(s.id)&&zoom>=s.nationalMinZoom&&fits(s,7))add(s);
   const threshold=zoom===3?.82:zoom===4?.68:zoom===5?.5:.3,minFrequency=zoom<=4?8:zoom===5?3:1;
   // Fill geographical gaps using the strongest nearby representative, not a province quota.
   for(const s of regional){
@@ -68,7 +68,7 @@ export function selectionTransition(state,action,reachableIds=new Set()){
 }
 // No origin means no route computation or drawing.
 export function selectedPaths(result,destination){return result?(destination?result.destinations.get(destination)||[]:result.services):[];}
-export function stationSpacing(zoom){return zoom<=8?28:zoom===9?24:zoom===10?20:zoom===11?16:zoom===12?12:8;}
+export function stationSpacing(){return 7;}
 export function stationMarkerDimensions(station,{zoom,selected=false,via=false,passing=false}){
  if(selected)return {radius:8,weight:2.5};
  const scale=zoom<=5?.7:zoom<=7?.82:zoom<=9?.92:1;

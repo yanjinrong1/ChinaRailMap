@@ -1,4 +1,9 @@
 export default {
+  "深浅底图来自 OpenFreeMap，无法连接时使用 OSM 栅格的备用视觉样式。铁路几何 © OpenStreetMap contributors，ODbL 1.0；OSM 路网日期与推算来源见自动审计记录；时刻表与上游线路走向快照见版本说明。": "Basemaps use OpenFreeMap, with an OSM raster fallback when unavailable. Railway geometry © OpenStreetMap contributors, ODbL 1.0. See the routing audit for OSM dates and inference provenance, and the snapshot metadata for timetable attribution.",
+  "选择始发站：": "Choose departure:",
+  "从地图或以下选项选择": "Choose on the map or below",
+  "始发站选择指引": "Departure station guidance",
+  "明确提示从地图或选项选择始发站，车站选项按车次频率排序，并按屏幕空间调整显示数量。": "Choose a departure station on the map or from the options. Stations are ordered by train frequency, with the number shown adapted to available space.",
   "精简数据操作": "Simplified data controls",
   "移除公开页面的时刻表导入和格式示例下载，保留已发布数据库的日期切换。": "Removed timetable imports and example downloads from the public interface. Published database dates remain available.",
   "时刻表加载失败，请刷新重试。": "Timetable failed to load. Please refresh and try again.",

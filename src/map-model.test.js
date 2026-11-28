@@ -1,5 +1,5 @@
 import {test}from 'node:test';import assert from 'node:assert/strict';import fs from 'node:fs';
-import {stationPriorities,stationWorldPoint,selectionTransition,selectedPaths,visibleStations}from './map-model.js';
+import {stationPriorities,stationWorldPoint,selectionTransition,selectedPaths,visibleStations,stationSpacing,stationMarkerDimensions}from './map-model.js';
 import {reachable}from './network.js';
 const d=JSON.parse(fs.readFileSync(new URL('../public/timetable/data.json',import.meta.url)));
 test('two picks select a destination; removing origin promotes destination and recalculates direction',()=>{
@@ -22,7 +22,7 @@ test('frequency drives size, colors, and zoom visibility; low zoom stays sparse'
  assert.ok(visible.length<=100);assert.ok(visible.every(s=>s.minZoom<=4));
  const low=ranked.find(s=>s.minZoom>=8);assert.ok(!visible.some(s=>s.id===low.id));
  // A low-frequency reachable station must still be available as a destination at low zoom.
- const selected=visibleStations(ranked,{zoom:4,contains:()=>true,origin:ranked[0].id,destination:null,reachableIds:new Set([low.id]),project:()=>({x:0,y:0})});
+ const selected=visibleStations(ranked,{zoom:4,contains:()=>true,origin:ranked[0].id,destination:null,reachableIds:new Set([low.id]),project:s=>({x:s.id===low.id?100:0,y:0})});
  assert.ok(selected.some(s=>s.id===low.id));
 });
 test('viewport culling and collision avoidance never remove selected endpoints',()=>{
@@ -61,4 +61,37 @@ test('regional weighting does not invent activity or depend on source station or
  const a=stationPriorities(data),b=stationPriorities({...data,stations:[...data.stations].reverse()});
  assert.deepEqual(a.map(s=>[s.id,s.minZoom]),b.map(s=>[s.id,s.minZoom]));assert.equal(a.find(s=>s.id==='empty').minZoom,Infinity);
  assert.ok(a.find(s=>s.id==='west').minZoom<a.find(s=>s.id==='nearby').minZoom);
+});
+
+test('reachable stations respect real pixel spacing across bucket edges, with endpoints always kept',()=>{
+ const stations=[{id:'origin',x:-100,frequency:1,minZoom:3},...Array.from({length:100},(_,i)=>({id:'s'+i,x:i*4,minZoom:3,frequency:100-i}))],reachableIds=new Set(stations.slice(1).map(s=>s.id));
+ const options={zoom:4,contains:()=>true,origin:'origin',destination:null,reachableIds,project:s=>({x:s.x,y:0})};
+ const visible=visibleStations(stations,options);assert.ok(visible.length<20);
+ for(let i=0;i<visible.length;i++)for(let j=0;j<i;j++)assert.ok(Math.abs(visible[i].x-visible[j].x)>=28);
+ const close=[{id:'A',x:27.9,minZoom:3},{id:'B',x:28.1,minZoom:3}];assert.equal(visibleStations(close,{...options,origin:null,project:s=>({x:s.x,y:0})}).length,1);
+ assert.equal(reachableIds.size,100);assert.equal(stations.length,101);
+ const fixed=visibleStations(close,{...options,contains:()=>false,origin:'A',destination:'B',project:s=>({x:s.x,y:0})});assert.equal(fixed.length,2);
+});
+test('focused stops are thinned at small zoom while passing stations appear later',()=>{
+ const stations=[{id:'A',x:0,minZoom:10},{id:'B',x:5,minZoom:10},{id:'P',x:60,minZoom:10},{id:'C',x:100,minZoom:10}],viaIds=new Set(['A','B','P','C']);
+ const options={contains:()=>true,origin:'A',destination:'C',reachableIds:new Set(['B','C']),viaIds,passIds:new Set(['P']),project:s=>({x:s.x,y:0})};
+ assert.deepEqual(new Set(visibleStations(stations,{...options,zoom:4}).map(s=>s.id)),new Set(['A','C']));
+ const detailed=visibleStations(stations,{...options,zoom:10,project:s=>({x:s.x*10,y:0})});assert.equal(detailed.length,4);
+});
+test('decluttering is stable under panning and viewport clipping; sparse regional stations survive',()=>{
+ const stations=Array.from({length:30},(_,i)=>({id:'s'+i,x:i*6,minZoom:3,frequency:100-i}));stations.push({id:'west',x:1000,minZoom:4,frequency:2,regionalRepresentative:true,displayPriority:.8});
+ const options={zoom:4,contains:()=>true,origin:'s0',destination:null,reachableIds:new Set(stations.map(s=>s.id)),project:s=>({x:s.x,y:0})};
+ const a=visibleStations(stations,options);assert.ok(a.some(s=>s.id==='west'));assert.deepEqual(visibleStations(stations,{...options,project:s=>({x:s.x+137,y:42})}).map(s=>s.id),a.map(s=>s.id));
+ assert.deepEqual(visibleStations(stations,{...options,contains:s=>s.x>50}).map(s=>s.id),a.filter(s=>s.x>50||s.id==='s0').map(s=>s.id));
+});
+test('zoom gradually restores density and low-zoom symbols use smaller radius and outlines',()=>{
+ assert.equal(stationSpacing(4),28);assert.ok(stationSpacing(13)<stationSpacing(4));
+ const small=stationMarkerDimensions({radius:7},{zoom:4}),large=stationMarkerDimensions({radius:7},{zoom:12});assert.ok(small.radius<large.radius);assert.ok(small.weight<large.weight);
+ assert.deepEqual(stationMarkerDimensions({radius:3},{zoom:4,selected:true}),{radius:8,weight:2.5});
+});
+
+test('separate operator companions use their actual offset positions and still obey the density filter',()=>{
+ const stations=[{id:'CR',minZoom:9,x:0},{id:'GDIC',minZoom:13,x:32},{id:'nearby',minZoom:9,x:34}],companions=new Set(['CR','GDIC']);
+ const result=visibleStations(stations,{zoom:9,contains:()=>true,origin:null,destination:null,companionIds:companions,project:s=>({x:s.x,y:0})});
+ assert.deepEqual(new Set(result.map(s=>s.id)),companions);
 });

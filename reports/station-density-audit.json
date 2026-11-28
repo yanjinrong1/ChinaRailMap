@@ -1,0 +1,168 @@
+{
+  "date": "2026-11-28",
+  "policy": "Same pixel-distance selection on desktop and mobile; endpoints pinned, regional hierarchy preserved, timetable/reachability unchanged.",
+  "results": [
+    {
+      "origin": "哈尔滨",
+      "screen": "mobile",
+      "zoom": 4,
+      "reachableStations": 331,
+      "beforeVisible": 332,
+      "afterVisible": 34,
+      "minimumGapPixels": 28.1
+    },
+    {
+      "origin": "哈尔滨",
+      "screen": "desktop",
+      "zoom": 4,
+      "reachableStations": 331,
+      "beforeVisible": 332,
+      "afterVisible": 34,
+      "minimumGapPixels": 28.1
+    },
+    {
+      "origin": "哈尔滨",
+      "screen": "mobile",
+      "zoom": 6,
+      "reachableStations": 331,
+      "beforeVisible": 130,
+      "afterVisible": 48,
+      "minimumGapPixels": 28.5
+    },
+    {
+      "origin": "哈尔滨",
+      "screen": "desktop",
+      "zoom": 6,
+      "reachableStations": 331,
+      "beforeVisible": 213,
+      "afterVisible": 83,
+      "minimumGapPixels": 28.3
+    },
+    {
+      "origin": "哈尔滨",
+      "screen": "mobile",
+      "zoom": 9,
+      "reachableStations": 331,
+      "beforeVisible": 5,
+      "afterVisible": 5,
+      "minimumGapPixels": 47.1
+    },
+    {
+      "origin": "哈尔滨",
+      "screen": "desktop",
+      "zoom": 9,
+      "reachableStations": 331,
+      "beforeVisible": 17,
+      "afterVisible": 16,
+      "minimumGapPixels": 30
+    },
+    {
+      "origin": "广州南",
+      "screen": "mobile",
+      "zoom": 4,
+      "reachableStations": 424,
+      "beforeVisible": 425,
+      "afterVisible": 35,
+      "minimumGapPixels": 28
+    },
+    {
+      "origin": "广州南",
+      "screen": "desktop",
+      "zoom": 4,
+      "reachableStations": 424,
+      "beforeVisible": 425,
+      "afterVisible": 35,
+      "minimumGapPixels": 28
+    },
+    {
+      "origin": "广州南",
+      "screen": "mobile",
+      "zoom": 6,
+      "reachableStations": 424,
+      "beforeVisible": 141,
+      "afterVisible": 66,
+      "minimumGapPixels": 29.3
+    },
+    {
+      "origin": "广州南",
+      "screen": "desktop",
+      "zoom": 6,
+      "reachableStations": 424,
+      "beforeVisible": 328,
+      "afterVisible": 150,
+      "minimumGapPixels": 28.1
+    },
+    {
+      "origin": "广州南",
+      "screen": "mobile",
+      "zoom": 9,
+      "reachableStations": 424,
+      "beforeVisible": 2,
+      "afterVisible": 2,
+      "minimumGapPixels": 3207.9
+    },
+    {
+      "origin": "广州南",
+      "screen": "desktop",
+      "zoom": 9,
+      "reachableStations": 424,
+      "beforeVisible": 9,
+      "afterVisible": 9,
+      "minimumGapPixels": 52.9
+    },
+    {
+      "origin": "乌鲁木齐",
+      "screen": "mobile",
+      "zoom": 4,
+      "reachableStations": 211,
+      "beforeVisible": 158,
+      "afterVisible": 34,
+      "minimumGapPixels": 28.6
+    },
+    {
+      "origin": "乌鲁木齐",
+      "screen": "desktop",
+      "zoom": 4,
+      "reachableStations": 211,
+      "beforeVisible": 212,
+      "afterVisible": 46,
+      "minimumGapPixels": 28.2
+    },
+    {
+      "origin": "乌鲁木齐",
+      "screen": "mobile",
+      "zoom": 6,
+      "reachableStations": 211,
+      "beforeVisible": 20,
+      "afterVisible": 12,
+      "minimumGapPixels": 37.1
+    },
+    {
+      "origin": "乌鲁木齐",
+      "screen": "desktop",
+      "zoom": 6,
+      "reachableStations": 211,
+      "beforeVisible": 76,
+      "afterVisible": 44,
+      "minimumGapPixels": 28.4
+    },
+    {
+      "origin": "乌鲁木齐",
+      "screen": "mobile",
+      "zoom": 9,
+      "reachableStations": 211,
+      "beforeVisible": 1,
+      "afterVisible": 1,
+      "minimumGapPixels": null
+    },
+    {
+      "origin": "乌鲁木齐",
+      "screen": "desktop",
+      "zoom": 9,
+      "reachableStations": 211,
+      "beforeVisible": 1,
+      "afterVisible": 1,
+      "minimumGapPixels": null
+    }
+  ]
+}

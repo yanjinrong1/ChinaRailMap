@@ -1,4 +1,6 @@
 export default {
+  "全端站点密度优化": "Station spacing on all screens",
+  "移动端和桌面端按屏幕间距筛选站点，低缩放优先枢纽和区域代表站；选中站始终显示，通过站放大后出现，站点列表保持完整。": "Space station markers by screen distance on mobile and desktop. Hubs and regional representatives appear first; selected stations stay visible and passing stations appear when zoomed in. Station lists remain complete.",
   "查看车次": "Show trains",
   "收起车次": "Hide trains",
   "移动版布局": "Mobile layout",

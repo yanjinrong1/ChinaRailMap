@@ -27,14 +27,14 @@ function assignVisibility(stations){
  const regional=[...active].sort((a,b)=>b.displayPriority-a.displayPriority||b.frequency-a.frequency||a.id.localeCompare(b.id));
  const chosen=new Set();
  for(let zoom=3;zoom<=13;zoom++){
-  const occupied=new Map(),coverage=new Set(),cellSize=26,coverageSize=64;
+  const occupied=new Map(),coverage=new Set(),cellSize=28,coverageSize=64;
   const bucket=p=>[Math.floor(p.x/cellSize),Math.floor(p.y/cellSize)];
   const coverageKey=p=>`${Math.floor(p.x/coverageSize)}|${Math.floor(p.y/coverageSize)}`;
   function add(s){const p=stationWorldPoint(s,zoom),k=bucket(p).join('|');if(!occupied.has(k))occupied.set(k,[]);occupied.get(k).push(p);coverage.add(coverageKey(p));if(!chosen.has(s.id)){chosen.add(s.id);s.minZoom=zoom;}}
   function fits(s,distance){const p=stationWorldPoint(s,zoom),[x,y]=bucket(p),span=Math.ceil(distance/cellSize);for(let dx=-span;dx<=span;dx++)for(let dy=-span;dy<=span;dy++)for(const other of occupied.get(`${x+dx}|${y+dy}`)||[])if(Math.hypot(p.x-other.x,p.y-other.y)<distance)return false;return true;}
   for(const s of active)if(chosen.has(s.id))add(s);
   // Preserve absolute-frequency hubs, with actual distance avoidance across cell edges.
-  for(const s of active)if(!chosen.has(s.id)&&zoom>=s.nationalMinZoom&&fits(s,26))add(s);
+  for(const s of active)if(!chosen.has(s.id)&&zoom>=s.nationalMinZoom&&fits(s,28))add(s);
   const threshold=zoom===3?.82:zoom===4?.68:zoom===5?.5:.3,minFrequency=zoom<=4?8:zoom===5?3:1;
   // Fill geographical gaps using the strongest nearby representative, not a province quota.
   for(const s of regional){
@@ -68,15 +68,31 @@ export function selectionTransition(state,action,reachableIds=new Set()){
 }
 // No origin means no route computation or drawing.
 export function selectedPaths(result,destination){return result?(destination?result.destinations.get(destination)||[]:result.services):[];}
-export function visibleStations(stations,{zoom,contains,origin,destination,reachableIds,project,viaIds=new Set(),cellSize=26}){
- const occupied=new Set(),visible=[];
- for(const s of stations){
-  const endpoint=s.id===origin||s.id===destination,via=viaIds.has(s.id),forced=endpoint||via;
-  if(!contains(s)&&!endpoint)continue;
-  if(origin){if(!forced&&(destination||!reachableIds.has(s.id)))continue;}
-  else if(zoom<s.minZoom)continue;
-  if(!origin&&!forced&&!s.layoutStable){const p=project(s),key=`${Math.floor(p.x/cellSize)},${Math.floor(p.y/cellSize)}`;if(occupied.has(key))continue;occupied.add(key);}
-  visible.push(s);
+export function stationSpacing(zoom){return zoom<=8?28:zoom===9?24:zoom===10?20:zoom===11?16:zoom===12?12:8;}
+export function stationMarkerDimensions(station,{zoom,selected=false,via=false,passing=false}){
+ if(selected)return {radius:8,weight:2.5};
+ const scale=zoom<=5?.7:zoom<=7?.82:zoom<=9?.92:1;
+ return {radius:(passing?3.5:via?Math.min(5,station.radius||5):station.radius||3)*scale,weight:zoom<=7?.7:1.1};
+}
+export function visibleStations(stations,{zoom,contains,origin,destination,reachableIds=new Set(),project,viaIds=new Set(),passIds=new Set(),companionIds=new Set(),cellSize=stationSpacing(zoom)}){
+ const endpoint=s=>s.id===origin||s.id===destination;
+ const candidates=stations.filter(s=>{
+  if(endpoint(s))return true;
+  if(passIds.has(s.id)&&zoom<9)return false;
+  if(origin)return viaIds.has(s.id)||(!destination&&reachableIds.has(s.id));
+  return companionIds.has(s.id)||zoom>=s.minZoom;
+ });
+ const priority=s=>endpoint(s)?0:(viaIds.has(s.id)&&!passIds.has(s.id)||companionIds.has(s.id))?1:passIds.has(s.id)?3:2;
+ candidates.sort((a,b)=>priority(a)-priority(b)||(a.minZoom??99)-(b.minZoom??99)||(b.displayPriority||0)-(a.displayPriority||0)||(b.frequency||0)-(a.frequency||0)||a.id.localeCompare(b.id));
+ const occupied=new Map(),visible=[],bucket=p=>[Math.floor(p.x/cellSize),Math.floor(p.y/cellSize)];
+ // Lay out every eligible candidate before viewport culling, so panning does
+ // not change which station wins a local collision at the edge of the screen.
+ for(const s of candidates){
+  const p=project(s),[x,y]=bucket(p);let fits=true;
+  if(!endpoint(s))for(let dx=-1;dx<=1;dx++)for(let dy=-1;dy<=1;dy++)for(const other of occupied.get(`${x+dx}|${y+dy}`)||[])if(Math.hypot(p.x-other.x,p.y-other.y)<cellSize-1e-8)fits=false;
+  if(!fits)continue;
+  const key=`${x}|${y}`;if(!occupied.has(key))occupied.set(key,[]);occupied.get(key).push(p);
+  if(contains(s)||endpoint(s))visible.push(s);
  }
  return visible;
 }

@@ -1,0 +1,50 @@
+{
+  "policy": "Display-only split at shared station anchors, then merge close same-operator corridor samples independently of each train stop pattern; service colors still separate.",
+  "results": [
+    {
+      "origin": "广州南",
+      "region": "Guangzhou-Shenzhen-Kuitan",
+      "trains": 585,
+      "sourceLegs": 1208,
+      "splitVariants": 3277,
+      "mergedVariants": 2815,
+      "corridors": 462,
+      "prepareMilliseconds": 229,
+      "stationAnchors": 427,
+      "stationAnchorsAligned": true,
+      "beforeRegionalVertices": 2306,
+      "afterRegionalVertices": 977,
+      "estimatedDisplayBytes": 453385
+    },
+    {
+      "origin": "广州南",
+      "region": "Hefei-Luan",
+      "trains": 585,
+      "sourceLegs": 1208,
+      "splitVariants": 3277,
+      "mergedVariants": 2815,
+      "corridors": 462,
+      "prepareMilliseconds": 73,
+      "stationAnchors": 427,
+      "stationAnchorsAligned": true,
+      "beforeRegionalVertices": 190,
+      "afterRegionalVertices": 147,
+      "estimatedDisplayBytes": 453385
+    },
+    {
+      "origin": "合肥南",
+      "region": "Hefei-Luan local",
+      "trains": 338,
+      "sourceLegs": 1240,
+      "splitVariants": 2728,
+      "mergedVariants": 2224,
+      "corridors": 504,
+      "prepareMilliseconds": 70,
+      "stationAnchors": 434,
+      "stationAnchorsAligned": true,
+      "beforeRegionalVertices": 1105,
+      "afterRegionalVertices": 414,
+      "estimatedDisplayBytes": 478395
+    }
+  ]
+}

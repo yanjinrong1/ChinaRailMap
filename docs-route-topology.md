@@ -79,3 +79,21 @@ After visual review, display tolerances were reduced to 1.5px (zoom <=5), 1px
 (<=7), .65px (<=9), .3px (<=11), .1px (12), and zero (13). Station nodes remain
 protected at every level. Unambiguous routed station anchors within 500m use the
 station marker coordinates for display only; conflicting anchors are excluded.
+
+## Different stop patterns in one visual corridor
+
+`bundleStationCorridors` derives a temporary display graph for the selected
+journey. It splits routed shapes at nearby shared station anchors, including
+known passage anchors, then matches same-operator subpaths within 400m. Matching
+can therefore combine A-C with A-B/B-C or partial overlaps A-C with B-D, rather
+than requiring identical original stop pairs. Multiple service colors reuse one
+centerline and retain their parallel strokes; station nodes remain hard pins.
+
+The display graph is cached for the selection and discarded on reset. It does
+not modify train references, source topology, passenger reachability, passage
+inference, schedules, or original route geometry. Substantial detours and separate
+operators remain separate. This is visual generalization, not new routing.
+
+Run `node scripts/audit-shared-corridors.mjs` after building to reproduce the
+Guangzhou South snapshot/date from the reported screenshot, check station-anchor
+alignment, and export before/after geometry for both affected regions.

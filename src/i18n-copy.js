@@ -1,4 +1,6 @@
 export default {
+  "不同停站车次共线合并": "Shared tracks across stop patterns",
+  "按共同车站拆分显示区间，让直达车和分段停站车共享同一条线，修复深圳北至葵潭、合肥至六安等区域的同色重线。": "Split display paths at shared stations so express and stopping trains use one line, removing duplicate same-color tracks around Shenzhen North–Kuitan and Hefei–Luan.",
   "车站": "Stations",
   "车次类型": "Services",
   "图例布局与绿皮车配色": "Legend layout and railway green",

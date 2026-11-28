@@ -1,0 +1,19 @@
+import fs from 'node:fs';import assert from 'node:assert/strict';
+import {loadSnapshotGeometry} from '../src/snapshots.js';import {reachable} from '../src/network.js';
+import {topologyLeg,topologyDisplayRoutes,deduplicateParallelLegs,stationAnchorNodes,stationAnchorPositions} from '../src/route-topology.js';
+import {bundleStationCorridors} from '../src/route-corridors.js';import {stationWorldPoint} from '../src/map-model.js';import {trainRouteClass} from '../src/route-colors.js';import {routeTolerance} from '../src/route-lod.js';import {stationAliases} from '../src/station-display.js';
+const g=await loadSnapshotGeometry('/timetable/',async url=>({ok:true,json:async()=>JSON.parse(fs.readFileSync('dist'+url))}),{runtime:true}),data=JSON.parse(fs.readFileSync('dist/timetable/data.json')),stations=new Map(data.stations.map(s=>[s.id,s])),aliases=stationAliases(data),results=[],plots=[];
+for(const [name,bounds,region]of [['广州南',[22.4,112.9,23.7,116.5],'Guangzhou-Shenzhen-Kuitan'],['广州南',[31.35,115.1,32.15,117.9],'Hefei-Luan'],['合肥南',[31.35,115.1,32.15,117.9],'Hefei-Luan local']]){
+ const station=data.stations.find(s=>s.name===name),trains=reachable(data,aliases.get(station.id)||station.id,'2026-11-28',aliases).services,legs=[],seen=new Set();
+ for(const train of trains)for(let i=1;i<train.path.length;i++){const leg=topologyLeg(train,train.path[i-1],train.path[i],g,stations);if(!leg)continue;const routeClass=trainRouteClass(train),key=leg.id+'|'+routeClass;if(!seen.has(key)){seen.add(key);legs.push({...leg,routeClass});}}
+ const beforeSource=JSON.stringify(g.topology),start=performance.now(),display=bundleStationCorridors(legs,g,stations,{stationKey:id=>aliases.get(id)||id}),prepareMilliseconds=Math.round(performance.now()-start);assert.equal(JSON.stringify(g.topology),beforeSource);
+ const project=([lat,lng])=>stationWorldPoint({lat,lng},10),oldLegs=deduplicateParallelLegs(legs,g,project,{pixelTolerance:0,stationKey:id=>aliases.get(id)||id});
+ const render=(selected,geometry)=>topologyDisplayRoutes(selected,geometry.topology,{project,unproject:p=>[p.x,p.y],gap:3.5,tolerance:routeTolerance(10),protectedNodes:stationAnchorNodes(selected,geometry.topology),anchorPositions:stationAnchorPositions(selected,geometry,stations,id=>aliases.get(id)||id)});
+ const before=render(oldLegs,g),after=render(display.legs,display.geometry),anchors=stationAnchorPositions(display.legs,display.geometry,stations,id=>aliases.get(id)||id),key=p=>p.map(n=>n.toFixed(6)).join(','),drawn=new Set(after.flatMap(b=>b.coordinates.flat().map(key)));
+ for(const coordinate of anchors.values()){const p=project(coordinate);assert.ok(drawn.has(key([p.x,p.y])),'Station detached from bundled route');}
+ const [south,west,north,east]=bounds,a=project([north,west]),b=project([south,east]);
+ const countRegional=batches=>batches.reduce((n,batch)=>n+batch.coordinates.reduce((m,line)=>m+line.filter(p=>p[0]>=a.x&&p[0]<=b.x&&p[1]>=a.y&&p[1]<=b.y).length,0),0);
+ const result={origin:name,region,trains:trains.length,...display.stats,prepareMilliseconds,stationAnchors:anchors.size,stationAnchorsAligned:true,beforeRegionalVertices:countRegional(before),afterRegionalVertices:countRegional(after),estimatedDisplayBytes:Buffer.byteLength(JSON.stringify(display))};results.push(result);
+ plots.push({name,region,bounds:[a.x,a.y,b.x,b.y],before,after,stations:[...new Set(trains.flatMap(t=>t.path))].map(id=>stations.get(id)).filter(Boolean).map(s=>{const p=project([s.lat,s.lng]);return [p.x,p.y];})});
+}
+fs.writeFileSync('/tmp/shared-corridor-plots.json',JSON.stringify(plots));const report={policy:'Display-only split at shared station anchors, then merge close same-operator corridor samples independently of each train stop pattern; service colors still separate.',results};fs.writeFileSync('reports/shared-corridor-audit.json',JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify(report));
